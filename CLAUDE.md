@@ -145,10 +145,15 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   2 Unreachable (403), 2 DnsError. After the pilot: load handling changed, timeouts no longer
   retried, subdomain-only domains left out (42 replaced in the list). WAVE comparison of 5 sites
   written to `docs/methodology.md` ("Manual comparison with WAVE"). Next: stage 4.
-- Stage 4 (aggregation + static report site) — built 2026-11-11 with pilot data; not deployed yet
-  (owner decides how to publish: commit generated site vs. GitHub Actions). Our scanner finds
-  0 failures on `index.html` and `methodology.html` in both viewports (also an integration test).
+- Stage 4 (aggregation + static report site) — done 2026-11-11, published with pilot data at
+  https://yunuskngl.github.io/turkiye-web-accessibility-report/ (owner approved). Our scanner finds
+  0 failures on `index.html` and `methodology.html` in both viewports, locally (integration test)
+  and on the live site. Next: stage 5.
   Generate: `dotnet run --project src/A11yReport.Site -- --run 2026-pilot --pilot` → `site/` (gitignored).
+- **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
+  (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
+  site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",
+  naming the main commit it was built from) and push. Only with the owner's go-ahead.
 - Stage 4 decisions: aggregation in `Core/Report` (`ReportBuilder`), DB access in
   `Storage/ReportReader` (read-only connection, no selectors/snippets read), pages in
   `Site/Pages`, inline SVG bar charts (`Site/Html/BarChart`) each followed by a data table,
