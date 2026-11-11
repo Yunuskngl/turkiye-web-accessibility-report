@@ -1,0 +1,164 @@
+[
+  {
+    "ruleId": "aria-allowed-attr",
+    "title": "Öğeye uymayan ARIA özellikleri",
+    "explanation": "Bazı ARIA özellikleri yalnızca belirli rollerle kullanılabilir; örneğin bir düğmede aria-checked anlamsızdır. Uymayan özellikler ekran okuyuculara yanlış ya da çelişkili bilgi verir veya hiç okunmaz. Bu durumdan en çok ekran okuyucu kullanan görme engelli kişiler etkilenir.",
+    "fixExample": "Hatalı: \u003Cbutton aria-checked=\u0022true\u0022\u003EBildirimler\u003C/button\u003E\nDoğru: \u003Cbutton aria-pressed=\u0022true\u0022\u003EBildirimler\u003C/button\u003E"
+  },
+  {
+    "ruleId": "aria-hidden-focus",
+    "title": "Gizlenmiş alanda odaklanılabilen öğeler",
+    "explanation": "aria-hidden=\u0022true\u0022 ile ekran okuyuculardan gizlenen bir alanın içindeki bağlantı veya düğme klavyeyle hâlâ odaklanabiliyorsa, kullanıcı adı okunmayan \u0022boş\u0022 bir öğeye gelir. Bu durum klavye ve ekran okuyucu kullanıcılarının sayfada yönünü kaybetmesine yol açar. Alan ya herkese gösterilmeli ya da hidden özelliğiyle tamamen gizlenmelidir.",
+    "fixExample": "Hatalı: \u003Cdiv aria-hidden=\u0022true\u0022\u003E\u003Ca href=\u0022/kampanya\u0022\u003EKampanyalar\u003C/a\u003E\u003C/div\u003E\nDoğru: \u003Cdiv hidden\u003E\u003Ca href=\u0022/kampanya\u0022\u003EKampanyalar\u003C/a\u003E\u003C/div\u003E"
+  },
+  {
+    "ruleId": "aria-input-field-name",
+    "title": "Adı olmayan ARIA giriş alanları",
+    "explanation": "textbox, combobox, listbox, searchbox, slider veya spinbutton rolü verilen öğelerin erişilebilir bir adı olmalıdır. Adı olmayan bir alana gelen ekran okuyucu kullanıcısı, oraya ne girmesi gerektiğini duyamaz. Ad, aria-label veya aria-labelledby ile verilebilir.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022textbox\u0022 contenteditable=\u0022true\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022textbox\u0022 contenteditable=\u0022true\u0022 aria-label=\u0022Mesajınız\u0022\u003E\u003C/div\u003E"
+  },
+  {
+    "ruleId": "aria-prohibited-attr",
+    "title": "Bu öğede kullanılamayan ARIA özellikleri",
+    "explanation": "Bazı roller belirli ARIA özelliklerine izin vermez; örneğin rolü olmayan bir span veya div için aria-label kullanılamaz. Ekran okuyucular bu durumda etiketi çoğu zaman yok sayar ve bilgi kaybolur. Öğeye uygun bir rol vermek ya da bilgiyi görünür metin olarak yazmak gerekir.",
+    "fixExample": "Hatalı: \u003Cspan aria-label=\u0022Yeni ürün\u0022\u003E●\u003C/span\u003E\nDoğru: \u003Cspan role=\u0022img\u0022 aria-label=\u0022Yeni ürün\u0022\u003E●\u003C/span\u003E"
+  },
+  {
+    "ruleId": "aria-required-children",
+    "title": "Gerekli alt rolleri eksik ARIA bileşenleri",
+    "explanation": "Bazı ARIA rolleri belirli alt öğeler olmadan anlam taşımaz; örneğin role=\u0022tablist\u0022 içinde role=\u0022tab\u0022 öğeleri, role=\u0022list\u0022 içinde role=\u0022listitem\u0022 öğeleri bulunmalıdır. Alt roller eksik olduğunda ekran okuyucular bileşenin yapısını ve kaç seçenek olduğunu doğru aktaramaz. Bu, ekran okuyucu kullanıcılarının sekme, menü ve listelerde gezinmesini zorlaştırır.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022tablist\u0022\u003E\u003Cbutton\u003EGünlük\u003C/button\u003E\u003Cbutton\u003EHaftalık\u003C/button\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022tablist\u0022\u003E\u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022true\u0022\u003EGünlük\u003C/button\u003E\u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022false\u0022\u003EHaftalık\u003C/button\u003E\u003C/div\u003E"
+  },
+  {
+    "ruleId": "aria-required-parent",
+    "title": "Gerekli üst rolü olmayan ARIA öğeleri",
+    "explanation": "role=\u0022tab\u0022, role=\u0022option\u0022 veya role=\u0022listitem\u0022 gibi bazı roller yalnızca doğru üst rolün içinde anlam taşır; örneğin bir tab öğesi role=\u0022tablist\u0022 içinde olmalıdır. Üst rol eksik olduğunda ekran okuyucular öğenin hangi bileşene ait olduğunu söyleyemez. Bu durum ekran okuyucu kullanıcılarının bileşeni anlamasını ve kullanmasını zorlaştırır.",
+    "fixExample": "Hatalı: \u003Cdiv\u003E\u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022true\u0022\u003EGünlük\u003C/button\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022tablist\u0022\u003E\u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022true\u0022\u003EGünlük\u003C/button\u003E\u003C/div\u003E"
+  },
+  {
+    "ruleId": "aria-toggle-field-name",
+    "title": "Adı olmayan aç/kapat kontrolleri",
+    "explanation": "checkbox, switch, radio, menuitemcheckbox veya menuitemradio rolü verilen öğelerin erişilebilir bir adı olmalıdır. Ad yoksa ekran okuyucu yalnızca \u0022anahtar, kapalı\u0022 gibi bir şey söyler ve kullanıcı neyi açıp kapattığını bilemez. Ad, görünür bir etiket, aria-label veya aria-labelledby ile verilebilir.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022switch\u0022 aria-checked=\u0022false\u0022 tabindex=\u00220\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022switch\u0022 aria-checked=\u0022false\u0022 tabindex=\u00220\u0022 aria-label=\u0022Karanlık mod\u0022\u003E\u003C/div\u003E"
+  },
+  {
+    "ruleId": "aria-valid-attr-value",
+    "title": "Geçersiz ARIA özellik değerleri",
+    "explanation": "ARIA özelliklerinin yalnızca tanımlı değerleri olabilir; örneğin aria-expanded sadece \u0022true\u0022 veya \u0022false\u0022 alır, aria-labelledby de sayfada gerçekten var olan bir id\u0027ye işaret etmelidir. Geçersiz değerler ekran okuyucular tarafından yok sayılır veya yanlış okunur. Sonuçta ekran okuyucu kullanıcıları bir menünün açık olup olmadığı gibi bilgileri alamaz.",
+    "fixExample": "Hatalı: \u003Cbutton aria-expanded=\u0022evet\u0022\u003EMenü\u003C/button\u003E\nDoğru: \u003Cbutton aria-expanded=\u0022true\u0022\u003EMenü\u003C/button\u003E"
+  },
+  {
+    "ruleId": "avoid-inline-spacing",
+    "title": "Değiştirilemeyen metin aralıkları",
+    "explanation": "Satır, harf veya kelime aralığı satır içi stilde !important ile sabitlendiğinde, kullanıcılar kendi stil ayarlarıyla bu aralıkları büyütemez. Disleksisi olan veya az gören birçok kişi metni rahat okumak için aralıkları artırır. Bu değerler !important olmadan yazılmalıdır.",
+    "fixExample": "Hatalı: \u003Cp style=\u0022line-height: 1.2 !important;\u0022\u003EKampanya koşulları\u003C/p\u003E\nDoğru: \u003Cp style=\u0022line-height: 1.5;\u0022\u003EKampanya koşulları\u003C/p\u003E"
+  },
+  {
+    "ruleId": "button-name",
+    "title": "Adı olmayan düğmeler",
+    "explanation": "Bir düğmenin ekran okuyucuların okuyabileceği bir adı olmalıdır. Yalnızca simge içeren ve metni olmayan düğmeler ekran okuyucuda sadece \u0022düğme\u0022 diye okunur; kullanıcı düğmenin ne yaptığını bilemez. Sesle bilgisayar kullanan kişiler de adı olmayan düğmeyi komutla seçemez.",
+    "fixExample": "Hatalı: \u003Cbutton class=\u0022kapat-simgesi\u0022\u003E\u003C/button\u003E\nDoğru: \u003Cbutton class=\u0022kapat-simgesi\u0022 aria-label=\u0022Kapat\u0022\u003E\u003C/button\u003E"
+  },
+  {
+    "ruleId": "color-contrast",
+    "title": "Arka planla yetersiz kontrastı olan metin",
+    "explanation": "Normal boyuttaki metin ile arka planı arasındaki kontrast en az 4,5:1, büyük metinde en az 3:1 olmalıdır. Düşük kontrastlı metni az gören kişiler, yaşlılar ve telefonunu güneş ışığında kullanan herkes zor okur. Renk seçerken bir kontrast ölçme aracıyla oranı kontrol etmek yeterlidir.",
+    "fixExample": "Hatalı: \u003Cp style=\u0022color: #999999; background: #ffffff;\u0022\u003EKampanya koşulları\u003C/p\u003E\nDoğru: \u003Cp style=\u0022color: #595959; background: #ffffff;\u0022\u003EKampanya koşulları\u003C/p\u003E"
+  },
+  {
+    "ruleId": "frame-title",
+    "title": "Başlığı olmayan iframe\u0027ler",
+    "explanation": "Sayfaya gömülen iframe öğelerinin, içeriğini anlatan bir title özelliği olmalıdır. Başlık olmadığında ekran okuyucu kullanıcıları gömülü alanda ne olduğunu (harita, video, form) önceden öğrenemez. Kısa ve açıklayıcı bir başlık bu sorunu çözer.",
+    "fixExample": "Hatalı: \u003Ciframe src=\u0022harita.html\u0022\u003E\u003C/iframe\u003E\nDoğru: \u003Ciframe src=\u0022harita.html\u0022 title=\u0022Mağaza konumları haritası\u0022\u003E\u003C/iframe\u003E"
+  },
+  {
+    "ruleId": "html-has-lang",
+    "title": "Sayfa dili belirtilmemiş",
+    "explanation": "html öğesinde lang özelliği olmadığında ekran okuyucular metni hangi dilin kurallarıyla okuyacağını bilemez; Türkçe bir sayfa yanlış telaffuzla okunabilir. Tarayıcıların çeviri ve heceleme özellikleri de sayfa diline göre çalışır. Türkçe sayfalarda lang=\u0022tr\u0022 kullanılmalıdır.",
+    "fixExample": "Hatalı: \u003Chtml\u003E\nDoğru: \u003Chtml lang=\u0022tr\u0022\u003E"
+  },
+  {
+    "ruleId": "image-alt",
+    "title": "Alternatif metni olmayan görseller",
+    "explanation": "Her img öğesinin bir alt özelliği olmalıdır. Bilgi taşıyan görsellerde alt metin görselin anlattığını söylemelidir; yalnızca süs olan görsellerde boş alt=\u0022\u0022 kullanılır. Alt özelliği hiç olmayan görseller ekran okuyucularda dosya adıyla okunabilir ya da tamamen kaybolur.",
+    "fixExample": "Hatalı: \u003Cimg src=\u0022kampanya.jpg\u0022\u003E\nDoğru: \u003Cimg src=\u0022kampanya.jpg\u0022 alt=\u0022Tüm ayakkabılarda yüzde 30 indirim\u0022\u003E"
+  },
+  {
+    "ruleId": "label",
+    "title": "Etiketi olmayan form alanları",
+    "explanation": "Form alanlarının, alanın ne istediğini söyleyen bir etiketi olmalıdır. Etiket olmadığında ekran okuyucu kullanıcıları alana ne yazacaklarını duyamaz; label öğesine tıklanabilmesi motor engelli kullanıcılar için de hedefi büyütür. En iyi yöntem, alanı for ve id ile bağlanmış görünür bir label öğesidir.",
+    "fixExample": "Hatalı: \u003Cinput type=\u0022email\u0022 name=\u0022eposta\u0022\u003E\nDoğru: \u003Clabel for=\u0022eposta\u0022\u003EE-posta adresiniz\u003C/label\u003E \u003Cinput type=\u0022email\u0022 id=\u0022eposta\u0022 name=\u0022eposta\u0022\u003E"
+  },
+  {
+    "ruleId": "label-content-name-mismatch",
+    "title": "Görünen yazıyla uyuşmayan erişilebilir ad",
+    "explanation": "Bir düğme veya bağlantının erişilebilir adı, ekranda görünen yazıyı içermelidir. Sesle bilgisayar kullanan kişiler gördükleri yazıyı söyleyerek kontrolü seçer; erişilebilir ad farklıysa komut çalışmaz. Ekran okuyucu kullanan ama ekranı da gören kişiler için de farklı adlar kafa karıştırır.",
+    "fixExample": "Hatalı: \u003Cbutton aria-label=\u0022Ürünü satın al\u0022\u003ESepete ekle\u003C/button\u003E\nDoğru: \u003Cbutton aria-label=\u0022Sepete ekle: Mavi tişört\u0022\u003ESepete ekle\u003C/button\u003E"
+  },
+  {
+    "ruleId": "link-in-text-block",
+    "title": "Yalnızca renkle ayırt edilen bağlantılar",
+    "explanation": "Paragraf içindeki bağlantılar çevresindeki metinden yalnızca renkle ayrılıyorsa, renk körü veya az gören kişiler bağlantıyı fark etmeyebilir. Bağlantının altı çizili olması gibi renge bağlı olmayan bir işaret gerekir. Altı çizgisiz kullanılacaksa, bağlantı rengiyle metin rengi arasında en az 3:1 kontrast ve odakta ek bir işaret olmalıdır.",
+    "fixExample": "Hatalı: \u003Cp\u003EAyrıntılar için \u003Ca href=\u0022/kosullar\u0022 style=\u0022color: #1a4d8f; text-decoration: none;\u0022\u003Ekoşulları okuyun\u003C/a\u003E.\u003C/p\u003E\nDoğru: \u003Cp\u003EAyrıntılar için \u003Ca href=\u0022/kosullar\u0022 style=\u0022color: #1a4d8f; text-decoration: underline;\u0022\u003Ekoşulları okuyun\u003C/a\u003E.\u003C/p\u003E"
+  },
+  {
+    "ruleId": "link-name",
+    "title": "Adı olmayan bağlantılar",
+    "explanation": "Her bağlantının, nereye gittiğini anlatan okunabilir bir adı olmalıdır. Yalnızca alt metni olmayan bir simge veya görsel içeren bağlantılar ekran okuyucuda adres ya da hiçbir şey olarak okunur. Ekran okuyucu ve sesle kontrol kullanan kişiler böyle bir bağlantının ne işe yaradığını anlayamaz.",
+    "fixExample": "Hatalı: \u003Ca href=\u0022/sepet\u0022\u003E\u003Cimg src=\u0022sepet.svg\u0022\u003E\u003C/a\u003E\nDoğru: \u003Ca href=\u0022/sepet\u0022\u003E\u003Cimg src=\u0022sepet.svg\u0022 alt=\u0022Sepetim\u0022\u003E\u003C/a\u003E"
+  },
+  {
+    "ruleId": "list",
+    "title": "Hatalı yapılandırılmış listeler",
+    "explanation": "ul ve ol listelerinin doğrudan içinde yalnızca li öğeleri (ve script veya template) bulunmalıdır. Liste içine doğrudan div gibi başka öğeler konduğunda ekran okuyucular listede kaç öğe olduğunu yanlış söyler. Bu, ekran okuyucu kullanıcılarının menü ve listelerde gezinmesini zorlaştırır.",
+    "fixExample": "Hatalı: \u003Cul\u003E\u003Cdiv\u003EHakkımızda\u003C/div\u003E\u003Cli\u003Eİletişim\u003C/li\u003E\u003C/ul\u003E\nDoğru: \u003Cul\u003E\u003Cli\u003EHakkımızda\u003C/li\u003E\u003Cli\u003Eİletişim\u003C/li\u003E\u003C/ul\u003E"
+  },
+  {
+    "ruleId": "listitem",
+    "title": "Liste dışında kullanılan liste öğeleri",
+    "explanation": "li öğeleri yalnızca bir ul veya ol listesinin (ya da role=\u0022list\u0022 olan bir öğenin) içinde kullanılmalıdır. Liste dışındaki li öğelerini ekran okuyucular liste olarak duyuramaz. Ekran okuyucu kullanıcıları böylece içeriğin bir liste olduğunu ve kaç öğe içerdiğini öğrenemez.",
+    "fixExample": "Hatalı: \u003Cdiv\u003E\u003Cli\u003EHakkımızda\u003C/li\u003E\u003Cli\u003Eİletişim\u003C/li\u003E\u003C/div\u003E\nDoğru: \u003Cul\u003E\u003Cli\u003EHakkımızda\u003C/li\u003E\u003Cli\u003Eİletişim\u003C/li\u003E\u003C/ul\u003E"
+  },
+  {
+    "ruleId": "meta-refresh",
+    "title": "Sayfanın kendiliğinden yenilenmesi",
+    "explanation": "meta http-equiv=\u0022refresh\u0022 ile sayfanın belirli bir süre sonra kendiliğinden yenilenmesi veya yönlenmesi kullanıcının kontrolü dışındadır. Ekran okuyucu kullanıcıları okudukları yeri kaybeder, yavaş okuyan kişiler de içeriği bitiremeden sayfa değişir. İçerik yenilenecekse bunu kullanıcının başlatabileceği bir düğmeyle yapmak gerekir.",
+    "fixExample": "Hatalı: \u003Cmeta http-equiv=\u0022refresh\u0022 content=\u002260\u0022\u003E\nDoğru: \u003Cbutton type=\u0022button\u0022\u003EHaberleri yenile\u003C/button\u003E"
+  },
+  {
+    "ruleId": "meta-viewport",
+    "title": "Mobilde yakınlaştırmanın engellenmesi",
+    "explanation": "viewport ayarında user-scalable=no veya çok düşük bir maximum-scale değeri kullanıldığında kullanıcılar telefonda sayfayı parmaklarıyla büyütemez. Az gören kişiler metni okumak için yakınlaştırmaya ihtiyaç duyar. Yakınlaştırmayı kısıtlayan değerler kaldırılmalıdır.",
+    "fixExample": "Hatalı: \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\u0022\u003E\nDoğru: \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1\u0022\u003E"
+  },
+  {
+    "ruleId": "nested-interactive",
+    "title": "İç içe yerleştirilmiş etkileşimli öğeler",
+    "explanation": "Bir bağlantının veya düğmenin içine başka bir düğme ya da bağlantı konmamalıdır. İç içe kontroller ekran okuyucularda tek öğe gibi okunabilir ve içteki kontrol hiç duyurulmayabilir; klavyeyle de beklenmedik şekilde odaklanır. Kontroller yan yana yerleştirilmelidir.",
+    "fixExample": "Hatalı: \u003Ca href=\u0022/urun/42\u0022\u003EMavi tişört \u003Cbutton\u003ESepete ekle\u003C/button\u003E\u003C/a\u003E\nDoğru: \u003Ca href=\u0022/urun/42\u0022\u003EMavi tişört\u003C/a\u003E \u003Cbutton\u003ESepete ekle\u003C/button\u003E"
+  },
+  {
+    "ruleId": "role-img-alt",
+    "title": "Metin alternatifi olmayan görsel rolündeki öğeler",
+    "explanation": "role=\u0022img\u0022 verilen öğeler (örneğin arka plan resmiyle çizilmiş bir logo) ekran okuyuculara görsel olarak tanıtılır, bu yüzden bir metin alternatifi gerekir. Alternatif yoksa ekran okuyucu yalnızca \u0022görsel\u0022 der veya öğeyi atlar. Metin, aria-label veya aria-labelledby ile verilebilir.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022img\u0022 class=\u0022logo\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022img\u0022 class=\u0022logo\u0022 aria-label=\u0022Örnek Market logosu\u0022\u003E\u003C/div\u003E"
+  },
+  {
+    "ruleId": "scrollable-region-focusable",
+    "title": "Klavyeyle kaydırılamayan alanlar",
+    "explanation": "İçeriği kaydırılan bir alan (örneğin uzun bir sözleşme metni) klavyeyle de kaydırılabilmelidir. Alan odaklanamıyorsa ve içinde odaklanılabilir bir öğe yoksa, fare kullanamayan kişiler gizli kalan içeriğe ulaşamaz. Alana tabindex=\u00220\u0022 ve anlamlı bir ad vermek çözümdür.",
+    "fixExample": "Hatalı: \u003Cdiv style=\u0022overflow: auto; height: 200px;\u0022\u003EUzun sözleşme metni\u003C/div\u003E\nDoğru: \u003Cdiv style=\u0022overflow: auto; height: 200px;\u0022 tabindex=\u00220\u0022 role=\u0022region\u0022 aria-label=\u0022Sözleşme metni\u0022\u003EUzun sözleşme metni\u003C/div\u003E"
+  },
+  {
+    "ruleId": "select-name",
+    "title": "Etiketi olmayan açılır listeler",
+    "explanation": "select öğelerinin ne seçtirdiğini anlatan bir etiketi olmalıdır. Etiket yoksa ekran okuyucu kullanıcıları yalnızca seçili değeri duyar ve listenin ne için olduğunu bilemez. name özelliği bir etiket değildir; görünür bir label öğesi kullanılmalıdır.",
+    "fixExample": "Hatalı: \u003Cselect id=\u0022sehir\u0022\u003E\u003Coption\u003Eİstanbul\u003C/option\u003E\u003Coption\u003EAnkara\u003C/option\u003E\u003C/select\u003E\nDoğru: \u003Clabel for=\u0022sehir\u0022\u003EŞehir\u003C/label\u003E \u003Cselect id=\u0022sehir\u0022\u003E\u003Coption\u003Eİstanbul\u003C/option\u003E\u003Coption\u003EAnkara\u003C/option\u003E\u003C/select\u003E"
+  },
+  {
+    "ruleId": "target-size",
+    "title": "Çok küçük dokunma hedefleri",
+    "explanation": "Düğme ve bağlantı gibi tıklanan hedefler en az 24×24 CSS pikseli olmalı ya da çevrelerinde yeterli boşluk bulunmalıdır. Küçük hedefler el titremesi veya motor engeli olan kişiler ve küçük ekranda dokunan herkes için yanlış tıklamaya yol açar. Hedefin görünen boyutunu ya da tıklanabilir alanını büyütmek yeterlidir.",
+    "fixExample": "Hatalı: \u003Cbutton aria-label=\u0022Kapat\u0022 style=\u0022width: 16px; height: 16px;\u0022\u003E×\u003C/button\u003E\nDoğru: \u003Cbutton aria-label=\u0022Kapat\u0022 style=\u0022min-width: 24px; min-height: 24px;\u0022\u003E×\u003C/button\u003E"
+  }
+]

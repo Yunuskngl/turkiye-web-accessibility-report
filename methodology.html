@@ -254,6 +254,20 @@ and heading facts. It shows rule names and counts only, not the HTML of the page
 list or ranking of sites: each result is stored in a file named after the SHA-256 hash of the
 domain, so a result can only be found by typing that domain. The list of scanned domains is still
 public in the source repository, for reproducibility.</p>
+<h2 id="turkish-explanations-of-failure-types">Turkish explanations of failure types</h2>
+<p>The site lookup can show a short Turkish explanation and a fix example for each failure type.</p>
+<ul>
+<li>A language model running on our own computer (Ollama with the open <code>gemma3:4b</code> model) wrote a
+first draft for each axe rule that failed at least once.</li>
+<li>The model received <strong>only axe-core's own description of the rule</strong> (rule id, summary,
+description and WCAG criteria). It never received anything from the scanned websites.</li>
+<li>The small local model's drafts were often technically wrong (for example wrong &quot;before&quot; code,
+identical &quot;before&quot; and &quot;after&quot; examples, or the wrong group of affected users). All 27 drafts
+were therefore rewritten by Claude (an AI assistant) from axe-core's rule definitions, and each
+entry records this in its notes.</li>
+<li>The project owner checks every text before it is published. Only explanations marked as
+approved are published; all versions are kept in <code>data/explanations/rules.tr.json</code>.</li>
+</ul>
 <h2 id="opting-out">Opting out</h2>
 <p>Site owners can ask us not to scan their site and not to publish its result.</p>
 <ul>
