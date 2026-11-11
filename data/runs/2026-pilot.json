@@ -1,0 +1,779 @@
+{
+  "name": "2026-pilot",
+  "state": "Completed",
+  "listSource": "Chrome UX Report (CrUX) top origins for Türkiye (country code tr), via github.com/zakird/crux-top-lists; snapshot tr-202610.csv.gz (sha256 9aecf48c805fc2daf6ef12201f08409cf0d1a522683938229e2dd3b08fc19710)",
+  "listSha256": "0bbbbb30bbea1ddb843a1e3aee57c4ee63faa95d39fc039451181dfa7e4d7fea",
+  "sessions": [
+    {
+      "startedAt": "2026-11-11T09:43:46.216373+00:00",
+      "finishedAt": "2026-11-11T09:52:01.506878+00:00",
+      "state": "Completed",
+      "versions": {
+        "scanner": "1.0.0\u002B324d7cc2be7d9e24d1a6935985c20c4109870aa3",
+        "dotnet": "10.0.13",
+        "playwright": "1.64.1",
+        "browser": "156.0.8078.4",
+        "axeCore": "4.14.0"
+      },
+      "userAgent": "Mozilla/5.0 (compatible; TurkiyeWebA11yReport/0.2; \u002Bhttps://github.com/Yunuskngl/turkiye-web-accessibility-report/blob/main/docs/methodology.md)",
+      "settings": {
+        "Scan": {
+          "NavigationTimeoutSeconds": 30,
+          "SettleMilliseconds": 2000,
+          "ResizeSettleMilliseconds": 500,
+          "Locale": "tr-TR",
+          "UserAgentProduct": "TurkiyeWebA11yReport/0.2",
+          "MethodologyUrl": "https://github.com/Yunuskngl/turkiye-web-accessibility-report/blob/main/docs/methodology.md",
+          "Desktop": {
+            "Name": "Desktop",
+            "Width": 1280,
+            "Height": 800
+          },
+          "Mobile": {
+            "Name": "Mobile",
+            "Width": 390,
+            "Height": 844
+          },
+          "AxeTags": [
+            "wcag2a",
+            "wcag2aa",
+            "wcag21a",
+            "wcag21aa",
+            "wcag22aa"
+          ],
+          "RobotsToken": "TurkiyeWebA11yReport",
+          "UserAgent": "Mozilla/5.0 (compatible; TurkiyeWebA11yReport/0.2; \u002Bhttps://github.com/Yunuskngl/turkiye-web-accessibility-report/blob/main/docs/methodology.md)"
+        },
+        "Run": {
+          "Concurrency": 3,
+          "DelayBetweenSitesSeconds": 3,
+          "RobotsTimeoutSeconds": 10,
+          "ManifestFolder": "data/runs"
+        },
+        "MaxNodesPerRule": 20
+      }
+    }
+  ],
+  "statusCounts": {
+    "Done": 40,
+    "SkippedOptOut": 0,
+    "SkippedRobots": 0,
+    "Unreachable": 2,
+    "Timeout": 6,
+    "DnsError": 2,
+    "TlsError": 0,
+    "NetworkError": 0,
+    "HttpError": 0,
+    "NonHtml": 0,
+    "Duplicate": 0,
+    "Failed": 0
+  },
+  "requestTotals": {
+    "robots": 50,
+    "documents": 51,
+    "subresources": 9707,
+    "total": 9808
+  },
+  "sites": [
+    {
+      "domain": "aile.gov.tr",
+      "sector": "public",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 179,
+        "total": 181
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "akbank.com",
+      "sector": "finance",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 136,
+        "total": 138
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "altinyildizclassics.com",
+      "sector": "ecommerce",
+      "status": "Timeout",
+      "attempts": 2,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 158,
+        "total": 160
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "arcelik.com.tr",
+      "sector": "ecommerce",
+      "status": "Unreachable",
+      "attempts": 1,
+      "httpStatus": 403,
+      "requests": {
+        "robots": 1,
+        "documents": 0,
+        "subresources": 0,
+        "total": 1
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "artigercek.com",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 398,
+        "total": 400
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "biletix.com",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 2,
+        "subresources": 155,
+        "total": 158
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "bulurum.com",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 134,
+        "total": 136
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "chery.com.tr",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 126,
+        "total": 128
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "donanimarsivi.com",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 348,
+        "total": 350
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "donanimhaber.com",
+      "sector": "media",
+      "status": "Timeout",
+      "attempts": 2,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 433,
+        "total": 435
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "egitim.net.tr",
+      "sector": "other",
+      "status": "Timeout",
+      "attempts": 2,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 230,
+        "total": 232
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "gratis.com",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 79,
+        "total": 81
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "gtb.gov.tr",
+      "sector": "public",
+      "status": "DnsError",
+      "attempts": 1,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 0,
+        "subresources": 0,
+        "total": 1
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "haber61.net",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 307,
+        "total": 309
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "haber7.com",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 305,
+        "total": 307
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "haberx.com",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 202,
+        "total": 204
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "indekskitap.com",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 193,
+        "total": 195
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "itopya.com",
+      "sector": "ecommerce",
+      "status": "Timeout",
+      "attempts": 2,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 328,
+        "total": 330
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "kaft.com",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 41,
+        "total": 43
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "kamusondakika.net",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 186,
+        "total": 188
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "kariyer.net",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 149,
+        "total": 151
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "kayiprihtim.com",
+      "sector": "other",
+      "status": "Timeout",
+      "attempts": 2,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 521,
+        "total": 523
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "kizlarsoruyor.com",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 169,
+        "total": 171
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "korkusuz.com.tr",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 195,
+        "total": 197
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "mavi.com",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 124,
+        "total": 126
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "mebehliyetsinavsorulari.com",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 2,
+        "subresources": 28,
+        "total": 31
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "metu.edu.tr",
+      "sector": "university",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 107,
+        "total": 109
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "migros.com.tr",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 147,
+        "total": 149
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "milliyet.com.tr",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 285,
+        "total": 287
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "okulizyon.com",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 2,
+        "subresources": 15,
+        "total": 18
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "penti.com",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 3,
+        "subresources": 96,
+        "total": 100
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "philips.com.tr",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 216,
+        "total": 218
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "r10.net",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 76,
+        "total": 78
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "repertuarim.com",
+      "sector": "other",
+      "status": "Timeout",
+      "attempts": 2,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 988,
+        "total": 990
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "saglik.gov.tr",
+      "sector": "public",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 58,
+        "total": 60
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "spor.istanbul",
+      "sector": "public",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 134,
+        "total": 136
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "testlericoz.com",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 2,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 313,
+        "total": 315
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "tgomarket.com",
+      "sector": "ecommerce",
+      "status": "DnsError",
+      "attempts": 2,
+      "httpStatus": null,
+      "requests": {
+        "robots": 1,
+        "documents": 0,
+        "subresources": 0,
+        "total": 1
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "tgoyemek.com",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 98,
+        "total": 100
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "toki.gov.tr",
+      "sector": "public",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 131,
+        "total": 133
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "tonnyblack.com.tr",
+      "sector": "ecommerce",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 216,
+        "total": 218
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "turkcell.com.tr",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 212,
+        "total": 214
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "turkiyegazetesi.com.tr",
+      "sector": "media",
+      "status": "Done",
+      "attempts": 2,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 278,
+        "total": 280
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "turktelekom.com.tr",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 254,
+        "total": 256
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "uludag.edu.tr",
+      "sector": "university",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 148,
+        "total": 150
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "uzaktanegitimkapisi.gov.tr",
+      "sector": "public",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 131,
+        "total": 133
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "watsons.com.tr",
+      "sector": "ecommerce",
+      "status": "Unreachable",
+      "attempts": 1,
+      "httpStatus": 403,
+      "requests": {
+        "robots": 1,
+        "documents": 0,
+        "subresources": 0,
+        "total": 1
+      },
+      "axeVersion": null
+    },
+    {
+      "domain": "yapikredi.com.tr",
+      "sector": "finance",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 97,
+        "total": 99
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "yazilideposu.com.tr",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 217,
+        "total": 219
+      },
+      "axeVersion": "4.14.0"
+    },
+    {
+      "domain": "yemek.com",
+      "sector": "other",
+      "status": "Done",
+      "attempts": 1,
+      "httpStatus": 200,
+      "requests": {
+        "robots": 1,
+        "documents": 1,
+        "subresources": 366,
+        "total": 368
+      },
+      "axeVersion": "4.14.0"
+    }
+  ]
+}

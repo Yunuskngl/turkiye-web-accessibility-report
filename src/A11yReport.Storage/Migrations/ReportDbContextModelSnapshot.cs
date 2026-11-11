@@ -44,9 +44,6 @@ namespace A11yReport.Storage.Migrations
                     b.Property<int>("RunId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ScanRunEntityId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("ScannerVersion")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -68,7 +65,7 @@ namespace A11yReport.Storage.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ScanRunEntityId");
+                    b.HasIndex("RunId");
 
                     b.ToTable("Sessions");
                 });
@@ -155,6 +152,9 @@ namespace A11yReport.Storage.Migrations
                     b.Property<string>("Lang")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool?>("LoadEventReached")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -163,9 +163,6 @@ namespace A11yReport.Storage.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RunId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ScanRunEntityId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Sector")
@@ -194,8 +191,6 @@ namespace A11yReport.Storage.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ScanRunEntityId");
-
                     b.HasIndex("RunId", "Domain")
                         .IsUnique();
 
@@ -223,9 +218,6 @@ namespace A11yReport.Storage.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("SiteScanEntityId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("SiteScanId")
                         .HasColumnType("INTEGER");
 
@@ -241,7 +233,7 @@ namespace A11yReport.Storage.Migrations
 
                     b.HasIndex("RuleId");
 
-                    b.HasIndex("SiteScanEntityId");
+                    b.HasIndex("SiteScanId");
 
                     b.ToTable("Violations");
                 });
@@ -260,45 +252,50 @@ namespace A11yReport.Storage.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ViolationEntityId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ViolationId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ViolationEntityId");
+                    b.HasIndex("ViolationId");
 
-                    b.ToTable("ViolationNodeEntity");
+                    b.ToTable("ViolationNodes", (string)null);
                 });
 
             modelBuilder.Entity("A11yReport.Storage.RunSessionEntity", b =>
                 {
                     b.HasOne("A11yReport.Storage.ScanRunEntity", null)
                         .WithMany("Sessions")
-                        .HasForeignKey("ScanRunEntityId");
+                        .HasForeignKey("RunId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("A11yReport.Storage.SiteScanEntity", b =>
                 {
                     b.HasOne("A11yReport.Storage.ScanRunEntity", null)
                         .WithMany("Sites")
-                        .HasForeignKey("ScanRunEntityId");
+                        .HasForeignKey("RunId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("A11yReport.Storage.ViolationEntity", b =>
                 {
                     b.HasOne("A11yReport.Storage.SiteScanEntity", null)
                         .WithMany("Violations")
-                        .HasForeignKey("SiteScanEntityId");
+                        .HasForeignKey("SiteScanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("A11yReport.Storage.ViolationNodeEntity", b =>
                 {
                     b.HasOne("A11yReport.Storage.ViolationEntity", null)
                         .WithMany("Nodes")
-                        .HasForeignKey("ViolationEntityId");
+                        .HasForeignKey("ViolationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("A11yReport.Storage.ScanRunEntity", b =>

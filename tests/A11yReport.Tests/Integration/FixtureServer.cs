@@ -14,6 +14,8 @@ public sealed class FixtureServer : IDisposable
 {
     private const string FixtureFolder = "Fixtures";
     private const string RobotsPath = "/robots.txt";
+    private const string SlowResourcePath = "/slow-resource";
+    private static readonly TimeSpan SlowResourceDelay = TimeSpan.FromSeconds(20);
     private const string HtmlContentType = "text/html; charset=utf-8";
     private const string TextContentType = "text/plain; charset=utf-8";
 
@@ -57,7 +59,20 @@ public sealed class FixtureServer : IDisposable
                 return;
             }
 
+            // Not awaited, so one slow response does not hold up the others.
+            _ = RespondSafelyAsync(context);
+        }
+    }
+
+    private async Task RespondSafelyAsync(HttpListenerContext context)
+    {
+        try
+        {
             await RespondAsync(context);
+        }
+        catch (Exception exception) when (exception is HttpListenerException or ObjectDisposedException)
+        {
+            // The browser or the test went away before the response was written.
         }
     }
 
@@ -65,6 +80,11 @@ public sealed class FixtureServer : IDisposable
     {
         var path = context.Request.Url?.AbsolutePath ?? "/";
         RequestedPaths.Enqueue(path);
+        if (path == SlowResourcePath)
+        {
+            await Task.Delay(SlowResourceDelay);
+        }
+
         var (body, contentType) = Content(path);
         if (body is null)
         {

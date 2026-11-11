@@ -19,7 +19,10 @@ public enum ScanStatus
 
 public static class ScanStatusRules
 {
-    /// <summary>Transient errors where no page was received. Blocking responses are never retried.</summary>
+    /// <summary>
+    /// Transient errors where no page was received. Blocking responses are never retried, and
+    /// timeouts are not either: a slow page often loaded hundreds of resources before timing out.
+    /// </summary>
     public static bool IsRetryable(ScanStatus status) =>
-        status is ScanStatus.Timeout or ScanStatus.DnsError or ScanStatus.NetworkError;
+        status is ScanStatus.DnsError or ScanStatus.NetworkError;
 }

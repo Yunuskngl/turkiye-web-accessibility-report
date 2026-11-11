@@ -25,6 +25,7 @@ internal static class SiteScanMapper
             FinalUrl = result.FinalUrl?.ToString(),
             FinalSiteKey = result.FinalUrl is null ? null : DomainKey.FromHost(result.FinalUrl.Host),
             AxeVersion = result.AxeVersion,
+            LoadEventReached = result.LoadEventReached,
             RobotsRequests = result.Requests.Robots,
             DocumentRequests = result.Requests.Documents,
             SubresourceRequests = result.Requests.Subresources,

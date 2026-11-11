@@ -10,19 +10,25 @@ public static class SiteListBuilder
     /// CrUX does not order sites inside a bucket, so ties are broken by a hash of the domain:
     /// stable between runs and not biased toward any letter of the alphabet.
     /// </summary>
-    public static IReadOnlyList<SiteCandidate> Build(
-        IEnumerable<CruxOrigin> origins, IReadOnlySet<string> includeDomains, IReadOnlySet<string> optOut, int maxSites)
+    public static SiteListResult Build(
+        IEnumerable<CruxOrigin> origins, IReadOnlySet<string> includeDomains, IReadOnlySet<string> excluded, int maxSites)
     {
-        return origins
+        var groups = origins
             .Where(origin => IsWebOrigin(origin.Origin))
             .GroupBy(origin => DomainKey.FromHost(origin.Origin.Host))
             .Where(group => DomainKey.IsTurkishTld(group.Key) || includeDomains.Contains(group.Key))
-            .Where(group => !optOut.Contains(group.Key))
+            .Where(group => !excluded.Contains(group.Key))
+            .ToList();
+
+        var withHome = groups.Where(group => group.Any(origin => IsHome(origin, group.Key))).ToList();
+        var sites = withHome
             .Select(group => ToCandidate(group.Key, group.ToList()))
             .OrderBy(candidate => candidate.RankBucket)
             .ThenBy(candidate => StableHash(candidate.Domain), StringComparer.Ordinal)
             .Take(maxSites)
             .ToList();
+        var subdomainOnly = groups.Except(withHome).Select(group => group.Key).Order(StringComparer.Ordinal).ToList();
+        return new SiteListResult(sites, subdomainOnly);
     }
 
     /// <summary>Non-Turkish-TLD domains in the best buckets, for a person to review for the include list.</summary>
@@ -43,15 +49,14 @@ public static class SiteListBuilder
     {
         var bestBucket = origins.Min(origin => origin.RankBucket);
         var home = origins
-            .Where(origin => DomainKey.IsHomeHostOf(origin.Origin.Host, domain))
+            .Where(origin => IsHome(origin, domain))
             .OrderBy(origin => origin.RankBucket)
             .ThenByDescending(origin => origin.Origin.Scheme == Uri.UriSchemeHttps)
-            .FirstOrDefault();
-
-        // When CrUX only lists subdomains (for example a student portal), we load the www home page instead.
-        var url = home is null ? new Uri($"https://www.{domain}/") : new Uri(home.Origin, "/");
-        return new SiteCandidate(domain, url, bestBucket);
+            .First();
+        return new SiteCandidate(domain, new Uri(home.Origin, "/"), bestBucket);
     }
+
+    private static bool IsHome(CruxOrigin origin, string domain) => DomainKey.IsHomeHostOf(origin.Origin.Host, domain);
 
     private static bool IsWebOrigin(Uri origin) =>
         (origin.Scheme == Uri.UriSchemeHttps || origin.Scheme == Uri.UriSchemeHttp) && origin.IsDefaultPort;

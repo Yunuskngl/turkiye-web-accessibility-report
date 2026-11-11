@@ -4,7 +4,12 @@ public sealed class ScanOptions
 {
     public const string SectionName = "Scan";
 
+    /// <summary>Time limit until the HTML document is ready (DOMContentLoaded).</summary>
     public int NavigationTimeoutSeconds { get; set; }
+
+    /// <summary>Extra time we wait for the full load event; after it we scan anyway.</summary>
+    public int LoadWaitSeconds { get; set; }
+
     public int SettleMilliseconds { get; set; }
     public int ResizeSettleMilliseconds { get; set; }
     public string Locale { get; set; } = string.Empty;
@@ -27,6 +32,7 @@ public sealed class ScanOptions
 
     public bool IsValid() =>
         NavigationTimeoutSeconds > 0
+        && LoadWaitSeconds >= 0
         && SettleMilliseconds >= 0
         && ResizeSettleMilliseconds >= 0
         && !string.IsNullOrWhiteSpace(Locale)

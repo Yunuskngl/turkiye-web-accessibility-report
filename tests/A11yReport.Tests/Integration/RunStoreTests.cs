@@ -62,11 +62,12 @@ public sealed class RunStoreTests : IAsyncLifetime, IDisposable
     }
 
     [Fact]
-    public async Task GetRetryDomainsAsync_SkipsPublicSectorAndBlockedSites()
+    public async Task GetRetryDomainsAsync_SkipsPublicSectorBlockedAndTimedOutSites()
     {
         var handle = await Store.StartSessionAsync(Start("retry"), CancellationToken.None);
-        await Store.SaveSiteAsync(handle, Result("shop.com.tr", ScanStatus.Timeout), CancellationToken.None);
-        await Store.SaveSiteAsync(handle, Result("kurum.gov.tr", ScanStatus.Timeout, Sectors.Public), CancellationToken.None);
+        await Store.SaveSiteAsync(handle, Result("shop.com.tr", ScanStatus.DnsError), CancellationToken.None);
+        await Store.SaveSiteAsync(handle, Result("kurum.gov.tr", ScanStatus.DnsError, Sectors.Public), CancellationToken.None);
+        await Store.SaveSiteAsync(handle, Result("slow.com.tr", ScanStatus.Timeout), CancellationToken.None);
         await Store.SaveSiteAsync(handle, Result("blocked.com.tr", ScanStatus.Unreachable), CancellationToken.None);
 
         var retry = await Store.GetRetryDomainsAsync(handle.RunId, CancellationToken.None);
@@ -89,6 +90,21 @@ public sealed class RunStoreTests : IAsyncLifetime, IDisposable
         Assert.Equal(1, manifest.StatusCounts["SkippedRobots"]);
         Assert.Equal(new RequestCounts(2, 1, 10), manifest.RequestTotals);
         Assert.Equal("4.14.0", manifest.Sessions.Single().Versions.AxeCore);
+    }
+
+    [Fact]
+    public async Task SaveSiteAsync_Retry_KeepsRequestsOfEarlierAttempt()
+    {
+        var handle = await Store.StartSessionAsync(Start("retry-requests"), CancellationToken.None);
+        await Store.SaveSiteAsync(handle, Result("slow.com.tr", ScanStatus.Timeout) with { Requests = new(1, 1, 100) },
+            CancellationToken.None);
+        await Store.SaveSiteAsync(handle, Result("slow.com.tr", ScanStatus.Done) with { Attempts = 2, Requests = new(1, 1, 50) },
+            CancellationToken.None);
+
+        var site = (await Store.BuildManifestAsync(handle.RunId)).Sites.Single();
+
+        Assert.Equal(new RequestCounts(2, 2, 150), site.Requests);
+        Assert.Equal("Done", site.Status);
     }
 
     private static RunStart Start(string name, string listSha = "sha") =>

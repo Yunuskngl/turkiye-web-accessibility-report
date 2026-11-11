@@ -88,14 +88,15 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
 
 1. Load the site list and opt-out list, apply sector rules.
 2. Per domain: normalize the URL, check robots.txt, open the home page in a fresh browser
-   context (1280×800, `tr-TR`), 30 s navigation timeout, wait for load + short settle time.
+   context (1280×800, `tr-TR`), wait up to 30 s for DOMContentLoaded, then up to 10 s more for
+   the load event (scan anyway; record `LoadEventReached`), then a 2 s settle time.
 3. Run axe; store violations (rule id, impact, WCAG tags, node count, selector, truncated
    snippet) and page facts (final URL, HTTP status, `lang`, title present, landmark and
    heading counts).
 4. Record failures by category (timeout, DNS, TLS, blocked by robots, unreachable/blocked,
    non-HTML, HTTP error) instead of crashing.
-5. Retry once only for transient network errors (DNS failure, timeout before any response),
-   never for responses that look like blocking and never for public-sector domains.
+5. Retry once only for DNS and other network errors where no page was received. Never for
+   timeouts, never for responses that look like blocking, never for public-sector domains.
    Runs are resumable: rerunning skips domains already done in the same run.
 6. Log progress at Information level without page content; full error details at Debug.
 7. `CancellationToken` everywhere so Ctrl+C stops cleanly.
@@ -139,9 +140,16 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
 
 - Stage 0 (setup) — done. Open questions answered (2026-11-11).
 - Stage 1 (single-URL scan) — done (2026-11-11).
-- Stage 2 (list, robots, limits, storage, resumable runs) — done (2026-11-11). Next: stage 3 (pilot).
-  **Blocked on:** `Scan:MethodologyUrl` (the scanner refuses real runs without it) and the
-  owner's review of `data/sectors.csv` / `data/include-domains.csv`.
+- Stage 2 (list, robots, limits, storage, resumable runs) — done (2026-11-11).
+- Stage 3 (pilot) — done 2026-11-11. Pilot run `2026-pilot` (50 sites): 40 Done, 6 Timeout,
+  2 Unreachable (403), 2 DnsError. After the pilot: load handling changed, timeouts no longer
+  retried, subdomain-only domains left out (42 replaced in the list). WAVE comparison of 5 sites
+  written to `docs/methodology.md` ("Manual comparison with WAVE"). Next: stage 4.
+- Report rule from the WAVE comparison: never compare our averages with WebAIM Million numbers
+  (different engines); compare sectors with each other.
+- Repo: https://github.com/Yunuskngl/turkiye-web-accessibility-report (public, `main`).
+  First commit pushed 2026-11-11 with the owner's approval. Sectors in `data/sectors.csv` and
+  `data/include-domains.csv` were suggested by Claude and still need the owner's check.
 
 ## Commands
 
@@ -213,7 +221,8 @@ Outputs: `output/a11yreport.db` (gitignored), `data/runs/<name>.json` run manife
 - **Site list rules:** one entry per registrable domain (`.tr` zones from TRABIS/PSL handled);
   `.tr` plus city TLDs `.istanbul` / `.ist` are Turkish; `nc.tr` (Northern Cyprus) excluded;
   best rank bucket first, ties ordered by SHA-256 of the domain (stable, not alphabetical);
-  scan URL = the CrUX home origin (`domain` or `www.domain`), else `https://www.<domain>/`.
+  scan URL = the CrUX home origin (`domain` or `www.domain`). Domains that CrUX lists only
+  through subdomains (apps, portals) are left out (decided after the pilot, 2026-11-11).
 - **Sector rules:** `.gov.tr`, `.bel.tr`, `.pol.tr`, `.mil.tr`, `.tsk.tr` → public;
   `.edu.tr` → university; `.k12.tr` and everything else → needs review.
 - **robots.txt (RFC 9309):** fetched with our User-Agent, up to 5 redirects, 500 KiB limit.
@@ -222,7 +231,8 @@ Outputs: `output/a11yreport.db` (gitignored), `data/runs/<name>.json` run manife
 - **Rate limit:** `StartGate` (own class; `System.Threading.RateLimiting` is not in the .NET
   base framework) lets one site start every `Run:DelayBetweenSitesSeconds` (3 s) across
   `Run:Concurrency` (3, max 4) parallel browser contexts in one Chromium.
-- **Retries:** once, in a second pass, only Timeout/DnsError/NetworkError, never public sector.
+- **Retries:** once, in a second pass, only DnsError/NetworkError, never public sector
+  (Timeout removed after the pilot: a timed-out page had often loaded 150–1,000 resources).
 - **Duplicates:** a site whose final URL lands on a site already Done in the run → `Duplicate`.
 - **Storage limits:** all element counts are kept; selector + snippet stored for at most
   `Storage:MaxNodesPerRule` (20) elements per rule and viewport (data minimization).
@@ -230,3 +240,11 @@ Outputs: `output/a11yreport.db` (gitignored), `data/runs/<name>.json` run manife
   counted per site (robots.txt, main-frame document loads incl. redirects, all other browser
   requests). Known gap: requests of sites interrupted by Ctrl+C are not saved (they are rescanned).
 - **CLI change:** single-URL scan is now `-- url <url>` (stage 1 was `-- <url>`).
+- **Exclude list:** `data/exclude-domains.csv` (domain, reason) for gambling, adult and piracy
+  sites; honored by `build-list` like the opt-out list. All betting sites, licensed ones
+  included, are left out of the include list.
+- **Pilot fixes (2026-11-11):** (1) a retry replaced the earlier row and lost its request
+  counts; `RunStore` now adds the earlier counts. (2) EF Core had created hidden
+  `<Type>EntityId` foreign key columns, leaving `RunId`/`SiteScanId`/`ViolationId` at 0;
+  relationships are now configured explicitly and migration `FixForeignKeys` copies the old
+  links before dropping the hidden columns. Backup of the pre-fix DB: `output/a11yreport.before-fk-fix.db`.
