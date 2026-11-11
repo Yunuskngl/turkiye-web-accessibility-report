@@ -80,3 +80,6 @@ code { font-size: 0.9em; background: var(--surface); padding: 0.1em 0.3em; borde
 .lookup-row button:hover { background: #164a78; }
 .lookup-status { min-height: 1.6em; font-weight: 700; }
 .lookup-result h2:focus { outline: 3px solid var(--focus); outline-offset: 4px; }
+
+/* Wrapping instead of a scrolling box keeps code examples readable without a keyboard trap or scroll region. */
+.fix-example { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 0.75rem 1rem; }

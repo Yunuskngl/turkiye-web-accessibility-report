@@ -1,3 +1,4 @@
+using A11yReport.Core.Explanations;
 using A11yReport.Core.Results;
 using A11yReport.Scanner.Scanning;
 using A11yReport.Site;
@@ -72,6 +73,8 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
         await Assertions.Expect(page.GetByRole(AriaRole.Heading, new() { Name = "Result for a.gov.tr" })).ToBeFocusedAsync();
         await Assertions.Expect(page.Locator("#lookup-result")).ToContainTextAsync("Low contrast text (color-contrast)");
         await Assertions.Expect(page.Locator("#lookup-result")).ToContainTextAsync("1.4.3");
+        await Assertions.Expect(page.Locator("#lookup-result section[lang='tr']")).ToContainTextAsync("Düşük kontrastlı metin");
+        await Assertions.Expect(page.Locator("#lookup-result")).Not.ToContainTextAsync("Taslak başlık");
         var axe = await page.RunAxe(new AxeRunOptions { RunOnly = new RunOnlyOptions { Type = "tag", Values = TestSettings.Scan().AxeTags } });
         Assert.Empty(axe.Violations);
     }
@@ -128,12 +131,19 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
     {
         var methodologyFile = Path.Combine(_folder, "methodology.md");
         File.WriteAllText(methodologyFile, Methodology);
+        var explanationsFile = Path.Combine(_folder, "rules.tr.json");
+        ExplanationFile.Save(explanationsFile,
+        [
+            Unit.ExplanationTests.Explanation("color-contrast", ExplanationStatus.Approved, "Düşük kontrastlı metin"),
+            Unit.ExplanationTests.Explanation("image-alt", ExplanationStatus.Draft, "Taslak başlık"),
+        ]);
         var options = new SiteOptions
         {
             OutputFolder = _folder,
             MethodologyFile = methodologyFile,
             OptOutFile = "unused",
             RepositoryUrl = "https://github.com/example/repo",
+            ExplanationsFile = explanationsFile,
         };
         var outcomes = ReportSamples.Outcomes();
         var data = A11yReport.Core.Report.ReportBuilder.Build(ReportSamples.Run, outcomes, optOut);

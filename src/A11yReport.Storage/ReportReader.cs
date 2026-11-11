@@ -27,6 +27,18 @@ public sealed class ReportReader(IDbContextFactory<ReportDbContext> contexts)
         return (ToRunInfo(run), sites.Select(ToOutcome).ToList());
     }
 
+    /// <summary>The axe rule ids that failed at least once in the run (no other data).</summary>
+    public async Task<IReadOnlySet<string>> ReadRuleIdsAsync(string runName, CancellationToken cancellationToken)
+    {
+        await using var db = await contexts.CreateDbContextAsync(cancellationToken);
+        var ids = await db.Violations.AsNoTracking()
+            .Where(v => db.Sites.Any(s => s.Id == v.SiteScanId && db.Runs.Any(r => r.Id == s.RunId && r.Name == runName)))
+            .Select(v => v.RuleId)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        return ids.ToHashSet(StringComparer.Ordinal);
+    }
+
     private static RunInfo ToRunInfo(ScanRunEntity run)
     {
         var sessions = run.Sessions.OrderBy(s => s.Id).ToList();

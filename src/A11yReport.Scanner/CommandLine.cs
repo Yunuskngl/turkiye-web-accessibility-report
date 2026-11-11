@@ -9,6 +9,7 @@ public sealed record InstallBrowserArgs : CommandArgs;
 public sealed record UrlArgs(Uri Url) : CommandArgs;
 public sealed record BuildListArgs(string SnapshotPath) : CommandArgs;
 public sealed record ScanArgs(string RunName, int? Limit) : CommandArgs;
+public sealed record ExplainArgs(string RunName) : CommandArgs;
 
 public static partial class CommandLine
 {
@@ -18,6 +19,7 @@ public static partial class CommandLine
           dotnet run --project src/A11yReport.Scanner -- url <url>
           dotnet run --project src/A11yReport.Scanner -- build-list <crux-snapshot.csv.gz>
           dotnet run --project src/A11yReport.Scanner -- scan --run <name> [--limit <n>]
+          dotnet run --project src/A11yReport.Scanner -- explain --run <name>
 
         Run names use lowercase letters, digits and dashes, for example 2026-pilot.
         """;
@@ -30,6 +32,7 @@ public static partial class CommandLine
         ["build-list", var path] => new BuildListArgs(path),
         ["scan", "--run", var name] => ScanFor(name, null),
         ["scan", "--run", var name, "--limit", var limit] => ScanFor(name, limit),
+        ["explain", "--run", var name] => RunName().IsMatch(name) ? new ExplainArgs(name) : null,
         _ => null,
     };
 

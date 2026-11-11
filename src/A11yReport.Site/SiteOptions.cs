@@ -9,6 +9,9 @@ public sealed class SiteOptions
     public string OptOutFile { get; set; } = string.Empty;
     public string RepositoryUrl { get; set; } = string.Empty;
 
+    /// <summary>The review file with Turkish rule explanations. Only "approved" entries are published.</summary>
+    public string ExplanationsFile { get; set; } = string.Empty;
+
     public bool IsValid() =>
-        new[] { OutputFolder, MethodologyFile, OptOutFile, RepositoryUrl }.All(value => !string.IsNullOrWhiteSpace(value));
+        new[] { OutputFolder, MethodologyFile, OptOutFile, RepositoryUrl, ExplanationsFile }.All(value => !string.IsNullOrWhiteSpace(value));
 }

@@ -187,6 +187,21 @@ list or ranking of sites: each result is stored in a file named after the SHA-25
 domain, so a result can only be found by typing that domain. The list of scanned domains is still
 public in the source repository, for reproducibility.
 
+## Turkish explanations of failure types
+
+The site lookup can show a short Turkish explanation and a fix example for each failure type.
+
+- A language model running on our own computer (Ollama with the open `gemma3:4b` model) wrote a
+  first draft for each axe rule that failed at least once.
+- The model received **only axe-core's own description of the rule** (rule id, summary,
+  description and WCAG criteria). It never received anything from the scanned websites.
+- The small local model's drafts were often technically wrong (for example wrong "before" code,
+  identical "before" and "after" examples, or the wrong group of affected users). All 27 drafts
+  were therefore rewritten by Claude (an AI assistant) from axe-core's rule definitions, and each
+  entry records this in its notes.
+- The project owner checks every text before it is published. Only explanations marked as
+  approved are published; all versions are kept in `data/explanations/rules.tr.json`.
+
 ## Opting out
 
 Site owners can ask us not to scan their site and not to publish its result.
