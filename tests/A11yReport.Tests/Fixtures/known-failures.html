@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!-- Known failures on purpose: no lang attribute and no title. -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <main>
+    <h1>Fixture page with known accessibility failures</h1>
+
+    <!-- image-alt: image without alt text -->
+    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAACAkQBADs=" width="40" height="40">
+
+    <!-- link-name: link without text -->
+    <a href="/somewhere"></a>
+
+    <!-- button-name: button without text -->
+    <button type="button"></button>
+
+    <!-- label: form field without a label -->
+    <input type="text" name="search">
+
+    <!-- color-contrast: light grey on white (about 2.3:1) -->
+    <p style="color: #aaaaaa; background-color: #ffffff;">This text has low contrast.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/A11yReport.Core/A11yReport.Core.csproj" />
+    <Project Path="src/A11yReport.Scanner/A11yReport.Scanner.csproj" />
+    <Project Path="src/A11yReport.Site/A11yReport.Site.csproj" />
+    <Project Path="src/A11yReport.Storage/A11yReport.Storage.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/A11yReport.Tests/A11yReport.Tests.csproj" />
+  </Folder>
+</Solution>
