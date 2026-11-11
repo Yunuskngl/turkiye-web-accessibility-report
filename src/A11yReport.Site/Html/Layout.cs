@@ -5,6 +5,7 @@ namespace A11yReport.Site.Html;
 public enum SitePage
 {
     Report,
+    Lookup,
     Methodology,
 }
 
@@ -31,6 +32,7 @@ public static class Layout
                   <nav aria-label="Main">
                     <ul>
                       {NavItem("index.html", "Report", current == SitePage.Report)}
+                      {NavItem("lookup.html", "Look up a site", current == SitePage.Lookup)}
                       {NavItem("methodology.html", "Methodology", current == SitePage.Methodology)}
                     </ul>
                   </nav>
@@ -42,7 +44,8 @@ public static class Layout
               <footer class="site-footer">
                 <div class="wrap">
                   <p>Automated results from axe-core. Not a legal compliance audit. Source code and data:
-                    <a href="{HtmlText.Encode(repositoryUrl)}">GitHub repository</a>.</p>
+                    <a href="{HtmlText.Encode(repositoryUrl)}">GitHub repository</a>.
+                    Site owners can <a href="methodology.html#opting-out">opt out</a>.</p>
                 </div>
               </footer>
             </body>

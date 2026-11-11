@@ -21,11 +21,14 @@ internal static class ReportSamples
     public static PageFacts Facts(string? lang, int h1 = 1, bool hasMain = true, bool skips = false) =>
         new(lang, true, 3, hasMain, 5, h1, skips);
 
-    public static ReportData Data() => ReportBuilder.Build(Run,
+    public static IReadOnlyList<SiteOutcome> Outcomes() =>
     [
-        Done("a.gov.tr", Sectors.Public, Rule("color-contrast", 10), Rule("image-alt", 2)),
+        Done("a.gov.tr", Sectors.Public, Rule("color-contrast", 10) with { Criteria = ["1.4.3"] }, Rule("image-alt", 2)),
         Done("b.com.tr", Sectors.Ecommerce, Rule("color-contrast", 4)),
         Done("c.com.tr", Sectors.Media),
         NotScanned("d.com.tr", Sectors.Media, ScanStatus.Timeout),
-    ], new HashSet<string>());
+        Done("uni.edu.tr", Sectors.University, Rule("link-name", 1)),
+    ];
+
+    public static ReportData Data() => ReportBuilder.Build(Run, Outcomes(), new HashSet<string>());
 }

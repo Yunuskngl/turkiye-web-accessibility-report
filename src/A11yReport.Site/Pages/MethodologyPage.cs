@@ -8,6 +8,7 @@ public static class MethodologyPage
 {
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
+        .UseAutoIdentifiers()
         .DisableHtml()
         .Build();
 

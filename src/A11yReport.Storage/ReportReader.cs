@@ -48,7 +48,10 @@ public sealed class ReportReader(IDbContextFactory<ReportDbContext> contexts)
     private static List<RuleCount> RulesFor(SiteScanEntity site, string viewport) =>
         site.Violations
             .Where(v => v.Viewport == viewport)
-            .Select(v => new RuleCount(v.RuleId, v.Impact, v.Help, v.NodeCount))
+            .Select(v => new RuleCount(v.RuleId, v.Impact, v.Help, v.NodeCount)
+            {
+                Criteria = WcagCriteria.FromTags(v.Tags.Split(' ', StringSplitOptions.RemoveEmptyEntries)),
+            })
             .ToList();
 
     private static PageFacts? ToFacts(SiteScanEntity site)

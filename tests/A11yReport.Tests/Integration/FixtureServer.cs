@@ -18,7 +18,12 @@ public sealed class FixtureServer : IDisposable
     private static readonly TimeSpan SlowResourceDelay = TimeSpan.FromSeconds(20);
     private const string HtmlContentType = "text/html; charset=utf-8";
     private const string TextContentType = "text/plain; charset=utf-8";
-    private const string CssContentType = "text/css; charset=utf-8";
+    private static readonly Dictionary<string, string> ContentTypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [".css"] = "text/css; charset=utf-8",
+        [".js"] = "text/javascript; charset=utf-8",
+        [".json"] = "application/json; charset=utf-8",
+    };
 
     private readonly HttpListener _listener = new();
     private readonly string _root;
@@ -108,10 +113,11 @@ public sealed class FixtureServer : IDisposable
             return (_robotsTxt is null ? null : Encoding.UTF8.GetBytes(_robotsTxt), TextContentType);
         }
 
-        var fileName = path == "/" ? _homePage : Path.GetFileName(path);
-        var file = Path.Combine(_root, fileName);
-        var contentType = fileName.EndsWith(".css", StringComparison.Ordinal) ? CssContentType : HtmlContentType;
-        return (fileName.Length > 0 && File.Exists(file) ? File.ReadAllBytes(file) : null, contentType);
+        var relative = path == "/" ? _homePage : Uri.UnescapeDataString(path.TrimStart('/'));
+        var file = Path.GetFullPath(Path.Combine(_root, relative));
+        var insideRoot = file.StartsWith(Path.GetFullPath(_root) + Path.DirectorySeparatorChar, StringComparison.Ordinal);
+        var contentType = ContentTypes.GetValueOrDefault(Path.GetExtension(file), HtmlContentType);
+        return (insideRoot && File.Exists(file) ? File.ReadAllBytes(file) : null, contentType);
     }
 
     private static int FindFreePort()

@@ -51,8 +51,8 @@ public sealed class ReportBuilderTests
     {
         var data = Data();
 
-        Assert.Equal(["color-contrast", "image-alt"], data.TopRules.Select(r => r.RuleId));
-        Assert.Equal(200.0 / 3, data.TopRules[0].PercentOfPages, precision: 6);
+        Assert.Equal(["color-contrast", "image-alt", "link-name"], data.TopRules.Select(r => r.RuleId));
+        Assert.Equal(50, data.TopRules[0].PercentOfPages, precision: 6);
         Assert.Equal(14, data.TopRules[0].Elements);
     }
 

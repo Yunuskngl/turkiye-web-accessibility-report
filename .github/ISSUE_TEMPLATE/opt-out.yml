@@ -1,0 +1,23 @@
+name: Opt-out request
+description: Ask us not to scan your website and not to publish its result.
+title: "Opt-out: "
+labels: ["opt-out"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form if you run a website and do not want it scanned or listed in the
+        Türkiye Web Accessibility Report. **This issue is public.** Please do not add personal
+        data such as names, e-mail addresses or phone numbers.
+  - type: input
+    id: domain
+    attributes:
+      label: Website domain
+      description: For example example.com.tr
+      placeholder: example.com.tr
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else? (optional)
