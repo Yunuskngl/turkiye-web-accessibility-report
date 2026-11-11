@@ -14,18 +14,19 @@
       <nav aria-label="Main">
         <ul>
           <li><a href="index.html">Report</a></li>
+          <li><a href="lookup.html">Look up a site</a></li>
           <li><a href="methodology.html" aria-current="page">Methodology</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main id="main" class="wrap">
-<div class="prose"><h1>Methodology (draft)</h1>
+<div class="prose"><h1 id="methodology-draft">Methodology (draft)</h1>
 <blockquote>
 <p>Draft written in stage 0. Values marked <em>TBD</em> are filled in after the pilot (stage 3)
 and the full run (stage 7).</p>
 </blockquote>
-<h2>What this report is — and is not</h2>
+<h2 id="what-this-report-is-and-is-not">What this report is — and is not</h2>
 <p>This report measures <strong>automatically detectable</strong> accessibility failures on the
 <strong>home pages</strong> of popular websites in Türkiye, using the open-source axe-core engine
 with the WCAG 2.0, 2.1 and 2.2 Level A and AA rules.</p>
@@ -35,7 +36,7 @@ accessibility barriers that real users meet. Keyboard use, screen reader experie
 meaningful alt text and many other aspects need human testing.</p>
 <p>The public report shows <strong>sector-level aggregates</strong>. It does not rank sites and does not
 publish lists of &quot;worst&quot; sites.</p>
-<h2>Which sites</h2>
+<h2 id="which-sites">Which sites</h2>
 <ul>
 <li><strong>Source list:</strong> Chrome UX Report (CrUX) popularity data for Türkiye. Draft list: snapshot
 October 2026 (<code>tr-202610</code>). CrUX ranks origins by real Chrome page loads in a country and
@@ -58,7 +59,7 @@ universities, news/media, other. Assigned by domain rules (<code>.gov.tr</code>,
 <code>.mil.tr</code>, <code>.tsk.tr</code> → public sector; <code>.edu.tr</code> → university) and by manual review of all
 other domains. Unknown sites are &quot;other&quot;.</li>
 </ul>
-<h2>How each page is scanned</h2>
+<h2 id="how-each-page-is-scanned">How each page is scanned</h2>
 <ul>
 <li>One page load per site per scan run, plus the resources the browser loads by itself.</li>
 <li>Chromium (via Playwright), desktop viewport 1280×800, locale <code>tr-TR</code>.</li>
@@ -73,7 +74,7 @@ happened by then, we check the page anyway and record that it was checked before
 <li>axe-core version: <em>TBD</em>. Rule tags: <code>wcag2a</code>, <code>wcag2aa</code>, <code>wcag21a</code>, <code>wcag21aa</code>, <code>wcag22aa</code>.</li>
 <li>Scan date(s): <em>TBD</em>.</li>
 </ul>
-<h2>Responsible scanning</h2>
+<h2 id="responsible-scanning">Responsible scanning</h2>
 <ul>
 <li><strong>robots.txt:</strong> fetched before the page, following RFC 9309. The rules for our product
 token <code>TurkiyeWebA11yReport</code> apply, otherwise the rules for <code>*</code>. If the home page is
@@ -98,7 +99,7 @@ for the page. The run record is published as a JSON file. Known gap: requests of
 was in progress when a run was stopped by hand are not counted; that site is scanned again
 when the run resumes.</li>
 </ul>
-<h2>What we store</h2>
+<h2 id="what-we-store">What we store</h2>
 <p>Only technical results:</p>
 <ul>
 <li>axe rule id, impact, WCAG tags, number of affected elements</li>
@@ -110,7 +111,7 @@ headings, number of <code>h1</code> headings, and whether a heading level is ski
 </ul>
 <p>We do <strong>not</strong> store page text, screenshots, cookies or any personal data.
 <em>Open point: whether HTML snippets are shown in the public per-site lookup or kept internal only.</em></p>
-<h2>How the numbers are counted</h2>
+<h2 id="how-the-numbers-are-counted">How the numbers are counted</h2>
 <ul>
 <li>A <strong>detected failure</strong> is one page element that fails one axe rule. A page with 12 images
 without alternative text has 12 detected failures of that rule.</li>
@@ -125,12 +126,12 @@ that skip a heading level.</li>
 counted as having zero failures. Opted-out sites are left out of all published numbers.</li>
 <li>The public report shows sector-level numbers only, never a list or ranking of sites.</li>
 </ul>
-<h2>How we differ from the WebAIM Million</h2>
+<h2 id="how-we-differ-from-the-webaim-million">How we differ from the WebAIM Million</h2>
 <p>WebAIM uses the WAVE engine, we use axe-core; the two engines check partly different rules (see
 &quot;Manual comparison with WAVE&quot;), so our counts are not directly comparable with WebAIM's. Our
 list is limited to Türkiye and comes from CrUX; we report by sector; we also check a mobile
 viewport.</p>
-<h2>Pilot (November 2026)</h2>
+<h2 id="pilot-november-2026">Pilot (November 2026)</h2>
 <p>A pilot run (<code>2026-pilot</code>, run record in <code>data/runs/2026-pilot.json</code>) scanned the first 50
 sites of the list on 2026-11-11 with axe-core 4.14.0, Chromium 156 and Playwright 1.64.1.</p>
 <table>
@@ -177,7 +178,7 @@ retried.</li>
 left out of the list; this replaced 42 of the 1,000 sites, including some universities and
 public bodies whose subdomains are more visited than their home page.</li>
 </ul>
-<h3>Manual comparison with WAVE</h3>
+<h3 id="manual-comparison-with-wave">Manual comparison with WAVE</h3>
 <p>On 2026-11-11 the project owner checked five pilot sites by hand with the WAVE browser
 extension (desktop browser window, cookie banner left untouched, as in our scan). Our numbers
 are from the pilot scan (desktop viewport), taken about one hour earlier.</p>
@@ -246,10 +247,28 @@ and almost none in WAVE.</li>
 comparable with the WebAIM Million, which uses the WAVE engine. We compare sectors with each
 other and do not compare our averages with WebAIM's.</li>
 </ul>
-<h2>Opting out</h2>
-<p>Site owners can ask not to be scanned or listed. <em>TBD: contact channel (stage 5).</em>
-Opted-out domains are excluded from scanning and from all published data.</p>
-<h2>Data sources and licenses</h2>
+<h2 id="looking-up-a-site">Looking up a site</h2>
+<p>The <a href="lookup.html">site lookup page</a> shows the result of one home page when someone types its
+address: which automated rules failed, how many elements were affected, and the page's language
+and heading facts. It shows rule names and counts only, not the HTML of the page. There is no
+list or ranking of sites: each result is stored in a file named after the SHA-256 hash of the
+domain, so a result can only be found by typing that domain. The list of scanned domains is still
+public in the source repository, for reproducibility.</p>
+<h2 id="opting-out">Opting out</h2>
+<p>Site owners can ask us not to scan their site and not to publish its result.</p>
+<ul>
+<li><strong>How:</strong> open an
+<a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report/issues/new?template=opt-out.yml">opt-out request</a>
+in the project's GitHub repository. Only the domain is needed. GitHub issues are public, so
+please do not add personal data.</li>
+<li><strong>No proof needed:</strong> leaving a site out does little harm, so we honor every request without
+asking for proof of ownership.</li>
+<li><strong>What happens:</strong> the domain is added to <code>data/opt-out.csv</code>. From the next run it is not
+scanned, and from the next publication of this site it has no lookup result and is not counted
+in any published number. Requests are handled by hand, so the change appears at the next
+publication.</li>
+</ul>
+<h2 id="data-sources-and-licenses">Data sources and licenses</h2>
 <ul>
 <li>Site list: Chrome UX Report (CrUX) by Google, licensed under CC BY-SA 4.0
 (https://developer.chrome.com/docs/crux/), via the snapshots at
@@ -261,7 +280,8 @@ https://github.com/zakird/crux-top-lists (commit <em>TBD</em>).</li>
   <footer class="site-footer">
     <div class="wrap">
       <p>Automated results from axe-core. Not a legal compliance audit. Source code and data:
-        <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub repository</a>.</p>
+        <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub repository</a>.
+        Site owners can <a href="methodology.html#opting-out">opt out</a>.</p>
     </div>
   </footer>
 </body>
