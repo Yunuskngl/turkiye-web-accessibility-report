@@ -11,6 +11,7 @@ internal static class TestSettings
     {
         NavigationTimeoutSeconds = 10,
         LoadWaitSeconds = 5,
+        CheckTimeoutSeconds = 30,
         SettleMilliseconds = 0,
         ResizeSettleMilliseconds = 0,
         Locale = "tr-TR",

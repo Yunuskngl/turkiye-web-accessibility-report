@@ -6,6 +6,7 @@ public sealed class SiteOptions
 
     public string OutputFolder { get; set; } = string.Empty;
     public string MethodologyFile { get; set; } = string.Empty;
+    public string MethodologyFileTurkish { get; set; } = string.Empty;
     public string OptOutFile { get; set; } = string.Empty;
     public string RepositoryUrl { get; set; } = string.Empty;
 
@@ -13,5 +14,5 @@ public sealed class SiteOptions
     public string ExplanationsFile { get; set; } = string.Empty;
 
     public bool IsValid() =>
-        new[] { OutputFolder, MethodologyFile, OptOutFile, RepositoryUrl, ExplanationsFile }.All(value => !string.IsNullOrWhiteSpace(value));
+        new[] { OutputFolder, MethodologyFile, MethodologyFileTurkish, OptOutFile, RepositoryUrl, ExplanationsFile }.All(value => !string.IsNullOrWhiteSpace(value));
 }

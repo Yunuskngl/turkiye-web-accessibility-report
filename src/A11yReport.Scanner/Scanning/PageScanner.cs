@@ -12,6 +12,7 @@ public sealed class PageScanner(IBrowser browser, IOptions<ScanOptions> options,
 {
     private const string AxeTagFilter = "tag";
     private const string ScannedMessage = "Scanned.";
+    private const string UnexpectedMessage = "The check failed because of an unexpected error.";
     private readonly ScanOptions _options = options.Value;
 
     public async Task<PageScanOutcome> ScanAsync(Uri url, CancellationToken cancellationToken)
@@ -29,22 +30,50 @@ public sealed class PageScanner(IBrowser browser, IOptions<ScanOptions> options,
             Log.PageScanFailed(logger, exception, url);
             return new PageScanOutcome(exception.Status, exception.Message, counter.Counts, exception.HttpStatus);
         }
+        catch (Exception exception) when (exception is not OperationCanceledException)
+        {
+            // One unexpected page problem must never stop a run of a thousand sites.
+            Log.PageScanFailed(logger, exception, url);
+            return new PageScanOutcome(ScanStatus.Failed, UnexpectedMessage, counter.Counts);
+        }
     }
 
     private async Task<PageScanResult> ScanPageAsync(IPage page, Uri url, CancellationToken cancellationToken)
     {
         var (response, loadEventReached) = await OpenAsync(page, url, cancellationToken);
-        var facts = await PageFactsReader.ReadAsync(page);
-        var desktop = await RunAxeAsync(page, _options.Desktop, cancellationToken);
+        var facts = await InPageAsync(() => PageFactsReader.ReadAsync(page), cancellationToken);
+        var desktop = await InPageAsync(() => RunAxeAsync(page, _options.Desktop, cancellationToken), cancellationToken);
 
         // Resizing the same page keeps it at one page load per site.
-        await page.SetViewportSizeAsync(_options.Mobile.Width, _options.Mobile.Height);
+        await InPageAsync(async () => { await page.SetViewportSizeAsync(_options.Mobile.Width, _options.Mobile.Height); return true; },
+            cancellationToken);
         await Task.Delay(_options.ResizeSettleMilliseconds, cancellationToken);
-        var mobile = await RunAxeAsync(page, _options.Mobile, cancellationToken);
+        var mobile = await InPageAsync(() => RunAxeAsync(page, _options.Mobile, cancellationToken), cancellationToken);
 
         return new PageScanResult(
             url, new Uri(page.Url), response.Status, desktop.Version,
             DateTimeOffset.UtcNow, [desktop.Result, mobile.Result], facts, loadEventReached);
+    }
+
+    /// <summary>
+    /// Script calls into the page have no time limit of their own, and a page can navigate away
+    /// while we check it. Both become a recorded failure for this site instead of a hang or crash.
+    /// </summary>
+    private async Task<T> InPageAsync<T>(Func<Task<T>> step, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await step().WaitAsync(TimeSpan.FromSeconds(_options.CheckTimeoutSeconds), cancellationToken);
+        }
+        catch (TimeoutException exception)
+        {
+            throw new ScanException(ScanStatus.Failed, "The page did not respond to the accessibility check in time.", null, exception);
+        }
+        catch (PlaywrightException exception)
+        {
+            throw new ScanException(ScanStatus.Failed, "The page changed while it was being checked (for example a script redirect).",
+                null, exception);
+        }
     }
 
     private BrowserNewContextOptions CreateContextOptions() => new()

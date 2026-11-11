@@ -2,6 +2,7 @@ using A11yReport.Core.Explanations;
 using A11yReport.Core.Results;
 using A11yReport.Scanner.Scanning;
 using A11yReport.Site;
+using A11yReport.Site.Html;
 using A11yReport.Site.Lookup;
 using Deque.AxeCore.Commons;
 using Deque.AxeCore.Playwright;
@@ -54,6 +55,9 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
     [InlineData("index.html")]
     [InlineData("lookup.html")]
     [InlineData("methodology.html")]
+    [InlineData("tr/index.html")]
+    [InlineData("tr/lookup.html")]
+    [InlineData("tr/methodology.html")]
     public async Task GeneratedPage_HasNoDetectedFailures(string page)
     {
         var scanner = new PageScanner(_fixture.Session.Browser, Options.Create(TestSettings.Scan()), NullLogger<PageScanner>.Instance);
@@ -75,6 +79,23 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
         await Assertions.Expect(page.Locator("#lookup-result")).ToContainTextAsync("1.4.3");
         await Assertions.Expect(page.Locator("#lookup-result section[lang='tr']")).ToContainTextAsync("Düşük kontrastlı metin");
         await Assertions.Expect(page.Locator("#lookup-result")).Not.ToContainTextAsync("Taslak başlık");
+        var axe = await page.RunAxe(new AxeRunOptions { RunOnly = new RunOnlyOptions { Type = "tag", Values = TestSettings.Scan().AxeTags } });
+        Assert.Empty(axe.Violations);
+    }
+
+    [Fact]
+    public async Task TurkishLookup_ShowsTurkishResultAndHasNoFailures()
+    {
+        await using var context = await _fixture.Session.Browser.NewContextAsync();
+        var page = await context.NewPageAsync();
+        await page.GotoAsync(_server.UrlFor("tr/lookup.html").ToString());
+        await page.GetByLabel("Web sitesi adresi").FillAsync("a.gov.tr");
+        await page.GetByRole(AriaRole.Button, new() { Name = "Sorgula" }).ClickAsync();
+
+        await Assertions.Expect(page.GetByRole(AriaRole.Heading, new() { Name = "a.gov.tr için sonuç" })).ToBeFocusedAsync();
+        await Assertions.Expect(page.Locator("#lookup-result")).ToContainTextAsync("Sektör: Kamu");
+        await Assertions.Expect(page.Locator("#lookup-result")).ToContainTextAsync("Düşük kontrastlı metin (color-contrast)");
+        await Assertions.Expect(page.Locator("#lookup-result")).ToContainTextAsync("Kasım 2026");
         var axe = await page.RunAxe(new AxeRunOptions { RunOnly = new RunOnlyOptions { Type = "tag", Values = TestSettings.Scan().AxeTags } });
         Assert.Empty(axe.Violations);
     }
@@ -141,12 +162,15 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
         {
             OutputFolder = _folder,
             MethodologyFile = methodologyFile,
+            MethodologyFileTurkish = methodologyFile,
             OptOutFile = "unused",
             RepositoryUrl = "https://github.com/example/repo",
             ExplanationsFile = explanationsFile,
         };
         var outcomes = ReportSamples.Outcomes();
         var data = A11yReport.Core.Report.ReportBuilder.Build(ReportSamples.Run, outcomes, optOut);
-        new SiteGenerator(Options.Create(options)).Generate(data, LookupBuilder.Build(ReportSamples.Run, outcomes, optOut), isPilot: true);
+        var names = RuleNames.From(ExplanationFile.Load(explanationsFile));
+        new SiteGenerator(Options.Create(options)).Generate(data, LookupBuilder.Build(ReportSamples.Run, outcomes, optOut, names), names,
+            isPilot: true);
     }
 }

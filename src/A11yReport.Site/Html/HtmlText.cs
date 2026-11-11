@@ -1,20 +1,13 @@
-using System.Globalization;
-using System.Net;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace A11yReport.Site.Html;
 
-/// <summary>Encoding and number formatting for the generated pages. Every text from data goes through Encode.</summary>
+/// <summary>HTML encoding. Every text that comes from data goes through Encode.</summary>
 public static class HtmlText
 {
-    private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
+    // Encodes markup characters (< > & " ') but keeps letters such as ü and ş readable.
+    private static readonly HtmlEncoder Encoder = HtmlEncoder.Create(UnicodeRanges.All);
 
-    public static string Encode(string? text) => WebUtility.HtmlEncode(text ?? string.Empty);
-
-    public static string Percent(double value) => value.ToString("0.0", Culture) + "%";
-
-    public static string OneDecimal(double value) => value.ToString("0.0", Culture);
-
-    public static string Count(int value) => value.ToString("#,0", Culture);
-
-    public static string Date(DateTimeOffset value) => value.ToUniversalTime().ToString("d MMMM yyyy", Culture);
+    public static string Encode(string? text) => Encoder.Encode(text ?? string.Empty);
 }

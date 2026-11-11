@@ -1,4 +1,7 @@
 using System.Globalization;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using A11yReport.Core.Report;
 using A11yReport.Core.Sites;
 using A11yReport.Site.Html;
@@ -11,42 +14,41 @@ namespace A11yReport.Site.Pages;
 /// </summary>
 public static class LookupPage
 {
-    private const string Title = "Look up a site";
+    private static readonly JsonSerializerOptions ScriptJson = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
 
-    public static string Render(RunInfo run, bool isPilot, string repositoryUrl)
+    public static string Render(SiteTexts t, RunInfo run, bool isPilot, string repositoryUrl)
     {
         var zones = string.Join(' ', DomainKey.TrZoneNames.Order(StringComparer.Ordinal));
-        var pilot = isPilot
-            ? """<p class="notice"><strong>Pilot results.</strong> Only the sites in the small pilot run can be found.</p>"""
-            : string.Empty;
+        var pilot = isPilot ? $"""<p class="notice">{t.LookupPilotNotice}</p>""" : string.Empty;
+        var readFirst = SiteTexts.Fill(t.LookupReadFirst, ("date", t.Format.Date(run.StartedAt)), ("axe", HtmlText.Encode(run.AxeVersion)));
+        var root = Layout.RootPrefix(t);
         var body = string.Create(CultureInfo.InvariantCulture, $"""
-            <h1>{Title}</h1>
-            <p class="lede">See the automated check result for one home page. We show a site's result only when
-            someone looks it up; we do not publish a list or a ranking of sites.</p>
+            <h1>{t.LookupTitle}</h1>
+            <p class="lede">{t.LookupLede}</p>
             {pilot}
-            <form id="lookup-form" class="lookup-form" data-tr-zones="{HtmlText.Encode(zones)}" novalidate>
-              <label for="domain">Website address</label>
-              <p id="domain-hint" class="hint">For example <code>example.com.tr</code> or <code>https://www.example.com.tr</code></p>
+            <form id="lookup-form" class="lookup-form" data-tr-zones="{HtmlText.Encode(zones)}" data-root="{root}"
+              data-lang="{t.LangCode}" novalidate>
+              <label for="domain">{t.LookupLabel}</label>
+              <p id="domain-hint" class="hint">{t.LookupHint}</p>
               <div class="lookup-row">
                 <input id="domain" name="domain" type="text" inputmode="url" autocomplete="url" spellcheck="false"
                   aria-describedby="domain-hint" required>
-                <button type="submit">Look up</button>
+                <button type="submit">{t.LookupButton}</button>
               </div>
             </form>
             <p id="lookup-status" class="lookup-status" role="status"></p>
             <div id="lookup-result" class="lookup-result"></div>
-            <noscript><p>This search needs JavaScript. All published numbers are also on the report page.</p></noscript>
+            <noscript><p>{t.LookupNoScript}</p></noscript>
             <section aria-labelledby="read-first">
-              <h2 id="read-first">Read this first</h2>
-              <ul>
-                <li>Checked on {HtmlText.Date(run.StartedAt)} with axe-core {HtmlText.Encode(run.AxeVersion)}, home page only.</li>
-                <li>Automated checks find only part of accessibility barriers. No detected failures does not mean the
-                page is accessible, and this is not a legal compliance audit.</li>
-                <li>Site owners can ask us to remove their site: see <a href="methodology.html#opting-out">opting out</a>.</li>
-              </ul>
+              <h2 id="read-first">{t.LookupReadFirstHeading}</h2>
+              <ul>{readFirst}</ul>
             </section>
-            <script src="lookup.js" defer></script>
+            <script type="application/json" id="lookup-texts">{ScriptTexts(t)}</script>
+            <script src="{root}lookup.js" defer></script>
             """);
-        return Layout.Page(Title, SitePage.Lookup, body, repositoryUrl);
+        return Layout.Page(t, t.LookupTitle, SitePage.Lookup, body, repositoryUrl);
     }
+
+    // JSON inside a script element: "<" is escaped as < by the encoder, so the data cannot close the element.
+    private static string ScriptTexts(SiteTexts t) => JsonSerializer.Serialize(t.Script, ScriptJson).Replace("<", "\\u003C", StringComparison.Ordinal);
 }
