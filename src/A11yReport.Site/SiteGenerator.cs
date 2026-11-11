@@ -1,6 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using A11yReport.Core.Explanations;
 using A11yReport.Core.Report;
 using A11yReport.Site.Lookup;
 using A11yReport.Site.Pages;
@@ -32,9 +33,19 @@ public sealed class SiteGenerator(IOptions<SiteOptions> options)
         Write(folder, "methodology.html", MethodologyPage.Render(File.ReadAllText(_options.MethodologyFile), _options.RepositoryUrl));
         Write(folder, "report.json", JsonSerializer.Serialize(data, JsonOptions));
         LookupFiles.WriteAll(folder, lookupSites);
+        Write(folder, "explanations.tr.json", JsonSerializer.Serialize(ApprovedExplanations(), JsonOptions));
         CopyAssets(folder);
         return folder;
     }
+
+    /// <summary>Drafts written by the language model stay private until the owner approves them.</summary>
+    private List<PublishedExplanation> ApprovedExplanations() =>
+        ExplanationFile.Load(_options.ExplanationsFile)
+            .Where(e => e.IsApproved)
+            .Select(e => new PublishedExplanation(e.RuleId, e.Title, e.Explanation, e.FixExample))
+            .ToList();
+
+    private sealed record PublishedExplanation(string RuleId, string Title, string Explanation, string FixExample);
 
     private static void CopyAssets(string folder)
     {

@@ -29,5 +29,6 @@ return command switch
     UrlArgs url => await ActivatorUtilities.CreateInstance<UrlCommand>(services).RunAsync(url.Url, cancellation.Token),
     BuildListArgs list => ActivatorUtilities.CreateInstance<BuildListCommand>(services).Run(list.SnapshotPath),
     ScanArgs scan => await ActivatorUtilities.CreateInstance<ScanRunCommand>(services).RunAsync(scan, cancellation.Token),
+    ExplainArgs explain => await ActivatorUtilities.CreateInstance<ExplainCommand>(services).RunAsync(explain.RunName, cancellation.Token),
     _ => ExitCodes.Usage,
 };

@@ -8,6 +8,15 @@
   const status = document.getElementById('lookup-status');
   const result = document.getElementById('lookup-result');
   const trZones = new Set((form.dataset.trZones || '').split(' '));
+  let explanations = null;
+
+  // Approved Turkish explanations, loaded once. A missing file just means none are published yet.
+  function loadExplanations() {
+    explanations = explanations || fetch('explanations.tr.json')
+      .then((response) => (response.ok ? response.json() : []))
+      .catch(() => []);
+    return explanations;
+  }
 
   function domainKey(text) {
     let host = text.trim().toLowerCase().replace(/^[a-z][a-z0-9+.-]*:\/\//, '');
@@ -92,7 +101,27 @@
     ]);
   }
 
-  function render(site) {
+  function explanationSection(site, list) {
+    const ruleIds = new Set(site.viewports.flatMap((v) => v.rules.map((r) => r.ruleId)));
+    const items = list.filter((e) => ruleIds.has(e.ruleId));
+    if (items.length === 0) {
+      return null;
+    }
+    const section = element('section');
+    section.lang = 'tr';
+    section.appendChild(element('h3', 'Bu hatalar ne anlama geliyor?'));
+    section.appendChild(element('p', 'Bu açıklamalar yapay zekâ ile taslak olarak yazıldı ve yayımlanmadan önce proje sahibi tarafından incelendi.'));
+    items.forEach((e) => {
+      section.appendChild(element('h4', e.title + ' (' + e.ruleId + ')'));
+      section.appendChild(element('p', e.explanation));
+      const pre = element('pre', undefined, 'fix-example');
+      pre.appendChild(element('code', e.fixExample));
+      section.appendChild(pre);
+    });
+    return section;
+  }
+
+  function render(site, list) {
     result.replaceChildren();
     const heading = element('h2', 'Result for ' + site.domain);
     heading.tabIndex = -1;
@@ -109,6 +138,10 @@
       }
       if (site.loadEventReached === false) {
         result.appendChild(element('p', 'The page was still loading extra content (for example ads) when it was checked.'));
+      }
+      const explained = explanationSection(site, list);
+      if (explained) {
+        result.appendChild(explained);
       }
     }
     heading.focus();
@@ -130,8 +163,10 @@
         status.textContent = 'No result for ' + key + '. The site was not in this run, or its owner asked to be left out.';
         return;
       }
+      const site = await response.json();
+      const list = await loadExplanations();
       status.textContent = '';
-      render(await response.json());
+      render(site, list);
     } catch (error) {
       status.textContent = 'The lookup could not be completed. Please try again.';
     }

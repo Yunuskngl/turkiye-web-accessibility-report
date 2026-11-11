@@ -24,6 +24,9 @@ internal static partial class Log
     [LoggerMessage(Level = LogLevel.Debug, Message = "robots.txt request {Url} failed")]
     public static partial void RobotsFailed(ILogger logger, Exception exception, Uri url);
 
+    [LoggerMessage(Level = LogLevel.Debug, Message = "Language model request failed")]
+    public static partial void LlmFailed(ILogger logger, Exception exception);
+
     [LoggerMessage(Level = LogLevel.Debug, Message = "Chromium could not start")]
     public static partial void BrowserStartFailed(ILogger logger, Exception exception);
 

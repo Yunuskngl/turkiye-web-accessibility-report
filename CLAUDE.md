@@ -157,6 +157,18 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   WCAG criteria and counts only (no selectors/snippets); `sites/` is rebuilt on every generation so
   opted-out sites disappear. Opt-out: GitHub issue form `.github/ISSUE_TEMPLATE/opt-out.yml` →
   add a row to `data/opt-out.csv` → honored by build-list, scan, report and lookup.
+- Stage 6 (AI explanations) — done 2026-11-11, not published yet. `ILlmClient` (Core, provider-neutral) +
+  `OllamaClient` (Scanner, plain HttpClient, structured JSON output, model `gemma3:4b`, local, no key).
+  `explain --run <name>` reads failed rule ids from the DB, gets rule metadata from axe-core on an
+  empty local page (`AxeRuleCatalog`), drafts once per rule into `data/explanations/rules.tr.json`
+  (saved after each rule, so it resumes). Status `draft` → owner sets `approved`; only approved
+  entries go to `site/explanations.tr.json` and the lookup page (section `lang="tr"`).
+  Model answers are validated (`ExplanationParser`: JSON, required fields, length limits, and a
+  fix example with different "Hatalı:" and "Doğru:" code).
+  Review result of the 27 gemma3:4b drafts (2026-11-11): most were technically wrong. Owner chose
+  to have Claude rewrite them: all 27 rewritten from axe rule definitions, still `draft`, `notes`
+  says what was wrong (field `Notes`, never published). Owner approved all 27 unchanged
+  (asked Claude to set the status on their behalf, 2026-11-11).
 - **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
   (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
   site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",
@@ -187,6 +199,8 @@ dotnet run --project src/A11yReport.Scanner -- install-browser                 #
 dotnet run --project src/A11yReport.Scanner -- url <url>                       # one site: robots.txt + one load
 dotnet run --project src/A11yReport.Scanner -- build-list data/crux/tr-202610.csv.gz
 dotnet run --project src/A11yReport.Scanner -- scan --run <name> [--limit <n>] # resumable; rerun to resume
+ollama serve   # if the Ollama app is not running
+dotnet run --project src/A11yReport.Scanner -- explain --run <name>           # drafts Turkish rule explanations
 dotnet tool run dotnet-ef migrations add <Name> --project src/A11yReport.Storage --startup-project src/A11yReport.Storage
 ```
 
