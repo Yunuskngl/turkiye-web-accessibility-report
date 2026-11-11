@@ -29,6 +29,7 @@ public sealed class SiteScanner(RobotsChecker robots, PageScanner pages)
             AxeVersion = outcome.Result?.AxeVersion,
             Facts = outcome.Result?.Facts,
             Viewports = outcome.Result?.Viewports,
+            LoadEventReached = outcome.Result?.LoadEventReached,
         };
     }
 

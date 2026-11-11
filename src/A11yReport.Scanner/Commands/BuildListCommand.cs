@@ -25,7 +25,8 @@ public sealed class BuildListCommand(IOptions<DataOptions> options)
         var origins = CruxReader.Read(snapshotPath);
         var include = SiteListFiles.LoadDomains(_data.IncludeFile);
         var excluded = SiteListFiles.LoadDomains(_data.OptOutFile).Union(SiteListFiles.LoadDomains(_data.ExcludeFile)).ToHashSet();
-        var candidates = SiteListBuilder.Build(origins, include, excluded, _data.MaxSites);
+        var result = SiteListBuilder.Build(origins, include, excluded, _data.MaxSites);
+        var candidates = result.Sites;
 
         var sectors = SectorAssigner.AddMissing(SiteListFiles.LoadSectors(_data.SectorsFile), candidates.Select(c => c.Domain));
         SiteListFiles.SaveSectors(_data.SectorsFile, sectors);
@@ -37,6 +38,8 @@ public sealed class BuildListCommand(IOptions<DataOptions> options)
         SaveSource(snapshotPath, sites.Count);
         SaveOtherTldCandidates(origins);
         PrintSummary(sites, sectors);
+        Console.WriteLine($"{result.SubdomainOnly.Count} domains in the whole snapshot were left out because CrUX lists " +
+            "only their subdomains, not a home page.");
         return ExitCodes.Success;
     }
 

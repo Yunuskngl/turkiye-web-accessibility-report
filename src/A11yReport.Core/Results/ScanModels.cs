@@ -28,4 +28,5 @@ public sealed record PageScanResult(
     string AxeVersion,
     DateTimeOffset ScannedAt,
     IReadOnlyList<ViewportResult> Viewports,
-    PageFacts Facts);
+    PageFacts Facts,
+    bool LoadEventReached = true);

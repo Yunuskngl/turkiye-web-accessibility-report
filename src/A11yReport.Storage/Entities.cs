@@ -53,6 +53,10 @@ public sealed class SiteScanEntity
     public string? FinalUrl { get; set; }
     public string? FinalSiteKey { get; set; }
     public string? AxeVersion { get; set; }
+
+    /// <summary>False when we scanned after DOMContentLoaded without the full load event.</summary>
+    public bool? LoadEventReached { get; set; }
+
     public int RobotsRequests { get; set; }
     public int DocumentRequests { get; set; }
     public int SubresourceRequests { get; set; }

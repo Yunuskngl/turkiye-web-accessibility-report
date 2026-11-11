@@ -24,7 +24,8 @@ public sealed class FailureClassifierTests
         Assert.Equal(expected, FailureClassifier.FromChromiumMessage(message));
 
     [Theory]
-    [InlineData(ScanStatus.Timeout, true)]
+    [InlineData(ScanStatus.Timeout, false)]
+    [InlineData(ScanStatus.NetworkError, true)]
     [InlineData(ScanStatus.DnsError, true)]
     [InlineData(ScanStatus.Unreachable, false)]
     [InlineData(ScanStatus.HttpError, false)]

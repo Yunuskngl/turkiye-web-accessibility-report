@@ -10,6 +10,7 @@ internal static class TestSettings
     public static ScanOptions Scan() => new()
     {
         NavigationTimeoutSeconds = 10,
+        LoadWaitSeconds = 5,
         SettleMilliseconds = 0,
         ResizeSettleMilliseconds = 0,
         Locale = "tr-TR",

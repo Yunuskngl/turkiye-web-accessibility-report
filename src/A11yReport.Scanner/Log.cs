@@ -12,6 +12,9 @@ internal static partial class Log
     [LoggerMessage(Level = LogLevel.Debug, Message = "Loaded {Url} with HTTP {Status}")]
     public static partial void PageLoaded(ILogger logger, Uri url, int status);
 
+    [LoggerMessage(Level = LogLevel.Debug, Message = "{Url}: load event not reached after {Seconds} more seconds; scanning anyway")]
+    public static partial void LoadEventNotReached(ILogger logger, Uri url, int seconds);
+
     [LoggerMessage(Level = LogLevel.Debug, Message = "axe found {Count} failed rules in the {Viewport} viewport")]
     public static partial void AxeFinished(ILogger logger, int count, string viewport);
 

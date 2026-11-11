@@ -33,7 +33,7 @@ public sealed class PageScanner(IBrowser browser, IOptions<ScanOptions> options,
 
     private async Task<PageScanResult> ScanPageAsync(IPage page, Uri url, CancellationToken cancellationToken)
     {
-        var response = await OpenAsync(page, url, cancellationToken);
+        var (response, loadEventReached) = await OpenAsync(page, url, cancellationToken);
         var facts = await PageFactsReader.ReadAsync(page);
         var desktop = await RunAxeAsync(page, _options.Desktop, cancellationToken);
 
@@ -44,7 +44,7 @@ public sealed class PageScanner(IBrowser browser, IOptions<ScanOptions> options,
 
         return new PageScanResult(
             url, new Uri(page.Url), response.Status, desktop.Version,
-            DateTimeOffset.UtcNow, [desktop.Result, mobile.Result], facts);
+            DateTimeOffset.UtcNow, [desktop.Result, mobile.Result], facts, loadEventReached);
     }
 
     private BrowserNewContextOptions CreateContextOptions() => new()
@@ -54,15 +54,36 @@ public sealed class PageScanner(IBrowser browser, IOptions<ScanOptions> options,
         UserAgent = _options.UserAgent,
     };
 
-    private async Task<IResponse> OpenAsync(IPage page, Uri url, CancellationToken cancellationToken)
+    private async Task<(IResponse Response, bool LoadEventReached)> OpenAsync(
+        IPage page, Uri url, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         var response = await NavigateAsync(page, url);
         EnsureHtmlPage(response);
 
         Log.PageLoaded(logger, url, response.Status);
+        var loadEventReached = await WaitForLoadAsync(page, url);
         await Task.Delay(_options.SettleMilliseconds, cancellationToken);
-        return response;
+        return (response, loadEventReached);
+    }
+
+    /// <summary>
+    /// Many popular pages keep loading ads and trackers long after their content is ready, so the
+    /// load event is awaited only for a limited time. We record whether it was reached.
+    /// </summary>
+    private async Task<bool> WaitForLoadAsync(IPage page, Uri url)
+    {
+        try
+        {
+            var timeout = (float)TimeSpan.FromSeconds(_options.LoadWaitSeconds).TotalMilliseconds;
+            await page.WaitForLoadStateAsync(LoadState.Load, new() { Timeout = timeout });
+            return true;
+        }
+        catch (TimeoutException)
+        {
+            Log.LoadEventNotReached(logger, url, _options.LoadWaitSeconds);
+            return false;
+        }
     }
 
     private async Task<IResponse> NavigateAsync(IPage page, Uri url)
@@ -72,7 +93,7 @@ public sealed class PageScanner(IBrowser browser, IOptions<ScanOptions> options,
             var response = await page.GotoAsync(url.ToString(), new()
             {
                 Timeout = (float)TimeSpan.FromSeconds(_options.NavigationTimeoutSeconds).TotalMilliseconds,
-                WaitUntil = WaitUntilState.Load,
+                WaitUntil = WaitUntilState.DOMContentLoaded,
             });
             return response ?? throw new ScanException(ScanStatus.Failed, "The page returned no response.");
         }

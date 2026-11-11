@@ -34,4 +34,5 @@ public sealed record SiteScanResult(
     Uri? FinalUrl = null,
     string? AxeVersion = null,
     PageFacts? Facts = null,
-    IReadOnlyList<ViewportResult>? Viewports = null);
+    IReadOnlyList<ViewportResult>? Viewports = null,
+    bool? LoadEventReached = null);

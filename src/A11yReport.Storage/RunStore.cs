@@ -67,6 +67,7 @@ public sealed class RunStore(IDbContextFactory<ReportDbContext> contexts, IOptio
             await using var db = await contexts.CreateDbContextAsync(cancellationToken);
             var entity = SiteScanMapper.ToEntity(result, handle.RunId, handle.SessionId, _options.MaxNodesPerRule);
             await MarkDuplicateAsync(db, entity, cancellationToken);
+            await AddPreviousRequestsAsync(db, entity, cancellationToken);
             await db.Sites.Where(s => s.RunId == handle.RunId && s.Domain == entity.Domain).ExecuteDeleteAsync(cancellationToken);
             db.Sites.Add(entity);
             await db.SaveChangesAsync(cancellationToken);
@@ -135,6 +136,23 @@ public sealed class RunStore(IDbContextFactory<ReportDbContext> contexts, IOptio
         entity.Status = ScanStatus.Duplicate;
         entity.Message = $"Redirects to {entity.FinalSiteKey}, which is already in this run.";
         entity.Violations = [];
+    }
+
+    /// <summary>A retry replaces the earlier row, but the requests of the earlier attempt still happened.</summary>
+    private static async Task AddPreviousRequestsAsync(ReportDbContext db, SiteScanEntity entity, CancellationToken cancellationToken)
+    {
+        var previous = await db.Sites.AsNoTracking()
+            .Where(s => s.RunId == entity.RunId && s.Domain == entity.Domain)
+            .Select(s => new { s.RobotsRequests, s.DocumentRequests, s.SubresourceRequests })
+            .SingleOrDefaultAsync(cancellationToken);
+        if (previous is null)
+        {
+            return;
+        }
+
+        entity.RobotsRequests += previous.RobotsRequests;
+        entity.DocumentRequests += previous.DocumentRequests;
+        entity.SubresourceRequests += previous.SubresourceRequests;
     }
 
     private static ScanRunEntity NewRun(RunStart start) => new()

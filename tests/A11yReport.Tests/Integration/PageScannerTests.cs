@@ -37,6 +37,20 @@ public sealed class PageScannerTests(ScannerFixture fixture) : IClassFixture<Sca
         Assert.Matches(@"^\d+\.\d+\.\d+", outcome.Result!.AxeVersion);
         Assert.Equal(200, outcome.HttpStatus);
         Assert.Equal(1, outcome.Requests.Documents);
+        Assert.True(outcome.Result.LoadEventReached);
+    }
+
+    [Fact]
+    public async Task ScanAsync_PageThatNeverFinishesLoading_IsScannedAnyway()
+    {
+        var options = TestSettings.Scan();
+        options.LoadWaitSeconds = 1;
+        var scanner = new PageScanner(fixture.Session.Browser, Options.Create(options), NullLogger<PageScanner>.Instance);
+
+        var outcome = await scanner.ScanAsync(fixture.Server.UrlFor("slow-load.html"), CancellationToken.None);
+
+        Assert.Equal(ScanStatus.Done, outcome.Status);
+        Assert.False(outcome.Result!.LoadEventReached);
     }
 
     [Fact]

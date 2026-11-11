@@ -27,7 +27,9 @@ publish lists of "worst" sites.
   `.nc.tr` (Northern Cyprus) is excluded because the report covers Türkiye.
 - **One entry per site:** all origins of a registrable domain (for example `www.`, `m.` or a
   student portal subdomain) count as one site, with the best rank bucket among them. We scan
-  the home page of the main host (`domain` or `www.domain`).
+  the home page of the main host (`domain` or `www.domain`). Domains that CrUX lists only
+  through subdomains (for example an e-government application or a login portal) are left
+  out, because their popularity does not come from a home page.
 - **Order and cut-off:** sites are ordered by rank bucket. CrUX does not order sites inside a
   bucket, so the 1,000 cut-off inside the last bucket uses a fixed pseudo-random order
   (SHA-256 of the domain name), which is stable and not alphabetical.
@@ -45,7 +47,10 @@ publish lists of "worst" sites.
 - Mobile pass: after the desktop check, the same loaded page is resized to 390×844 and checked
   again, so no second page load is needed. Sites that send different pages to mobile browsers
   (for example separate `m.` sites) are therefore not covered by the mobile pass.
-- 30-second navigation timeout, then a short settle time after the page's load event.
+- We wait up to 30 seconds for the HTML document to be ready (`DOMContentLoaded`), then up to
+  10 more seconds for the page's load event, then 2 seconds more. Many popular pages keep
+  loading ads and trackers long after their content is ready; if the load event has not
+  happened by then, we check the page anyway and record that it was checked before full load.
 - No interaction: no clicks, no scrolling, no cookie banners accepted, no forms submitted.
 - axe-core version: _TBD_. Rule tags: `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa`.
 - Scan date(s): _TBD_.
@@ -64,8 +69,9 @@ publish lists of "worst" sites.
   refused or reset connections are recorded as "unreachable", the page is not loaded (or not
   loaded again), and the site is not retried in the same run. We do not use proxies, rotate IP
   addresses, disguise the scanner, or solve CAPTCHAs.
-- **Retries:** a site gets at most one retry per run, only after a timeout, DNS or other
-  network error where no page was received. Public-sector sites are never retried.
+- **Retries:** a site gets at most one retry per run, only after a DNS or other network error
+  where no page was received. Pages that time out are not retried, because a slow page has
+  often already loaded hundreds of resources. Public-sector sites are never retried.
 - **Audit trail:** every run, and every time an interrupted run is resumed, records the date
   and time, tool versions (scanner, .NET, Playwright, browser, axe-core), the site list
   version, the User-Agent and all settings. For every site it records how many requests were
@@ -99,13 +105,72 @@ _Open point: whether HTML snippets are shown in the public per-site lookup or ke
 
 ## How we differ from the WebAIM Million
 
-_TBD after stage 3/4._ Known differences so far: WebAIM uses the WAVE engine, we use axe-core;
-our list is limited to Türkiye; we report by sector.
+WebAIM uses the WAVE engine, we use axe-core; the two engines check partly different rules (see
+"Manual comparison with WAVE"), so our counts are not directly comparable with WebAIM's. Our
+list is limited to Türkiye and comes from CrUX; we report by sector; we also check a mobile
+viewport.
 
-## Manual comparison (pilot)
+## Pilot (November 2026)
 
-_TBD in stage 3:_ five sites checked manually with the WAVE browser extension and compared
-with our results.
+A pilot run (`2026-pilot`, run record in `data/runs/2026-pilot.json`) scanned the first 50
+sites of the list on 2026-11-11 with axe-core 4.14.0, Chromium 156 and Playwright 1.64.1.
+
+| Result | Sites |
+|---|---|
+| Scanned | 40 |
+| Did not finish loading in 30 seconds | 6 |
+| Refused the request (HTTP 403) | 2 |
+| Domain name not found | 2 |
+
+Requests: 9,808 in total (50 robots.txt requests, 51 page loads, 9,707 resources loaded by the
+browser for those pages).
+
+Findings that changed or may change the method:
+
+- Two scanner defects found in the pilot were fixed before any results were used: retried
+  sites lost the request counts of their first attempt, and stored rule results were not linked
+  to their site in the database (the data itself was intact and was relinked). Because of the
+  first defect, the pilot run record undercounts the requests of the 9 retried sites
+  (one extra page load each, except the DNS failure).
+- 6 of 50 pages did not fire the browser's load event within 30 seconds, while their content
+  was ready (they loaded 150–1,000 resources). We now wait for the document to be ready and give
+  the load event 10 more seconds (see "How each page is scanned"), and timeouts are no longer
+  retried.
+- 2 of 50 sites failed because CrUX listed only an application subdomain (for example
+  `uygulama.gtb.gov.tr`) and the guessed `www.` home page did not exist. Such domains are now
+  left out of the list; this replaced 42 of the 1,000 sites, including some universities and
+  public bodies whose subdomains are more visited than their home page.
+
+### Manual comparison with WAVE
+
+On 2026-11-11 the project owner checked five pilot sites by hand with the WAVE browser
+extension (desktop browser window, cookie banner left untouched, as in our scan). Our numbers
+are from the pilot scan (desktop viewport), taken about one hour earlier.
+
+| Site | WAVE errors | WAVE contrast errors | Our failed rules / elements | Our main findings |
+|---|---|---|---|---|
+| milliyet.com.tr | 26 (form label 16, empty link 8, alt text 2) | 92 | 6 / 50 | contrast 31, link name 12, alt text 3 |
+| migros.com.tr | 1 (form label 1) | 83 | 5 / 83 | contrast 76, label/name mismatch 4 |
+| yapikredi.com.tr | 11 (form label 6, alt text 2, empty link 2, empty button 1) | 0 | 7 / 23 | list structure 12, ARIA roles 7, form label 2 |
+| metu.edu.tr | 3 (empty link 3) | 1 | 3 / 13 | target size 7, ARIA attribute 5, frame title 1 |
+| saglik.gov.tr | 0 | 2 | 0 / 0 | none |
+
+What we learned:
+
+- **Contrast results agree in four of five sites** (83 vs 76, 0 vs 0, 1 vs 0, 2 vs 0). The
+  exception is a news home page (92 vs 31) whose content changed between the two checks.
+- **The two tools check different things.** axe reports list structure, required ARIA roles,
+  target size (WCAG 2.2), label/name mismatch and zoom-blocking `meta viewport` as failures.
+  WAVE does not check some of these and reports others as alerts, not errors.
+- **WAVE reported some empty links, empty buttons, missing alt text and form labels that axe
+  did not.** A likely reason is that WAVE also evaluates some hidden content (menus, dialogs,
+  cookie settings), while axe checks only content that is rendered for users. We have not
+  verified this element by element.
+- **A result of zero is real, not a blocked page:** saglik.gov.tr had no failures in our scan
+  and almost none in WAVE.
+- **Consequence for this report:** our numbers come from axe-core and are not directly
+  comparable with the WebAIM Million, which uses the WAVE engine. We compare sectors with each
+  other and do not compare our averages with WebAIM's.
 
 ## Opting out
 
