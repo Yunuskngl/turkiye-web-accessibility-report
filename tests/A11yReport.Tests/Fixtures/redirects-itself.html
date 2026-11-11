@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Redirects itself</title>
+</head>
+<body>
+  <main>
+    <h1>This page sends the browser to another page soon after it loads</h1>
+  </main>
+  <script>
+    // Keeps navigating, so the scanner's in-page checks lose their page.
+    setTimeout(function again() { location.href = 'redirects-itself.html?n=' + Date.now(); }, 50);
+  </script>
+</body>
+</html>

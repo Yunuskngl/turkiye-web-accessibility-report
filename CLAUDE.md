@@ -169,6 +169,22 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   to have Claude rewrite them: all 27 rewritten from axe rule definitions, still `draft`, `notes`
   says what was wrong (field `Notes`, never published). Owner approved all 27 unchanged
   (asked Claude to set the status on their behalf, 2026-11-11).
+- Stage 7 (full run, Turkish site, press summary, LinkedIn draft) — built 2026-11-12, NOT published.
+  Run `2026-full` Completed 2026-11-11 18:18 (TR): 878 Done of 1,000; 139,732 requests. Desktop: 95.4%
+  of pages with a failure, mean 58.8 (median 29, one page 5,911). Methodology has a "Full run" section
+  (EN + TR). Press summaries `docs/press/press-summary.{tr,en}.md`, LinkedIn draft
+  `docs/press/linkedin-post.tr.md`. Generate: `dotnet run --project src/A11yReport.Site -- --run 2026-full`.
+  Details of the run:
+  User-Agent now `TurkiyeWebA11yReport/1.0` linking to the Pages methodology. Run `2026-full`
+  started 14:59; crashed at 586/1000 on an uncaught PlaywrightException (a page navigated itself
+  during the facts script). Fix: every in-page step has `Scan:CheckTimeoutSeconds` (60) and
+  navigation errors become `Failed`; any unexpected per-page error becomes `Failed` instead of
+  stopping the run. Resumed 17:34 (session 2 records the new setting).
+  Turkish site: `SiteTexts`/`SiteLanguages` hold all UI text (EN root, TR in `/tr/`), `SiteFormat`
+  formats numbers per culture (`%95,0`, `48,4`), Turkish rule names = approved explanation titles,
+  `docs/methodology.tr.md` is the Turkish translation (English is authoritative; keep in sync),
+  headings use `{#id}` generic attributes for shared anchors. `HtmlText` uses `HtmlEncoder` with all
+  Unicode ranges so Turkish letters are not turned into entities.
 - **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
   (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
   site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",

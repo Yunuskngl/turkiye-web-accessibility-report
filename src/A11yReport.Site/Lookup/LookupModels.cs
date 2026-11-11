@@ -4,8 +4,10 @@ namespace A11yReport.Site.Lookup;
 public sealed record LookupSite(
     string Domain,
     string SectorName,
+    string SectorNameTr,
     bool Checked,
     string StatusText,
+    string StatusTextTr,
     string CheckedOn,
     string AxeVersion,
     bool? LoadEventReached,
@@ -14,6 +16,6 @@ public sealed record LookupSite(
 
 public sealed record LookupViewport(string Name, int FailedRules, int Elements, IReadOnlyList<LookupRule> Rules);
 
-public sealed record LookupRule(string RuleId, string Name, string Criteria, int Elements);
+public sealed record LookupRule(string RuleId, string Name, string NameTr, string Criteria, int Elements);
 
 public sealed record LookupFacts(string? Lang, bool HasTitle, bool HasMain, int H1Count, int HeadingCount, bool SkipsHeadingLevel);

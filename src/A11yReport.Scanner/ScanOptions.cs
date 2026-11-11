@@ -11,6 +11,9 @@ public sealed class ScanOptions
     public int LoadWaitSeconds { get; set; }
 
     public int SettleMilliseconds { get; set; }
+
+    /// <summary>Time limit for each script step inside the page (reading page facts, one axe run).</summary>
+    public int CheckTimeoutSeconds { get; set; }
     public int ResizeSettleMilliseconds { get; set; }
     public string Locale { get; set; } = string.Empty;
 
@@ -33,6 +36,7 @@ public sealed class ScanOptions
     public bool IsValid() =>
         NavigationTimeoutSeconds > 0
         && LoadWaitSeconds >= 0
+        && CheckTimeoutSeconds > 0
         && SettleMilliseconds >= 0
         && ResizeSettleMilliseconds >= 0
         && !string.IsNullOrWhiteSpace(Locale)

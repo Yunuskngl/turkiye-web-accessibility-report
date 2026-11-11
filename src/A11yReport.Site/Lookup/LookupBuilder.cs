@@ -10,37 +10,43 @@ public static class LookupBuilder
     private const string Desktop = "Desktop";
     private const string Mobile = "Mobile";
     private const string CheckedText = "Checked";
+    private const string CheckedTextTr = "Kontrol edildi";
 
-    public static IReadOnlyList<LookupSite> Build(RunInfo run, IEnumerable<SiteOutcome> outcomes, IReadOnlySet<string> optOut) =>
+    public static IReadOnlyList<LookupSite> Build(
+        RunInfo run, IEnumerable<SiteOutcome> outcomes, IReadOnlySet<string> optOut, RuleNames names) =>
         outcomes
             .Where(site => !optOut.Contains(site.Domain))
-            .Select(site => ToLookup(run, site))
+            .Select(site => ToLookup(run, site, names))
             .ToList();
 
-    private static LookupSite ToLookup(RunInfo run, SiteOutcome site)
+    private static LookupSite ToLookup(RunInfo run, SiteOutcome site, RuleNames names)
     {
         var isChecked = site.Status == ScanStatus.Done;
         IReadOnlyList<LookupViewport> viewports = isChecked
-            ? [ToViewport(Desktop, site.Desktop), ToViewport(Mobile, site.Mobile)]
+            ? [ToViewport(Desktop, site.Desktop, names), ToViewport(Mobile, site.Mobile, names)]
             : [];
+        var status = site.Status.ToString();
         return new LookupSite(
             site.Domain,
             Labels.Sector(site.Sector),
+            Labels.SectorTr(site.Sector),
             isChecked,
-            isChecked ? CheckedText : Labels.Status(site.Status.ToString()),
-            HtmlText.Date(run.StartedAt),
+            isChecked ? CheckedText : Labels.Status(status),
+            isChecked ? CheckedTextTr : Labels.StatusTr(status),
+            run.StartedAt.ToUniversalTime().ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
             run.AxeVersion,
             site.LoadEventReached,
             isChecked ? ToFacts(site.Facts) : null,
             viewports);
     }
 
-    private static LookupViewport ToViewport(string name, IReadOnlyList<RuleCount> rules)
+    private static LookupViewport ToViewport(string name, IReadOnlyList<RuleCount> rules, RuleNames names)
     {
         var lookupRules = rules
             .OrderByDescending(rule => rule.Elements)
             .ThenBy(rule => rule.RuleId, StringComparer.Ordinal)
-            .Select(rule => new LookupRule(rule.RuleId, Labels.Rule(rule.RuleId, rule.Help), string.Join(", ", rule.Criteria), rule.Elements))
+            .Select(rule => new LookupRule(rule.RuleId, RuleNames.English(rule.RuleId, rule.Help), names.Turkish(rule.RuleId, rule.Help),
+                string.Join(", ", rule.Criteria), rule.Elements))
             .ToList();
         return new LookupViewport(name, lookupRules.Count, lookupRules.Sum(rule => rule.Elements), lookupRules);
     }

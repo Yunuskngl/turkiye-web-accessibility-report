@@ -1,7 +1,9 @@
 using System.Text.RegularExpressions;
+using A11yReport.Core.Explanations;
 using A11yReport.Core.Report;
 using A11yReport.Core.Sites;
 using A11yReport.Site;
+using A11yReport.Site.Html;
 using A11yReport.Site.Lookup;
 using A11yReport.Storage;
 using Microsoft.Data.Sqlite;
@@ -43,8 +45,9 @@ if (input is null)
 var siteOptions = host.Services.GetRequiredService<IOptions<SiteOptions>>().Value;
 var optOut = SiteListFiles.LoadDomains(siteOptions.OptOutFile);
 var data = ReportBuilder.Build(input.Value.Run, input.Value.Sites, optOut);
-var lookupSites = LookupBuilder.Build(input.Value.Run, input.Value.Sites, optOut);
-var folder = ActivatorUtilities.CreateInstance<SiteGenerator>(host.Services).Generate(data, lookupSites, parsed.IsPilot);
+var ruleNames = RuleNames.From(ExplanationFile.Load(siteOptions.ExplanationsFile));
+var lookupSites = LookupBuilder.Build(input.Value.Run, input.Value.Sites, optOut, ruleNames);
+var folder = ActivatorUtilities.CreateInstance<SiteGenerator>(host.Services).Generate(data, lookupSites, ruleNames, parsed.IsPilot);
 Console.WriteLine($"Site for run {parsed.Name} written to {folder} ({data.Coverage.Scanned} pages checked).");
 return Success;
 

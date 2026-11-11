@@ -1,7 +1,6 @@
-# Methodology (draft)
+# Methodology
 
-> Draft written in stage 0. Values marked _TBD_ are filled in after the pilot (stage 3)
-> and the full run (stage 7).
+This page describes the 2026 edition of the report.
 
 ## What this report is — and is not
 
@@ -19,7 +18,7 @@ publish lists of "worst" sites.
 
 ## Which sites
 
-- **Source list:** Chrome UX Report (CrUX) popularity data for Türkiye. Draft list: snapshot
+- **Source list:** Chrome UX Report (CrUX) popularity data for Türkiye, snapshot of
   October 2026 (`tr-202610`). CrUX ranks origins by real Chrome page loads in a country and
   groups them in rank buckets (top 1,000, 5,000, 10,000, …), not exact ranks.
 - **Selection:** domains under `.tr` (and the city domains `.istanbul` and `.ist`), plus
@@ -52,8 +51,12 @@ publish lists of "worst" sites.
   loading ads and trackers long after their content is ready; if the load event has not
   happened by then, we check the page anyway and record that it was checked before full load.
 - No interaction: no clicks, no scrolling, no cookie banners accepted, no forms submitted.
-- axe-core version: _TBD_. Rule tags: `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa`.
-- Scan date(s): _TBD_.
+- axe-core 4.14.0 in Chromium 156 (Playwright 1.64.1). Rule tags: `wcag2a`, `wcag2aa`, `wcag21a`,
+  `wcag21aa`, `wcag22aa`.
+- Each script step inside the page (reading page facts, one axe run) has a 60-second limit. A page
+  that does not answer in time, or that navigates away by itself while it is being checked, is
+  recorded as "check could not run".
+- Scan dates: see "Full run" below.
 
 ## Responsible scanning
 
@@ -91,8 +94,9 @@ Only technical results:
   exists (not the title text), number of landmarks, whether a `main` landmark exists, number of
   headings, number of `h1` headings, and whether a heading level is skipped (for example h2 → h4)
 
-We do **not** store page text, screenshots, cookies or any personal data.
-_Open point: whether HTML snippets are shown in the public per-site lookup or kept internal only._
+We do **not** store page text, screenshots, cookies or any personal data. Selectors and HTML
+snippets stay in our local database and are **not** published; the public lookup shows rule names
+and counts only.
 
 ## How the numbers are counted
 
@@ -115,6 +119,44 @@ WebAIM uses the WAVE engine, we use axe-core; the two engines check partly diffe
 "Manual comparison with WAVE"), so our counts are not directly comparable with WebAIM's. Our
 list is limited to Türkiye and comes from CrUX; we report by sector; we also check a mobile
 viewport.
+
+## Full run (November 2026)
+
+The full run (`2026-full`, run record in `data/runs/2026-full.json`) checked the 1,000 sites of
+the list on 11 November 2026 between 14:59 and 18:18 Türkiye time (UTC+3), with axe-core 4.14.0, Chromium
+156 and Playwright 1.64.1.
+
+| Result | Sites |
+|---|---|
+| Checked | 878 |
+| Refused the request or unreachable (57 × HTTP 403, 1 × 429, 1 × 503, 1 refused connection) | 60 |
+| Did not load in time | 33 |
+| Secure connection (TLS) failed | 11 |
+| Skipped: robots.txt does not allow it | 5 |
+| Check could not run | 5 |
+| Network error, HTTP error, domain not found (2 each) | 6 |
+| Redirects to another listed site | 2 |
+
+Requests: 139,732 in total (1,028 robots.txt requests, 1,026 page loads, 137,678 resources loaded
+by the browser for those pages).
+
+Notes on this run:
+
+- **The run was interrupted once.** At site 586 a page navigated away by itself while our
+  scanner was reading it, and an unhandled error stopped the scanner. We added a time limit to
+  every check step inside the page and record such pages as "check could not run", then resumed
+  the run; the 586 finished sites were not scanned again. Both sessions and their settings are in
+  the run record. The requests of the few sites that were in progress when the scanner stopped
+  are not counted; those sites were scanned again on resume.
+- **44.1% of the checked pages** had not finished loading extra content (the browser's load
+  event) 10 seconds after the page was ready. They were checked anyway; see "How each page is
+  scanned".
+- **Averages and outliers:** the average is the arithmetic mean. The number of detected failures
+  per page varies a lot: half of the checked home pages had 29 or fewer (median), 90% had 113 or
+  fewer, and one page had 5,911. 40 pages (4.6%) had none.
+- **Possible placeholder pages:** 7 checked pages loaded fewer than five resources. Some of them
+  may have shown a bot check or maintenance page instead of the real home page. We could not
+  tell this reliably, so they are counted as checked.
 
 ## Pilot (November 2026)
 
@@ -221,5 +263,5 @@ Site owners can ask us not to scan their site and not to publish its result.
 
 - Site list: Chrome UX Report (CrUX) by Google, licensed under CC BY-SA 4.0
   (https://developer.chrome.com/docs/crux/), via the snapshots at
-  https://github.com/zakird/crux-top-lists (commit _TBD_).
+  https://github.com/zakird/crux-top-lists (commit `a67d0c8f09326df09739560bc43205b4f949f8e6`).
 - axe-core by Deque Systems, licensed under MPL-2.0: https://github.com/dequelabs/axe-core
