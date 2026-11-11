@@ -12,6 +12,9 @@ public static class DomainKey
         "mil", "name", "net", "nc", "org", "pol", "tel", "tsk", "tv", "web",
     };
 
+    /// <summary>The .tr second-level zones, for code outside .NET (the lookup page's JavaScript) that must match FromHost.</summary>
+    public static IReadOnlyCollection<string> TrZoneNames => TrZones;
+
     /// <summary>Northern Cyprus uses nc.tr. This report covers Türkiye only, so it is excluded.</summary>
     public const string ExcludedTrZone = "nc.tr";
 

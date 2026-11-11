@@ -178,10 +178,29 @@ What we learned:
   comparable with the WebAIM Million, which uses the WAVE engine. We compare sectors with each
   other and do not compare our averages with WebAIM's.
 
+## Looking up a site
+
+The [site lookup page](lookup.html) shows the result of one home page when someone types its
+address: which automated rules failed, how many elements were affected, and the page's language
+and heading facts. It shows rule names and counts only, not the HTML of the page. There is no
+list or ranking of sites: each result is stored in a file named after the SHA-256 hash of the
+domain, so a result can only be found by typing that domain. The list of scanned domains is still
+public in the source repository, for reproducibility.
+
 ## Opting out
 
-Site owners can ask not to be scanned or listed. _TBD: contact channel (stage 5)._
-Opted-out domains are excluded from scanning and from all published data.
+Site owners can ask us not to scan their site and not to publish its result.
+
+- **How:** open an
+  [opt-out request](https://github.com/Yunuskngl/turkiye-web-accessibility-report/issues/new?template=opt-out.yml)
+  in the project's GitHub repository. Only the domain is needed. GitHub issues are public, so
+  please do not add personal data.
+- **No proof needed:** leaving a site out does little harm, so we honor every request without
+  asking for proof of ownership.
+- **What happens:** the domain is added to `data/opt-out.csv`. From the next run it is not
+  scanned, and from the next publication of this site it has no lookup result and is not counted
+  in any published number. Requests are handled by hand, so the change appears at the next
+  publication.
 
 ## Data sources and licenses
 
