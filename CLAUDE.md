@@ -145,8 +145,21 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   2 Unreachable (403), 2 DnsError. After the pilot: load handling changed, timeouts no longer
   retried, subdomain-only domains left out (42 replaced in the list). WAVE comparison of 5 sites
   written to `docs/methodology.md` ("Manual comparison with WAVE"). Next: stage 4.
+- Stage 4 (aggregation + static report site) — built 2026-11-11 with pilot data; not deployed yet
+  (owner decides how to publish: commit generated site vs. GitHub Actions). Our scanner finds
+  0 failures on `index.html` and `methodology.html` in both viewports (also an integration test).
+  Generate: `dotnet run --project src/A11yReport.Site -- --run 2026-pilot --pilot` → `site/` (gitignored).
+- Stage 4 decisions: aggregation in `Core/Report` (`ReportBuilder`), DB access in
+  `Storage/ReportReader` (read-only connection, no selectors/snippets read), pages in
+  `Site/Pages`, inline SVG bar charts (`Site/Html/BarChart`) each followed by a data table,
+  `Markdig` 1.6.0 (BSD-2-Clause) renders `docs/methodology.md` with raw HTML disabled so the site
+  and repo show one text. Scrollable tables are focusable named regions (WCAG 2.1.1).
 - Report rule from the WAVE comparison: never compare our averages with WebAIM Million numbers
   (different engines); compare sectors with each other.
+- **Zero cost (owner requirement, 2026-11-11):** no paid hosting, domain, API or service.
+  Report site on GitHub Pages (`https://yunuskngl.github.io/turkiye-web-accessibility-report/`),
+  fully static (per-site lookup = static JSON + vanilla JS, no backend), scans run locally,
+  opt-out via GitHub Issues, LLM (stage 6) only via local Ollama.
 - Repo: https://github.com/Yunuskngl/turkiye-web-accessibility-report (public, `main`).
   First commit pushed 2026-11-11 with the owner's approval. Sectors in `data/sectors.csv` and
   `data/include-domains.csv` were suggested by Claude and still need the owner's check.
