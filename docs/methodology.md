@@ -96,12 +96,18 @@ _Open point: whether HTML snippets are shown in the public per-site lookup or ke
 
 ## How the numbers are counted
 
-- Share of home pages with at least one detected failure.
-- Average number of detected failures per page, overall and per sector.
-- Most common failure types (by axe rule).
-- `lang` usage (including `lang="tr"`), landmark usage, heading structure.
+- A **detected failure** is one page element that fails one axe rule. A page with 12 images
+  without alternative text has 12 detected failures of that rule.
+- Share of home pages with at least one detected failure, and the average number of detected
+  failures per page (mean), for the desktop and the mobile view.
+- Sector comparisons and the list of most common failure types use the desktop view. A failure
+  type's share is the share of checked home pages with at least one such failure.
+- `lang` usage (missing, or set to Turkish such as `tr` or `tr-TR`), whether a `main` landmark
+  exists, the number of landmarks and headings, pages with exactly one or no `h1`, and pages
+  that skip a heading level.
 - Sites that were skipped, unreachable or failed are reported separately and are **never**
-  counted as having zero failures.
+  counted as having zero failures. Opted-out sites are left out of all published numbers.
+- The public report shows sector-level numbers only, never a list or ranking of sites.
 
 ## How we differ from the WebAIM Million
 

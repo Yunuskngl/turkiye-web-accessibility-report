@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\src\A11yReport.Core\A11yReport.Core.csproj" />
     <ProjectReference Include="..\..\src\A11yReport.Scanner\A11yReport.Scanner.csproj" />
     <ProjectReference Include="..\..\src\A11yReport.Storage\A11yReport.Storage.csproj" />
+    <ProjectReference Include="..\..\src\A11yReport.Site\A11yReport.Site.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ using System.Text;
 namespace A11yReport.Tests.Integration;
 
 /// <summary>
-/// Serves the HTML files in the Fixtures folder on 127.0.0.1, so tests never touch the internet.
+/// Serves the HTML files in the Fixtures folder (or another folder) on 127.0.0.1, so tests never touch the internet.
 /// "/" serves the home page file and "/robots.txt" serves the given text (404 when null).
 /// Every requested path is recorded, so tests can prove which requests were made.
 /// </summary>
@@ -18,16 +18,18 @@ public sealed class FixtureServer : IDisposable
     private static readonly TimeSpan SlowResourceDelay = TimeSpan.FromSeconds(20);
     private const string HtmlContentType = "text/html; charset=utf-8";
     private const string TextContentType = "text/plain; charset=utf-8";
+    private const string CssContentType = "text/css; charset=utf-8";
 
     private readonly HttpListener _listener = new();
-    private readonly string _root = Path.Combine(AppContext.BaseDirectory, FixtureFolder);
+    private readonly string _root;
     private readonly string? _robotsTxt;
     private readonly string _homePage;
 
-    public FixtureServer(string? robotsTxt = null, string homePage = "known-failures.html")
+    public FixtureServer(string? robotsTxt = null, string homePage = "known-failures.html", string? rootFolder = null)
     {
         _robotsTxt = robotsTxt;
         _homePage = homePage;
+        _root = rootFolder ?? Path.Combine(AppContext.BaseDirectory, FixtureFolder);
         BaseUrl = new Uri($"http://127.0.0.1:{FindFreePort()}/");
         _listener.Prefixes.Add(BaseUrl.ToString());
         _listener.Start();
@@ -108,7 +110,8 @@ public sealed class FixtureServer : IDisposable
 
         var fileName = path == "/" ? _homePage : Path.GetFileName(path);
         var file = Path.Combine(_root, fileName);
-        return (fileName.Length > 0 && File.Exists(file) ? File.ReadAllBytes(file) : null, HtmlContentType);
+        var contentType = fileName.EndsWith(".css", StringComparison.Ordinal) ? CssContentType : HtmlContentType;
+        return (fileName.Length > 0 && File.Exists(file) ? File.ReadAllBytes(file) : null, contentType);
     }
 
     private static int FindFreePort()
