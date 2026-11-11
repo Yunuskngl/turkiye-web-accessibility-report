@@ -1,0 +1,159 @@
+{
+  "run": {
+    "name": "2026-pilot",
+    "state": "Completed",
+    "startedAt": "2026-11-11T09:43:46.216373+00:00",
+    "finishedAt": "2026-11-11T09:52:01.506878+00:00",
+    "axeVersion": "4.14.0",
+    "browserVersion": "156.0.8078.4",
+    "listSource": "Chrome UX Report (CrUX) top origins for Türkiye (country code tr), via github.com/zakird/crux-top-lists; snapshot tr-202610.csv.gz (sha256 9aecf48c805fc2daf6ef12201f08409cf0d1a522683938229e2dd3b08fc19710)"
+  },
+  "coverage": {
+    "listed": 50,
+    "scanned": 40,
+    "notScannedByStatus": {
+      "Timeout": 6,
+      "Unreachable": 2,
+      "DnsError": 2
+    }
+  },
+  "desktop": {
+    "pages": 40,
+    "percentWithFailures": 95,
+    "averageFailures": 48.425
+  },
+  "mobile": {
+    "pages": 40,
+    "percentWithFailures": 95,
+    "averageFailures": 39.1
+  },
+  "sectors": [
+    {
+      "sector": "public",
+      "listed": 6,
+      "scanned": 5,
+      "percentWithFailures": 80,
+      "averageFailures": 39.2
+    },
+    {
+      "sector": "finance",
+      "listed": 2,
+      "scanned": 2,
+      "percentWithFailures": 100,
+      "averageFailures": 16
+    },
+    {
+      "sector": "ecommerce",
+      "listed": 15,
+      "scanned": 10,
+      "percentWithFailures": 90,
+      "averageFailures": 52.6
+    },
+    {
+      "sector": "university",
+      "listed": 2,
+      "scanned": 2,
+      "percentWithFailures": 100,
+      "averageFailures": 10
+    },
+    {
+      "sector": "media",
+      "listed": 10,
+      "scanned": 9,
+      "percentWithFailures": 100,
+      "averageFailures": 65.22222222222223
+    },
+    {
+      "sector": "other",
+      "listed": 15,
+      "scanned": 12,
+      "percentWithFailures": 100,
+      "averageFailures": 48
+    }
+  ],
+  "topRules": [
+    {
+      "ruleId": "color-contrast",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "percentOfPages": 70,
+      "pages": 28,
+      "elements": 691
+    },
+    {
+      "ruleId": "link-name",
+      "help": "Links must have discernible text",
+      "percentOfPages": 65,
+      "pages": 26,
+      "elements": 299
+    },
+    {
+      "ruleId": "image-alt",
+      "help": "Images must have alternative text",
+      "percentOfPages": 40,
+      "pages": 16,
+      "elements": 198
+    },
+    {
+      "ruleId": "label-content-name-mismatch",
+      "help": "Elements must have their visible text as part of their accessible name",
+      "percentOfPages": 35,
+      "pages": 14,
+      "elements": 65
+    },
+    {
+      "ruleId": "meta-viewport",
+      "help": "Zooming and scaling must not be disabled",
+      "percentOfPages": 32.5,
+      "pages": 13,
+      "elements": 13
+    },
+    {
+      "ruleId": "target-size",
+      "help": "All touch targets must be 24px large, or leave sufficient space",
+      "percentOfPages": 30,
+      "pages": 12,
+      "elements": 126
+    },
+    {
+      "ruleId": "frame-title",
+      "help": "Frames must have an accessible name",
+      "percentOfPages": 30,
+      "pages": 12,
+      "elements": 17
+    },
+    {
+      "ruleId": "button-name",
+      "help": "Buttons must have discernible text",
+      "percentOfPages": 27.5,
+      "pages": 11,
+      "elements": 37
+    },
+    {
+      "ruleId": "aria-allowed-attr",
+      "help": "Elements must only use supported ARIA attributes",
+      "percentOfPages": 15,
+      "pages": 6,
+      "elements": 51
+    },
+    {
+      "ruleId": "aria-prohibited-attr",
+      "help": "Elements must only use permitted ARIA attributes",
+      "percentOfPages": 12.5,
+      "pages": 5,
+      "elements": 11
+    }
+  ],
+  "structure": {
+    "pages": 40,
+    "percentLangMissing": 5,
+    "percentLangTurkish": 90,
+    "percentWithMain": 60,
+    "percentExactlyOneH1": 52.5,
+    "percentNoH1": 42.5,
+    "percentSkippedHeadingLevel": 40,
+    "averageLandmarks": 5.75,
+    "averageHeadings": 40.025,
+    "pagesWithLoadRecord": 0,
+    "percentScannedBeforeLoadEvent": 0
+  }
+}
