@@ -125,7 +125,7 @@
     }
     const section = element('section');
     section.lang = 'tr';
-    section.appendChild(element('h3', 'Bu hatalar ne anlama geliyor?'));
+    section.appendChild(element('h3', 'Bu sorunlar ne anlama geliyor?'));
     section.appendChild(element('p', 'Bu açıklamalar yapay zekâ ile taslak olarak yazıldı ve yayımlanmadan önce proje sahibi tarafından incelendi.'));
     items.forEach((e) => {
       section.appendChild(element('h4', e.title + ' (' + e.ruleId + ')'));

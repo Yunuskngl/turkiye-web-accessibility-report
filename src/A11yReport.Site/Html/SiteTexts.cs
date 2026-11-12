@@ -17,6 +17,12 @@ public sealed record SiteTexts
     public required string NavLookup { get; init; }
     public required string NavMethodology { get; init; }
     public required string OtherLanguageName { get; init; }
+
+    /// <summary>The language's own name, for example "Türkçe".</summary>
+    public required string LanguageName { get; init; }
+
+    /// <summary>Accessible name of the language switch.</summary>
+    public required string LanguageLabel { get; init; }
     public required string FooterText { get; init; }
     public required string FooterRepository { get; init; }
     public required string FooterOptOut { get; init; }

@@ -10,7 +10,7 @@ public enum SitePage
 }
 
 /// <summary>
-/// The shared page frame: language, skip link, header navigation with a language switch,
+/// The shared page frame: language, skip link, header with a language switch and navigation,
 /// main landmark and footer. English pages live at the root, Turkish pages in /tr/.
 /// </summary>
 public static class Layout
@@ -28,7 +28,6 @@ public static class Layout
     public static string Page(SiteTexts t, string title, SitePage current, string body, string repositoryUrl)
     {
         var other = t.LangCode == SiteLanguages.English.LangCode ? SiteLanguages.Turkish : SiteLanguages.English;
-        var otherHref = OtherLanguageHref(t, other, current);
         return string.Create(CultureInfo.InvariantCulture, $"""
             <!DOCTYPE html>
             <html lang="{t.LangCode}">
@@ -37,19 +36,23 @@ public static class Layout
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <title>{HtmlText.Encode(title)} – {t.SiteName}</title>
               <link rel="stylesheet" href="{RootPrefix(t)}styles.css">
-              <link rel="alternate" hreflang="{other.LangCode}" href="{otherHref}">
+              <link rel="alternate" hreflang="{other.LangCode}" href="{LanguageHref(t, other, current)}">
             </head>
             <body>
               <a class="skip-link" href="#main">{t.SkipLink}</a>
               <header class="site-header">
-                <div class="wrap">
+                <div class="wrap header-top">
                   <p class="site-name"><a href="index.html">{t.SiteName}</a></p>
-                  <nav aria-label="{t.NavLabel}">
+                  <nav class="lang-switch" aria-label="{t.LanguageLabel}">
+                    <ul>{LanguageItems(t, current)}</ul>
+                  </nav>
+                </div>
+                <div class="wrap">
+                  <nav class="main-nav" aria-label="{t.NavLabel}">
                     <ul>
                       {NavItem(SitePage.Report, t.NavReport, current)}
                       {NavItem(SitePage.Lookup, t.NavLookup, current)}
                       {NavItem(SitePage.Methodology, t.NavMethodology, current)}
-                      <li><a href="{otherHref}" lang="{other.LangCode}" hreflang="{other.LangCode}">{t.OtherLanguageName}</a></li>
                     </ul>
                   </nav>
                 </div>
@@ -67,10 +70,27 @@ public static class Layout
             """);
     }
 
-    private static string OtherLanguageHref(SiteTexts current, SiteTexts other, SitePage page)
+    /// <summary>Link to the same page in a language, relative to the current page.</summary>
+    private static string LanguageHref(SiteTexts current, SiteTexts target, SitePage page)
     {
         var file = FileName(page);
-        return other.Folder.Length == 0 ? RootPrefix(current) + file : other.Folder + "/" + file;
+        if (target.LangCode == current.LangCode)
+        {
+            return file;
+        }
+
+        return target.Folder.Length == 0 ? RootPrefix(current) + file : target.Folder + "/" + file;
+    }
+
+    // Both languages are always shown, each written in its own language; the current one is marked.
+    private static string LanguageItems(SiteTexts current, SitePage page) =>
+        string.Concat(SiteLanguages.All.Select(language => LanguageItem(current, language, page)));
+
+    private static string LanguageItem(SiteTexts current, SiteTexts language, SitePage page)
+    {
+        var href = LanguageHref(current, language, page);
+        var marker = language.LangCode == current.LangCode ? " aria-current=\"true\"" : string.Empty;
+        return $"""<li><a href="{href}" lang="{language.LangCode}" hreflang="{language.LangCode}"{marker}>{language.LanguageName}</a></li>""";
     }
 
     private static string NavItem(SitePage page, string text, SitePage current) => page == current

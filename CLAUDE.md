@@ -185,6 +185,10 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   `docs/methodology.tr.md` is the Turkish translation (English is authoritative; keep in sync),
   headings use `{#id}` generic attributes for shared anchors. `HtmlText` uses `HtmlEncoder` with all
   Unicode ranges so Turkish letters are not turned into entities.
+- Site redesign (owner request, 2026-11-12): always-visible "English | Türkçe" switch in the header
+  (each language in its own name, current one `aria-current="true"`), plain-language page texts
+  (no jargon like "landmark" or "axe rule" outside the methodology), "In short / Kısaca" summary at
+  the top of both methodology pages, calm card-based CSS (white cards on light grey, one accent).
 - **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
   (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
   site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",
