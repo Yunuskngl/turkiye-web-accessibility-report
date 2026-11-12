@@ -1,9 +1,21 @@
 [
   {
+    "ruleId": "area-alt",
+    "title": "Açıklaması olmayan tıklanabilir harita alanları",
+    "explanation": "Bir görselin tıklanabilir bölgeleri (area öğeleri) bir yere götürüyorsa, her birinin alt metni olmalıdır. Alt metin yoksa ekran okuyucu kullanan kişi bu bağlantının nereye gittiğini duyamaz.",
+    "fixExample": "Hatalı: \u003Carea shape=\u0022rect\u0022 coords=\u00220,0,100,50\u0022 href=\u0022/iletisim\u0022\u003E\nDoğru: \u003Carea shape=\u0022rect\u0022 coords=\u00220,0,100,50\u0022 href=\u0022/iletisim\u0022 alt=\u0022İletişim\u0022\u003E"
+  },
+  {
     "ruleId": "aria-allowed-attr",
     "title": "Öğeye uymayan ARIA özellikleri",
     "explanation": "Bazı ARIA özellikleri yalnızca belirli rollerle kullanılabilir; örneğin bir düğmede aria-checked anlamsızdır. Uymayan özellikler ekran okuyuculara yanlış ya da çelişkili bilgi verir veya hiç okunmaz. Bu durumdan en çok ekran okuyucu kullanan görme engelli kişiler etkilenir.",
     "fixExample": "Hatalı: \u003Cbutton aria-checked=\u0022true\u0022\u003EBildirimler\u003C/button\u003E\nDoğru: \u003Cbutton aria-pressed=\u0022true\u0022\u003EBildirimler\u003C/button\u003E"
+  },
+  {
+    "ruleId": "aria-command-name",
+    "title": "Adı olmayan düğme ve bağlantı benzeri öğeler",
+    "explanation": "role=\u0022button\u0022, role=\u0022link\u0022 veya role=\u0022menuitem\u0022 verilen öğelerin ekran okuyucunun okuyabileceği bir adı olmalıdır. Yalnızca simge içeren böyle bir öğe ekran okuyucuda sadece \u0022düğme\u0022 diye okunur; kullanıcı ne işe yaradığını bilemez.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022button\u0022 tabindex=\u00220\u0022 class=\u0022ara-simgesi\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022button\u0022 tabindex=\u00220\u0022 class=\u0022ara-simgesi\u0022 aria-label=\u0022Ara\u0022\u003E\u003C/div\u003E"
   },
   {
     "ruleId": "aria-hidden-focus",
@@ -18,10 +30,22 @@
     "fixExample": "Hatalı: \u003Cdiv role=\u0022textbox\u0022 contenteditable=\u0022true\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022textbox\u0022 contenteditable=\u0022true\u0022 aria-label=\u0022Mesajınız\u0022\u003E\u003C/div\u003E"
   },
   {
+    "ruleId": "aria-progressbar-name",
+    "title": "Adı olmayan ilerleme çubukları",
+    "explanation": "İlerleme çubuğu (role=\u0022progressbar\u0022) neyin ilerlediğini söyleyen bir ada sahip olmalıdır. Ad yoksa ekran okuyucu kullanan kişi yalnızca bir yüzde duyar ve bunun dosya yükleme mi, sayfa yükleme mi olduğunu bilemez.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022progressbar\u0022 aria-valuenow=\u002240\u0022 aria-valuemin=\u00220\u0022 aria-valuemax=\u0022100\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022progressbar\u0022 aria-valuenow=\u002240\u0022 aria-valuemin=\u00220\u0022 aria-valuemax=\u0022100\u0022 aria-label=\u0022Dosya yükleniyor\u0022\u003E\u003C/div\u003E"
+  },
+  {
     "ruleId": "aria-prohibited-attr",
     "title": "Bu öğede kullanılamayan ARIA özellikleri",
     "explanation": "Bazı roller belirli ARIA özelliklerine izin vermez; örneğin rolü olmayan bir span veya div için aria-label kullanılamaz. Ekran okuyucular bu durumda etiketi çoğu zaman yok sayar ve bilgi kaybolur. Öğeye uygun bir rol vermek ya da bilgiyi görünür metin olarak yazmak gerekir.",
     "fixExample": "Hatalı: \u003Cspan aria-label=\u0022Yeni ürün\u0022\u003E●\u003C/span\u003E\nDoğru: \u003Cspan role=\u0022img\u0022 aria-label=\u0022Yeni ürün\u0022\u003E●\u003C/span\u003E"
+  },
+  {
+    "ruleId": "aria-required-attr",
+    "title": "Zorunlu ARIA bilgisi eksik öğeler",
+    "explanation": "Bazı ARIA rolleri ek bir bilgi olmadan eksik kalır; örneğin role=\u0022checkbox\u0022 seçili olup olmadığını aria-checked ile söylemelidir. Bu bilgi yoksa ekran okuyucu kullanan kişi kutunun işaretli olup olmadığını öğrenemez.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022checkbox\u0022 tabindex=\u00220\u0022\u003EKampanyalardan haberdar et\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022checkbox\u0022 tabindex=\u00220\u0022 aria-checked=\u0022false\u0022\u003EKampanyalardan haberdar et\u003C/div\u003E"
   },
   {
     "ruleId": "aria-required-children",
@@ -36,10 +60,34 @@
     "fixExample": "Hatalı: \u003Cdiv\u003E\u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022true\u0022\u003EGünlük\u003C/button\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022tablist\u0022\u003E\u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022true\u0022\u003EGünlük\u003C/button\u003E\u003C/div\u003E"
   },
   {
+    "ruleId": "aria-roles",
+    "title": "Geçersiz ARIA rolleri",
+    "explanation": "role özelliğine yalnızca ARIA\u0027da tanımlı değerler yazılabilir. Yanlış yazılmış bir rol (örneğin \u0022buton\u0022) ekran okuyucular tarafından tanınmaz ve öğe sıradan bir metin gibi okunur. En sağlamı, mümkünse HTML\u0027in kendi öğelerini (örneğin button) kullanmaktır.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022buton\u0022 tabindex=\u00220\u0022\u003EGönder\u003C/div\u003E\nDoğru: \u003Cbutton type=\u0022submit\u0022\u003EGönder\u003C/button\u003E"
+  },
+  {
+    "ruleId": "aria-tab-name",
+    "title": "Adı olmayan sekmeler",
+    "explanation": "Sekme olarak işaretlenen öğelerin (role=\u0022tab\u0022) okunabilir bir adı olmalıdır. Yalnızca simgeden oluşan bir sekmede ekran okuyucu kullanan kişi hangi sekmede olduğunu ve diğer sekmelerin ne içerdiğini bilemez.",
+    "fixExample": "Hatalı: \u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022true\u0022\u003E\u003Cspan class=\u0022ikon-liste\u0022\u003E\u003C/span\u003E\u003C/button\u003E\nDoğru: \u003Cbutton role=\u0022tab\u0022 aria-selected=\u0022true\u0022 aria-label=\u0022Liste görünümü\u0022\u003E\u003Cspan class=\u0022ikon-liste\u0022\u003E\u003C/span\u003E\u003C/button\u003E"
+  },
+  {
     "ruleId": "aria-toggle-field-name",
     "title": "Adı olmayan aç/kapat kontrolleri",
     "explanation": "checkbox, switch, radio, menuitemcheckbox veya menuitemradio rolü verilen öğelerin erişilebilir bir adı olmalıdır. Ad yoksa ekran okuyucu yalnızca \u0022anahtar, kapalı\u0022 gibi bir şey söyler ve kullanıcı neyi açıp kapattığını bilemez. Ad, görünür bir etiket, aria-label veya aria-labelledby ile verilebilir.",
     "fixExample": "Hatalı: \u003Cdiv role=\u0022switch\u0022 aria-checked=\u0022false\u0022 tabindex=\u00220\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022switch\u0022 aria-checked=\u0022false\u0022 tabindex=\u00220\u0022 aria-label=\u0022Karanlık mod\u0022\u003E\u003C/div\u003E"
+  },
+  {
+    "ruleId": "aria-tooltip-name",
+    "title": "Boş ipucu kutuları",
+    "explanation": "İpucu olarak işaretlenen bir öğenin (role=\u0022tooltip\u0022) içinde okunabilir bir metin olmalıdır. İpucu boşsa ekran okuyucu kullanan kişi, diğer kullanıcıların gördüğü yardımcı bilgiyi alamaz.",
+    "fixExample": "Hatalı: \u003Cdiv role=\u0022tooltip\u0022 id=\u0022sifre-ipucu\u0022\u003E\u003C/div\u003E\nDoğru: \u003Cdiv role=\u0022tooltip\u0022 id=\u0022sifre-ipucu\u0022\u003EŞifreniz en az 8 karakter olmalı\u003C/div\u003E"
+  },
+  {
+    "ruleId": "aria-valid-attr",
+    "title": "Yanlış yazılmış ARIA özellikleri",
+    "explanation": "ARIA özelliklerinin adları tam olarak doğru yazılmalıdır. Örneğin aria-label yerine aria-labell yazılırsa tarayıcı bu özelliği tanımaz ve düğmenin adı ekran okuyuculara hiç ulaşmaz.",
+    "fixExample": "Hatalı: \u003Cbutton aria-labell=\u0022Kapat\u0022\u003E×\u003C/button\u003E\nDoğru: \u003Cbutton aria-label=\u0022Kapat\u0022\u003E×\u003C/button\u003E"
   },
   {
     "ruleId": "aria-valid-attr-value",
@@ -66,6 +114,30 @@
     "fixExample": "Hatalı: \u003Cp style=\u0022color: #999999; background: #ffffff;\u0022\u003EKampanya koşulları\u003C/p\u003E\nDoğru: \u003Cp style=\u0022color: #595959; background: #ffffff;\u0022\u003EKampanya koşulları\u003C/p\u003E"
   },
   {
+    "ruleId": "definition-list",
+    "title": "Hatalı yapılmış tanım listeleri",
+    "explanation": "Tanım listelerinin (dl) içinde terim (dt) ve açıklama (dd) çiftleri bulunmalıdır; araya doğrudan p gibi başka öğeler konmamalıdır. Yapı bozulduğunda ekran okuyucular hangi açıklamanın hangi terime ait olduğunu doğru aktaramaz.",
+    "fixExample": "Hatalı: \u003Cdl\u003E\u003Cp\u003EKargo\u003C/p\u003E\u003Cdd\u003EÜcretsiz\u003C/dd\u003E\u003C/dl\u003E\nDoğru: \u003Cdl\u003E\u003Cdt\u003EKargo\u003C/dt\u003E\u003Cdd\u003EÜcretsiz\u003C/dd\u003E\u003C/dl\u003E"
+  },
+  {
+    "ruleId": "dlitem",
+    "title": "Tanım listesi dışında kalan terimler",
+    "explanation": "Terim (dt) ve açıklama (dd) öğeleri yalnızca bir tanım listesinin (dl) içinde kullanılmalıdır. Liste dışında kaldıklarında ekran okuyucular terim ile açıklamasının bağlantısını kuramaz.",
+    "fixExample": "Hatalı: \u003Cdiv\u003E\u003Cdt\u003EKargo\u003C/dt\u003E\u003Cdd\u003EÜcretsiz\u003C/dd\u003E\u003C/div\u003E\nDoğru: \u003Cdl\u003E\u003Cdt\u003EKargo\u003C/dt\u003E\u003Cdd\u003EÜcretsiz\u003C/dd\u003E\u003C/dl\u003E"
+  },
+  {
+    "ruleId": "document-title",
+    "title": "Sayfa başlığı eksik",
+    "explanation": "Her sayfanın, tarayıcı sekmesinde görünen bir başlığı (title) olmalıdır. Ekran okuyucular sayfaya girildiğinde önce bu başlığı okur; başlık yoksa kişi hangi sayfada olduğunu anlamakta zorlanır. Başlık, sekmeler arasında geçiş yapan herkesin de işine yarar.",
+    "fixExample": "Hatalı: \u003Chead\u003E\u003Cmeta charset=\u0022utf-8\u0022\u003E\u003C/head\u003E\nDoğru: \u003Chead\u003E\u003Cmeta charset=\u0022utf-8\u0022\u003E\u003Ctitle\u003EAna sayfa – Örnek Market\u003C/title\u003E\u003C/head\u003E"
+  },
+  {
+    "ruleId": "frame-focusable-content",
+    "title": "Klavyeyle ulaşılamayan çerçeve içerikleri",
+    "explanation": "İçinde düğme veya form alanı bulunan bir iframe\u0027e tabindex=\u0022-1\u0022 verilirse, klavye kullanan kişiler bu çerçevenin içine hiç giremez. Örneğin gömülü bir ödeme formu fare kullanamayanlar için tamamen kullanılamaz hale gelir.",
+    "fixExample": "Hatalı: \u003Ciframe src=\u0022odeme-formu.html\u0022 title=\u0022Ödeme formu\u0022 tabindex=\u0022-1\u0022\u003E\u003C/iframe\u003E\nDoğru: \u003Ciframe src=\u0022odeme-formu.html\u0022 title=\u0022Ödeme formu\u0022\u003E\u003C/iframe\u003E"
+  },
+  {
     "ruleId": "frame-title",
     "title": "Başlığı olmayan iframe\u0027ler",
     "explanation": "Sayfaya gömülen iframe öğelerinin, içeriğini anlatan bir title özelliği olmalıdır. Başlık olmadığında ekran okuyucu kullanıcıları gömülü alanda ne olduğunu (harita, video, form) önceden öğrenemez. Kısa ve açıklayıcı bir başlık bu sorunu çözer.",
@@ -78,10 +150,28 @@
     "fixExample": "Hatalı: \u003Chtml\u003E\nDoğru: \u003Chtml lang=\u0022tr\u0022\u003E"
   },
   {
+    "ruleId": "html-lang-valid",
+    "title": "Geçersiz sayfa dili kodu",
+    "explanation": "html öğesindeki lang değeri geçerli bir dil kodu olmalıdır; Türkçe için \u0022tr\u0022 (veya \u0022tr-TR\u0022). \u0022turkish\u0022 gibi geçersiz bir değer yazılırsa ekran okuyucular dili tanımaz ve Türkçe metni yanlış telaffuzla okuyabilir.",
+    "fixExample": "Hatalı: \u003Chtml lang=\u0022turkish\u0022\u003E\nDoğru: \u003Chtml lang=\u0022tr\u0022\u003E"
+  },
+  {
     "ruleId": "image-alt",
     "title": "Alternatif metni olmayan görseller",
     "explanation": "Her img öğesinin bir alt özelliği olmalıdır. Bilgi taşıyan görsellerde alt metin görselin anlattığını söylemelidir; yalnızca süs olan görsellerde boş alt=\u0022\u0022 kullanılır. Alt özelliği hiç olmayan görseller ekran okuyucularda dosya adıyla okunabilir ya da tamamen kaybolur.",
     "fixExample": "Hatalı: \u003Cimg src=\u0022kampanya.jpg\u0022\u003E\nDoğru: \u003Cimg src=\u0022kampanya.jpg\u0022 alt=\u0022Tüm ayakkabılarda yüzde 30 indirim\u0022\u003E"
+  },
+  {
+    "ruleId": "input-button-name",
+    "title": "Yazısı olmayan form düğmeleri",
+    "explanation": "input type=\u0022button\u0022 ile yapılan düğmelerin value özelliğinde okunabilir bir yazı olmalıdır. Yazı yoksa ekran okuyucu düğmeyi sadece \u0022düğme\u0022 diye okur ve kullanıcı ne yapacağını bilemez.",
+    "fixExample": "Hatalı: \u003Cinput type=\u0022button\u0022 class=\u0022ara-dugmesi\u0022\u003E\nDoğru: \u003Cinput type=\u0022button\u0022 class=\u0022ara-dugmesi\u0022 value=\u0022Ara\u0022\u003E"
+  },
+  {
+    "ruleId": "input-image-alt",
+    "title": "Alt metni olmayan resimli düğmeler",
+    "explanation": "Resimden oluşan form düğmelerinin (input type=\u0022image\u0022) ne yaptığını anlatan bir alt metni olmalıdır. Alt metin yoksa ekran okuyucu kullanan kişi formu gönderen düğmeyi tanıyamaz.",
+    "fixExample": "Hatalı: \u003Cinput type=\u0022image\u0022 src=\u0022gonder.png\u0022\u003E\nDoğru: \u003Cinput type=\u0022image\u0022 src=\u0022gonder.png\u0022 alt=\u0022Gönder\u0022\u003E"
   },
   {
     "ruleId": "label",
@@ -154,6 +244,12 @@
     "title": "Etiketi olmayan açılır listeler",
     "explanation": "select öğelerinin ne seçtirdiğini anlatan bir etiketi olmalıdır. Etiket yoksa ekran okuyucu kullanıcıları yalnızca seçili değeri duyar ve listenin ne için olduğunu bilemez. name özelliği bir etiket değildir; görünür bir label öğesi kullanılmalıdır.",
     "fixExample": "Hatalı: \u003Cselect id=\u0022sehir\u0022\u003E\u003Coption\u003Eİstanbul\u003C/option\u003E\u003Coption\u003EAnkara\u003C/option\u003E\u003C/select\u003E\nDoğru: \u003Clabel for=\u0022sehir\u0022\u003EŞehir\u003C/label\u003E \u003Cselect id=\u0022sehir\u0022\u003E\u003Coption\u003Eİstanbul\u003C/option\u003E\u003Coption\u003EAnkara\u003C/option\u003E\u003C/select\u003E"
+  },
+  {
+    "ruleId": "svg-img-alt",
+    "title": "Açıklaması olmayan SVG görseller",
+    "explanation": "role=\u0022img\u0022 verilen SVG görsellerin bir metin alternatifi olmalıdır; bu, aria-label ya da SVG içindeki bir title ile verilebilir. Alternatif yoksa ekran okuyucu yalnızca \u0022görsel\u0022 der ve görselin anlattığı bilgi kaybolur.",
+    "fixExample": "Hatalı: \u003Csvg role=\u0022img\u0022 viewBox=\u00220 0 24 24\u0022\u003E\u003Cpath d=\u0022M0 0h24v24H0z\u0022/\u003E\u003C/svg\u003E\nDoğru: \u003Csvg role=\u0022img\u0022 aria-label=\u0022Sepet\u0022 viewBox=\u00220 0 24 24\u0022\u003E\u003Cpath d=\u0022M0 0h24v24H0z\u0022/\u003E\u003C/svg\u003E"
   },
   {
     "ruleId": "target-size",
