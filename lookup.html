@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Look up a site – Türkiye Web Accessibility Report</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="alternate" hreflang="tr" href="tr/lookup.html">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -16,16 +17,17 @@
           <li><a href="index.html">Report</a></li>
           <li><a href="lookup.html" aria-current="page">Look up a site</a></li>
           <li><a href="methodology.html">Methodology</a></li>
+          <li><a href="tr/lookup.html" lang="tr" hreflang="tr">Türkçe</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main id="main" class="wrap">
 <h1>Look up a site</h1>
-<p class="lede">See the automated check result for one home page. We show a site's result only when
-someone looks it up; we do not publish a list or a ranking of sites.</p>
-<p class="notice"><strong>Pilot results.</strong> Only the sites in the small pilot run can be found.</p>
-<form id="lookup-form" class="lookup-form" data-tr-zones="av bbs bel biz com dr edu gen gov info k12 kep mil name nc net org pol tel tsk tv web" novalidate>
+<p class="lede">See the automated check result for one home page. We show a site's result only when someone looks it up; we do not publish a list or a ranking of sites.</p>
+
+<form id="lookup-form" class="lookup-form" data-tr-zones="av bbs bel biz com dr edu gen gov info k12 kep mil name nc net org pol tel tsk tv web" data-root=""
+  data-lang="en" novalidate>
   <label for="domain">Website address</label>
   <p id="domain-hint" class="hint">For example <code>example.com.tr</code> or <code>https://www.example.com.tr</code></p>
   <div class="lookup-row">
@@ -39,20 +41,14 @@ someone looks it up; we do not publish a list or a ranking of sites.</p>
 <noscript><p>This search needs JavaScript. All published numbers are also on the report page.</p></noscript>
 <section aria-labelledby="read-first">
   <h2 id="read-first">Read this first</h2>
-  <ul>
-    <li>Checked on 11 November 2026 with axe-core 4.14.0, home page only.</li>
-    <li>Automated checks find only part of accessibility barriers. No detected failures does not mean the
-    page is accessible, and this is not a legal compliance audit.</li>
-    <li>Site owners can ask us to remove their site: see <a href="methodology.html#opting-out">opting out</a>.</li>
-  </ul>
+  <ul><li>Checked on 11 November 2026 with axe-core 4.14.0, home page only.</li><li>Automated checks find only part of accessibility barriers. No detected failures does not mean the page is accessible, and this is not a legal compliance audit.</li><li>Site owners can ask us to remove their site: see <a href="methodology.html#opting-out">opting out</a>.</li></ul>
 </section>
+<script type="application/json" id="lookup-texts">{"enterAddress":"Please enter a website address, for example example.com.tr.","lookingUp":"Looking up {domain}…","noResult":"No result for {domain}. The site was not in this run, or its owner asked to be left out.","failed":"The lookup could not be completed. Please try again.","resultFor":"Result for {domain}","sectorLine":"Sector: {sector}. Checked on {date} with axe-core {axe}.","notChecked":"This home page was not checked: {status}. It is not counted as a page without failures.","summary":"Summary","view":"View","failedRules":"Failed rules","detectedFailures":"Detected failures (elements)","Desktop":"Desktop view","Mobile":"Mobile view","rulesCaption":"{view}: detected failures","ruleColumn":"Failure type (axe rule)","criteriaColumn":"WCAG criteria","elementsColumn":"Elements","noFailures":"No failures detected by the automated rules. This does not mean the page is accessible.","factsCaption":"Page language and structure","measure":"Measure","value":"Value","lang":"Page language (lang attribute)","hasTitle":"Has a page title","hasMain":"Has a main landmark","h1Count":"First-level headings (h1)","headingCount":"Headings in total","skips":"Skips a heading level","yes":"Yes","no":"No","notSet":"Not set","stillLoading":"The page was still loading extra content (for example ads) when it was checked."}</script>
 <script src="lookup.js" defer></script>
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p>Automated results from axe-core. Not a legal compliance audit. Source code and data:
-        <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub repository</a>.
-        Site owners can <a href="methodology.html#opting-out">opt out</a>.</p>
+      <p>Automated results from axe-core. Not a legal compliance audit. Source code and data: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub repository</a>. Site owners can <a href="methodology.html#opting-out">opt out</a>.</p>
     </div>
   </footer>
 </body>

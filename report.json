@@ -1,159 +1,165 @@
 {
   "run": {
-    "name": "2026-pilot",
+    "name": "2026-full",
     "state": "Completed",
-    "startedAt": "2026-11-11T09:43:46.216373+00:00",
-    "finishedAt": "2026-11-11T09:52:01.506878+00:00",
+    "startedAt": "2026-11-11T11:59:55.066928+00:00",
+    "finishedAt": "2026-11-11T15:18:56.795233+00:00",
     "axeVersion": "4.14.0",
     "browserVersion": "156.0.8078.4",
     "listSource": "Chrome UX Report (CrUX) top origins for Türkiye (country code tr), via github.com/zakird/crux-top-lists; snapshot tr-202610.csv.gz (sha256 9aecf48c805fc2daf6ef12201f08409cf0d1a522683938229e2dd3b08fc19710)"
   },
   "coverage": {
-    "listed": 50,
-    "scanned": 40,
+    "listed": 1000,
+    "scanned": 878,
     "notScannedByStatus": {
-      "Timeout": 6,
-      "Unreachable": 2,
+      "Unreachable": 60,
+      "Timeout": 33,
+      "TlsError": 11,
+      "Failed": 5,
+      "SkippedRobots": 5,
+      "NetworkError": 2,
+      "HttpError": 2,
+      "Duplicate": 2,
       "DnsError": 2
     }
   },
   "desktop": {
-    "pages": 40,
-    "percentWithFailures": 95,
-    "averageFailures": 48.425
+    "pages": 878,
+    "percentWithFailures": 95.44419134396355,
+    "averageFailures": 58.84168564920273
   },
   "mobile": {
-    "pages": 40,
-    "percentWithFailures": 95,
-    "averageFailures": 39.1
+    "pages": 878,
+    "percentWithFailures": 95.10250569476082,
+    "averageFailures": 55.28473804100228
   },
   "sectors": [
     {
       "sector": "public",
-      "listed": 6,
-      "scanned": 5,
-      "percentWithFailures": 80,
-      "averageFailures": 39.2
+      "listed": 111,
+      "scanned": 92,
+      "percentWithFailures": 94.56521739130434,
+      "averageFailures": 29.67391304347826
     },
     {
       "sector": "finance",
-      "listed": 2,
-      "scanned": 2,
-      "percentWithFailures": 100,
-      "averageFailures": 16
+      "listed": 56,
+      "scanned": 50,
+      "percentWithFailures": 96,
+      "averageFailures": 34.44
     },
     {
       "sector": "ecommerce",
-      "listed": 15,
-      "scanned": 10,
-      "percentWithFailures": 90,
-      "averageFailures": 52.6
+      "listed": 270,
+      "scanned": 234,
+      "percentWithFailures": 96.15384615384616,
+      "averageFailures": 67.00854700854701
     },
     {
       "sector": "university",
-      "listed": 2,
-      "scanned": 2,
-      "percentWithFailures": 100,
-      "averageFailures": 10
+      "listed": 63,
+      "scanned": 51,
+      "percentWithFailures": 96.07843137254902,
+      "averageFailures": 41.64705882352941
     },
     {
       "sector": "media",
-      "listed": 10,
-      "scanned": 9,
-      "percentWithFailures": 100,
-      "averageFailures": 65.22222222222223
+      "listed": 176,
+      "scanned": 167,
+      "percentWithFailures": 98.80239520958084,
+      "averageFailures": 61.203592814371255
     },
     {
       "sector": "other",
-      "listed": 15,
-      "scanned": 12,
-      "percentWithFailures": 100,
-      "averageFailures": 48
+      "listed": 324,
+      "scanned": 284,
+      "percentWithFailures": 92.95774647887323,
+      "averageFailures": 67.55633802816901
     }
   ],
   "topRules": [
     {
       "ruleId": "color-contrast",
       "help": "Elements must meet minimum color contrast ratio thresholds",
-      "percentOfPages": 70,
-      "pages": 28,
-      "elements": 691
+      "percentOfPages": 75.74031890660592,
+      "pages": 665,
+      "elements": 16348
     },
     {
       "ruleId": "link-name",
       "help": "Links must have discernible text",
-      "percentOfPages": 65,
-      "pages": 26,
-      "elements": 299
+      "percentOfPages": 64.57858769931663,
+      "pages": 567,
+      "elements": 8993
     },
     {
       "ruleId": "image-alt",
       "help": "Images must have alternative text",
-      "percentOfPages": 40,
-      "pages": 16,
-      "elements": 198
-    },
-    {
-      "ruleId": "label-content-name-mismatch",
-      "help": "Elements must have their visible text as part of their accessible name",
-      "percentOfPages": 35,
-      "pages": 14,
-      "elements": 65
-    },
-    {
-      "ruleId": "meta-viewport",
-      "help": "Zooming and scaling must not be disabled",
-      "percentOfPages": 32.5,
-      "pages": 13,
-      "elements": 13
+      "percentOfPages": 45.33029612756264,
+      "pages": 398,
+      "elements": 5511
     },
     {
       "ruleId": "target-size",
       "help": "All touch targets must be 24px large, or leave sufficient space",
-      "percentOfPages": 30,
-      "pages": 12,
-      "elements": 126
-    },
-    {
-      "ruleId": "frame-title",
-      "help": "Frames must have an accessible name",
-      "percentOfPages": 30,
-      "pages": 12,
-      "elements": 17
+      "percentOfPages": 44.874715261959,
+      "pages": 394,
+      "elements": 12821
     },
     {
       "ruleId": "button-name",
       "help": "Buttons must have discernible text",
-      "percentOfPages": 27.5,
-      "pages": 11,
-      "elements": 37
+      "percentOfPages": 28.246013667425967,
+      "pages": 248,
+      "elements": 1579
     },
     {
-      "ruleId": "aria-allowed-attr",
-      "help": "Elements must only use supported ARIA attributes",
-      "percentOfPages": 15,
-      "pages": 6,
-      "elements": 51
+      "ruleId": "meta-viewport",
+      "help": "Zooming and scaling must not be disabled",
+      "percentOfPages": 26.65148063781321,
+      "pages": 234,
+      "elements": 242
     },
     {
-      "ruleId": "aria-prohibited-attr",
-      "help": "Elements must only use permitted ARIA attributes",
-      "percentOfPages": 12.5,
-      "pages": 5,
-      "elements": 11
+      "ruleId": "label-content-name-mismatch",
+      "help": "Elements must have their visible text as part of their accessible name",
+      "percentOfPages": 21.184510250569478,
+      "pages": 186,
+      "elements": 1116
+    },
+    {
+      "ruleId": "frame-title",
+      "help": "Frames must have an accessible name",
+      "percentOfPages": 14.350797266514807,
+      "pages": 126,
+      "elements": 184
+    },
+    {
+      "ruleId": "list",
+      "help": "\u003Cul\u003E and \u003Col\u003E must only directly contain \u003Cli\u003E, \u003Cscript\u003E or \u003Ctemplate\u003E elements",
+      "percentOfPages": 12.75626423690205,
+      "pages": 112,
+      "elements": 230
+    },
+    {
+      "ruleId": "listitem",
+      "help": "\u003Cli\u003E elements must be contained in a \u003Cul\u003E or \u003Col\u003E",
+      "percentOfPages": 8.542141230068337,
+      "pages": 75,
+      "elements": 1169
     }
   ],
   "structure": {
-    "pages": 40,
-    "percentLangMissing": 5,
-    "percentLangTurkish": 90,
-    "percentWithMain": 60,
-    "percentExactlyOneH1": 52.5,
-    "percentNoH1": 42.5,
-    "percentSkippedHeadingLevel": 40,
-    "averageLandmarks": 5.75,
-    "averageHeadings": 40.025,
-    "pagesWithLoadRecord": 0,
-    "percentScannedBeforeLoadEvent": 0
+    "pages": 878,
+    "percentLangMissing": 5.922551252847381,
+    "percentLangTurkish": 90.8883826879271,
+    "percentWithMain": 52.619589977220954,
+    "percentExactlyOneH1": 43.8496583143508,
+    "percentNoH1": 45.33029612756264,
+    "percentSkippedHeadingLevel": 35.19362186788155,
+    "averageLandmarks": 7.029612756264237,
+    "averageHeadings": 38.34168564920273,
+    "pagesWithLoadRecord": 878,
+    "percentScannedBeforeLoadEvent": 44.07744874715262
   }
 }
