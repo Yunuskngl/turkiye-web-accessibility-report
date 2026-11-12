@@ -1,5 +1,17 @@
 [
   {
+    "ruleId": "area-alt",
+    "help": "Active <area> elements must have alternative text",
+    "criteria": "2.4.4, 4.1.2",
+    "title": "Açıklaması olmayan tıklanabilir harita alanları",
+    "explanation": "Bir görselin tıklanabilir bölgeleri (area öğeleri) bir yere götürüyorsa, her birinin alt metni olmalıdır. Alt metin yoksa ekran okuyucu kullanan kişi bu bağlantının nereye gittiğini duyamaz.",
+    "fixExample": "Hatalı: <area shape=\"rect\" coords=\"0,0,100,50\" href=\"/iletisim\">\nDoğru: <area shape=\"rect\" coords=\"0,0,100,50\" href=\"/iletisim\" alt=\"İletişim\">",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
     "ruleId": "aria-allowed-attr",
     "help": "Elements must only use supported ARIA attributes",
     "criteria": "4.1.2",
@@ -10,6 +22,18 @@
     "model": "gemma3:4b (first draft), rewritten by Claude Opus 5.5",
     "generatedAt": "2026-11-11T11:25:30.356268+00:00",
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft example and explanation were vague; rewritten. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
+  },
+  {
+    "ruleId": "aria-command-name",
+    "help": "ARIA commands must have an accessible name",
+    "criteria": "4.1.2",
+    "title": "Adı olmayan düğme ve bağlantı benzeri öğeler",
+    "explanation": "role=\"button\", role=\"link\" veya role=\"menuitem\" verilen öğelerin ekran okuyucunun okuyabileceği bir adı olmalıdır. Yalnızca simge içeren böyle bir öğe ekran okuyucuda sadece \"düğme\" diye okunur; kullanıcı ne işe yaradığını bilemez.",
+    "fixExample": "Hatalı: <div role=\"button\" tabindex=\"0\" class=\"ara-simgesi\"></div>\nDoğru: <div role=\"button\" tabindex=\"0\" class=\"ara-simgesi\" aria-label=\"Ara\"></div>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
   },
   {
     "ruleId": "aria-hidden-focus",
@@ -36,6 +60,18 @@
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft showed a correctly labelled field as the wrong example. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
   },
   {
+    "ruleId": "aria-progressbar-name",
+    "help": "ARIA progressbar nodes must have an accessible name",
+    "criteria": "1.1.1",
+    "title": "Adı olmayan ilerleme çubukları",
+    "explanation": "İlerleme çubuğu (role=\"progressbar\") neyin ilerlediğini söyleyen bir ada sahip olmalıdır. Ad yoksa ekran okuyucu kullanan kişi yalnızca bir yüzde duyar ve bunun dosya yükleme mi, sayfa yükleme mi olduğunu bilemez.",
+    "fixExample": "Hatalı: <div role=\"progressbar\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\nDoğru: <div role=\"progressbar\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-label=\"Dosya yükleniyor\"></div>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
     "ruleId": "aria-prohibited-attr",
     "help": "Elements must only use permitted ARIA attributes",
     "criteria": "4.1.2",
@@ -46,6 +82,18 @@
     "model": "gemma3:4b (first draft), rewritten by Claude Opus 5.5",
     "generatedAt": "2026-11-11T11:27:21.988847+00:00",
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft example was about a broken aria-labelledby reference, a different rule. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
+  },
+  {
+    "ruleId": "aria-required-attr",
+    "help": "Required ARIA attributes must be provided",
+    "criteria": "4.1.2",
+    "title": "Zorunlu ARIA bilgisi eksik öğeler",
+    "explanation": "Bazı ARIA rolleri ek bir bilgi olmadan eksik kalır; örneğin role=\"checkbox\" seçili olup olmadığını aria-checked ile söylemelidir. Bu bilgi yoksa ekran okuyucu kullanan kişi kutunun işaretli olup olmadığını öğrenemez.",
+    "fixExample": "Hatalı: <div role=\"checkbox\" tabindex=\"0\">Kampanyalardan haberdar et</div>\nDoğru: <div role=\"checkbox\" tabindex=\"0\" aria-checked=\"false\">Kampanyalardan haberdar et</div>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
   },
   {
     "ruleId": "aria-required-children",
@@ -72,6 +120,30 @@
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft confused this rule with aria-required on form fields. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
   },
   {
+    "ruleId": "aria-roles",
+    "help": "ARIA roles used must conform to valid values",
+    "criteria": "4.1.2",
+    "title": "Geçersiz ARIA rolleri",
+    "explanation": "role özelliğine yalnızca ARIA'da tanımlı değerler yazılabilir. Yanlış yazılmış bir rol (örneğin \"buton\") ekran okuyucular tarafından tanınmaz ve öğe sıradan bir metin gibi okunur. En sağlamı, mümkünse HTML'in kendi öğelerini (örneğin button) kullanmaktır.",
+    "fixExample": "Hatalı: <div role=\"buton\" tabindex=\"0\">Gönder</div>\nDoğru: <button type=\"submit\">Gönder</button>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
+    "ruleId": "aria-tab-name",
+    "help": "ARIA tab nodes must have an accessible name",
+    "criteria": "4.1.2",
+    "title": "Adı olmayan sekmeler",
+    "explanation": "Sekme olarak işaretlenen öğelerin (role=\"tab\") okunabilir bir adı olmalıdır. Yalnızca simgeden oluşan bir sekmede ekran okuyucu kullanan kişi hangi sekmede olduğunu ve diğer sekmelerin ne içerdiğini bilemez.",
+    "fixExample": "Hatalı: <button role=\"tab\" aria-selected=\"true\"><span class=\"ikon-liste\"></span></button>\nDoğru: <button role=\"tab\" aria-selected=\"true\" aria-label=\"Liste görünümü\"><span class=\"ikon-liste\"></span></button>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
     "ruleId": "aria-toggle-field-name",
     "help": "ARIA toggle fields must have an accessible name",
     "criteria": "4.1.2",
@@ -82,6 +154,30 @@
     "model": "gemma3:4b (first draft), rewritten by Claude Opus 5.5",
     "generatedAt": "2026-11-11T11:34:04.704367+00:00",
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft used an element that is not a toggle field. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
+  },
+  {
+    "ruleId": "aria-tooltip-name",
+    "help": "ARIA tooltip nodes must have an accessible name",
+    "criteria": "4.1.2",
+    "title": "Boş ipucu kutuları",
+    "explanation": "İpucu olarak işaretlenen bir öğenin (role=\"tooltip\") içinde okunabilir bir metin olmalıdır. İpucu boşsa ekran okuyucu kullanan kişi, diğer kullanıcıların gördüğü yardımcı bilgiyi alamaz.",
+    "fixExample": "Hatalı: <div role=\"tooltip\" id=\"sifre-ipucu\"></div>\nDoğru: <div role=\"tooltip\" id=\"sifre-ipucu\">Şifreniz en az 8 karakter olmalı</div>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
+    "ruleId": "aria-valid-attr",
+    "help": "ARIA attributes must conform to valid names",
+    "criteria": "4.1.2",
+    "title": "Yanlış yazılmış ARIA özellikleri",
+    "explanation": "ARIA özelliklerinin adları tam olarak doğru yazılmalıdır. Örneğin aria-label yerine aria-labell yazılırsa tarayıcı bu özelliği tanımaz ve düğmenin adı ekran okuyuculara hiç ulaşmaz.",
+    "fixExample": "Hatalı: <button aria-labell=\"Kapat\">×</button>\nDoğru: <button aria-label=\"Kapat\">×</button>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
   },
   {
     "ruleId": "aria-valid-attr-value",
@@ -132,6 +228,54 @@
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft named screen reader users as affected; example text adjusted. Ratios: #999999 on white 2.8:1, #595959 on white 7.0:1. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
   },
   {
+    "ruleId": "definition-list",
+    "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script>, <template> or <div> elements",
+    "criteria": "1.3.1",
+    "title": "Hatalı yapılmış tanım listeleri",
+    "explanation": "Tanım listelerinin (dl) içinde terim (dt) ve açıklama (dd) çiftleri bulunmalıdır; araya doğrudan p gibi başka öğeler konmamalıdır. Yapı bozulduğunda ekran okuyucular hangi açıklamanın hangi terime ait olduğunu doğru aktaramaz.",
+    "fixExample": "Hatalı: <dl><p>Kargo</p><dd>Ücretsiz</dd></dl>\nDoğru: <dl><dt>Kargo</dt><dd>Ücretsiz</dd></dl>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
+    "ruleId": "dlitem",
+    "help": "<dt> and <dd> elements must be contained by a <dl>",
+    "criteria": "1.3.1",
+    "title": "Tanım listesi dışında kalan terimler",
+    "explanation": "Terim (dt) ve açıklama (dd) öğeleri yalnızca bir tanım listesinin (dl) içinde kullanılmalıdır. Liste dışında kaldıklarında ekran okuyucular terim ile açıklamasının bağlantısını kuramaz.",
+    "fixExample": "Hatalı: <div><dt>Kargo</dt><dd>Ücretsiz</dd></div>\nDoğru: <dl><dt>Kargo</dt><dd>Ücretsiz</dd></dl>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
+    "ruleId": "document-title",
+    "help": "Documents must have <title> element to aid in navigation",
+    "criteria": "2.4.2",
+    "title": "Sayfa başlığı eksik",
+    "explanation": "Her sayfanın, tarayıcı sekmesinde görünen bir başlığı (title) olmalıdır. Ekran okuyucular sayfaya girildiğinde önce bu başlığı okur; başlık yoksa kişi hangi sayfada olduğunu anlamakta zorlanır. Başlık, sekmeler arasında geçiş yapan herkesin de işine yarar.",
+    "fixExample": "Hatalı: <head><meta charset=\"utf-8\"></head>\nDoğru: <head><meta charset=\"utf-8\"><title>Ana sayfa – Örnek Market</title></head>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
+    "ruleId": "frame-focusable-content",
+    "help": "Frames with focusable content must not have tabindex=-1",
+    "criteria": "2.1.1",
+    "title": "Klavyeyle ulaşılamayan çerçeve içerikleri",
+    "explanation": "İçinde düğme veya form alanı bulunan bir iframe'e tabindex=\"-1\" verilirse, klavye kullanan kişiler bu çerçevenin içine hiç giremez. Örneğin gömülü bir ödeme formu fare kullanamayanlar için tamamen kullanılamaz hale gelir.",
+    "fixExample": "Hatalı: <iframe src=\"odeme-formu.html\" title=\"Ödeme formu\" tabindex=\"-1\"></iframe>\nDoğru: <iframe src=\"odeme-formu.html\" title=\"Ödeme formu\"></iframe>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
     "ruleId": "frame-title",
     "help": "Frames must have an accessible name",
     "criteria": "4.1.2",
@@ -156,6 +300,18 @@
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft was correct in substance; example made valid HTML. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
   },
   {
+    "ruleId": "html-lang-valid",
+    "help": "<html> element must have a valid value for the lang attribute",
+    "criteria": "3.1.1",
+    "title": "Geçersiz sayfa dili kodu",
+    "explanation": "html öğesindeki lang değeri geçerli bir dil kodu olmalıdır; Türkçe için \"tr\" (veya \"tr-TR\"). \"turkish\" gibi geçersiz bir değer yazılırsa ekran okuyucular dili tanımaz ve Türkçe metni yanlış telaffuzla okuyabilir.",
+    "fixExample": "Hatalı: <html lang=\"turkish\">\nDoğru: <html lang=\"tr\">",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
     "ruleId": "image-alt",
     "help": "Images must have alternative text",
     "criteria": "1.1.1",
@@ -166,6 +322,30 @@
     "model": "gemma3:4b (first draft), rewritten by Claude Opus 5.5",
     "generatedAt": "2026-11-11T11:38:22.069212+00:00",
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft wrongly showed alt=\"\" as an error; empty alt is correct for decorative images. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
+  },
+  {
+    "ruleId": "input-button-name",
+    "help": "Input buttons must have discernible text",
+    "criteria": "4.1.2",
+    "title": "Yazısı olmayan form düğmeleri",
+    "explanation": "input type=\"button\" ile yapılan düğmelerin value özelliğinde okunabilir bir yazı olmalıdır. Yazı yoksa ekran okuyucu düğmeyi sadece \"düğme\" diye okur ve kullanıcı ne yapacağını bilemez.",
+    "fixExample": "Hatalı: <input type=\"button\" class=\"ara-dugmesi\">\nDoğru: <input type=\"button\" class=\"ara-dugmesi\" value=\"Ara\">",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
+  },
+  {
+    "ruleId": "input-image-alt",
+    "help": "Image buttons must have alternative text",
+    "criteria": "1.1.1, 4.1.2",
+    "title": "Alt metni olmayan resimli düğmeler",
+    "explanation": "Resimden oluşan form düğmelerinin (input type=\"image\") ne yaptığını anlatan bir alt metni olmalıdır. Alt metin yoksa ekran okuyucu kullanan kişi formu gönderen düğmeyi tanıyamaz.",
+    "fixExample": "Hatalı: <input type=\"image\" src=\"gonder.png\">\nDoğru: <input type=\"image\" src=\"gonder.png\" alt=\"Gönder\">",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
   },
   {
     "ruleId": "label",
@@ -310,6 +490,18 @@
     "model": "gemma3:4b (first draft), rewritten by Claude Opus 5.5",
     "generatedAt": "2026-11-11T11:44:51.128452+00:00",
     "notes": "Rewritten by Claude on 2026-11-11 after review: Draft treated the name attribute as a label, which it is not. Approved by the project owner on 2026-11-11 (all 27 at once, text unchanged)."
+  },
+  {
+    "ruleId": "svg-img-alt",
+    "help": "<svg> elements with an img or image role must have alternative text",
+    "criteria": "1.1.1",
+    "title": "Açıklaması olmayan SVG görseller",
+    "explanation": "role=\"img\" verilen SVG görsellerin bir metin alternatifi olmalıdır; bu, aria-label ya da SVG içindeki bir title ile verilebilir. Alternatif yoksa ekran okuyucu yalnızca \"görsel\" der ve görselin anlattığı bilgi kaybolur.",
+    "fixExample": "Hatalı: <svg role=\"img\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\"/></svg>\nDoğru: <svg role=\"img\" aria-label=\"Sepet\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\"/></svg>",
+    "status": "approved",
+    "model": "Claude Opus 5.5",
+    "generatedAt": "2026-11-13T00:00:00+00:00",
+    "notes": "Written by Claude on 2026-11-13 from axe-core's rule definitions (no local-model draft). Approved by the project owner on 2026-11-13 (all 16 at once, text unchanged)."
   },
   {
     "ruleId": "target-size",
