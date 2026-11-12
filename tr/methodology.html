@@ -3,21 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Yöntem – Türkiye Web Erişilebilirlik Raporu</title>
+  <title>Nasıl yaptık? – Türkiye Web Erişilebilirlik Raporu</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="alternate" hreflang="en" href="../methodology.html">
 </head>
 <body>
   <a class="skip-link" href="#main">Ana içeriğe geç</a>
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap header-top">
       <p class="site-name"><a href="index.html">Türkiye Web Erişilebilirlik Raporu</a></p>
-      <nav aria-label="Ana menü">
+      <nav class="lang-switch" aria-label="Dil">
+        <ul><li><a href="../methodology.html" lang="en" hreflang="en">English</a></li><li><a href="methodology.html" lang="tr" hreflang="tr" aria-current="true">Türkçe</a></li></ul>
+      </nav>
+    </div>
+    <div class="wrap">
+      <nav class="main-nav" aria-label="Ana menü">
         <ul>
-          <li><a href="index.html">Rapor</a></li>
+          <li><a href="index.html">Sonuçlar</a></li>
           <li><a href="lookup.html">Site sorgula</a></li>
-          <li><a href="methodology.html" aria-current="page">Yöntem</a></li>
-          <li><a href="../methodology.html" lang="en" hreflang="en">English</a></li>
+          <li><a href="methodology.html" aria-current="page">Nasıl yaptık?</a></li>
         </ul>
       </nav>
     </div>
@@ -26,6 +30,24 @@
 <div class="prose"><h1 id="yontem">Yöntem</h1>
 <p>Bu sayfa raporun 2026 sürümünü anlatır. İngilizce metin (<code>docs/methodology.md</code>) esas alınır; bu
 sayfa onun Türkçe çevirisidir.</p>
+<h2 id="ksaca">Kısaca</h2>
+<ul>
+<li><strong>Neyi kontrol ettik:</strong> Gerçek Chrome ziyaret verilerine göre Türkiye'de en çok ziyaret edilen
+1.000 web sitesinin ana sayfasını.</li>
+<li><strong>Nasıl:</strong> Bir bilgisayar programı her ana sayfayı normal bir ziyaretçi gibi bir kez açtı ve
+üzerinde açık kaynaklı bir kontrol aracı (axe-core) çalıştırdı; hem bilgisayar hem telefon
+ekranı boyutunda.</li>
+<li><strong>Neye baktık:</strong> Siteyi engelli kişiler için zorlaştıran sorunlara; örneğin metin açıklaması
+olmayan görseller, okunamayacak kadar soluk yazılar veya ekran okuyucunun okuyabileceği bir adı
+olmayan düğmeler.</li>
+<li><strong>Ne değildir:</strong> Yasal bir denetim değildir. Bir program sorunların yalnızca bir kısmını
+bulabilir; &quot;sorun bulunmadı&quot; demek sitenin herkes için kolay olduğu anlamına gelmez.</li>
+<li><strong>Kurallara uyduk:</strong> Her sitenin robots.txt kurallarına uyduk, her ana sayfayı yalnızca bir kez
+açtık ve bir site ziyaretimizi reddettiğinde durduk. Raporda siteleri sıralamıyor ve isim
+vermiyoruz.</li>
+<li><strong>Site sahipleri</strong> rapordan çıkarılmayı isteyebilir (bkz. &quot;Kapsam dışı kalma&quot;).</li>
+</ul>
+<p>Sayfanın geri kalanı teknik ayrıntıları anlatır.</p>
 <h2 id="bu-rapor-nedir-ne-degildir">Bu rapor nedir, ne değildir</h2>
 <p>Bu rapor, Türkiye'deki popüler web sitelerinin <strong>ana sayfalarında</strong>, açık kaynaklı axe-core
 motoru ve WCAG 2.0, 2.1 ve 2.2 A ve AA kurallarıyla <strong>otomatik olarak tespit edilebilen</strong>
@@ -372,7 +394,7 @@ kopyalar üzerinden (commit <code>a67d0c8f09326df09739560bc43205b4f949f8e6</code
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p>axe-core ile yapılmış otomatik kontrol sonuçlarıdır. Yasal uygunluk denetimi değildir. Kaynak kod ve veriler: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub deposu</a>. Site sahipleri <a href="methodology.html#opting-out">kapsam dışı kalmayı</a> isteyebilir.</p>
+      <p>Otomatik bir kontrolün sonuçlarıdır. Yasal denetim değildir. Kaynak kod ve veriler: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub</a>. Site sahipleri <a href="methodology.html#opting-out">rapordan çıkarılmayı</a> isteyebilir.</p>
     </div>
   </footer>
 </body>

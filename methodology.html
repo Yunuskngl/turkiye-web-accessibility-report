@@ -3,21 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Methodology – Türkiye Web Accessibility Report</title>
+  <title>How we did it – Türkiye Web Accessibility Report</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="tr" href="tr/methodology.html">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap header-top">
       <p class="site-name"><a href="index.html">Türkiye Web Accessibility Report</a></p>
-      <nav aria-label="Main">
+      <nav class="lang-switch" aria-label="Language">
+        <ul><li><a href="methodology.html" lang="en" hreflang="en" aria-current="true">English</a></li><li><a href="tr/methodology.html" lang="tr" hreflang="tr">Türkçe</a></li></ul>
+      </nav>
+    </div>
+    <div class="wrap">
+      <nav class="main-nav" aria-label="Main">
         <ul>
-          <li><a href="index.html">Report</a></li>
-          <li><a href="lookup.html">Look up a site</a></li>
-          <li><a href="methodology.html" aria-current="page">Methodology</a></li>
-          <li><a href="tr/methodology.html" lang="tr" hreflang="tr">Türkçe</a></li>
+          <li><a href="index.html">Results</a></li>
+          <li><a href="lookup.html">Check a website</a></li>
+          <li><a href="methodology.html" aria-current="page">How we did it</a></li>
         </ul>
       </nav>
     </div>
@@ -25,6 +29,22 @@
   <main id="main" class="wrap">
 <div class="prose"><h1 id="methodology">Methodology</h1>
 <p>This page describes the 2026 edition of the report.</p>
+<h2 id="in-short">In short</h2>
+<ul>
+<li><strong>What we checked:</strong> the home pages of the 1,000 most visited websites in Türkiye, using real
+Chrome visit data.</li>
+<li><strong>How:</strong> a computer program opened each home page once, like a normal visitor, and ran an
+open-source checking tool (axe-core) on it, on a computer screen and on a phone screen.</li>
+<li><strong>What we looked for:</strong> problems that make a site hard to use for people with disabilities,
+for example images without a text description, text that is too pale to read, or buttons
+without a name that a screen reader can read out.</li>
+<li><strong>What it is not:</strong> a legal audit. A program can find only some problems, so &quot;no problems
+found&quot; does not mean a site is easy for everyone to use.</li>
+<li><strong>Fair play:</strong> we followed each site's robots.txt rules, loaded each home page only once, and
+stopped when a site refused our visit. We do not rank or name sites in the report.</li>
+<li><strong>Website owners</strong> can ask to be left out (see &quot;Opting out&quot;).</li>
+</ul>
+<p>The rest of this page gives the technical details.</p>
 <h2 id="what-this-report-is-and-is-not">What this report is — and is not</h2>
 <p>This report measures <strong>automatically detectable</strong> accessibility failures on the
 <strong>home pages</strong> of popular websites in Türkiye, using the open-source axe-core engine
@@ -363,7 +383,7 @@ https://github.com/zakird/crux-top-lists (commit <code>a67d0c8f09326df09739560bc
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p>Automated results from axe-core. Not a legal compliance audit. Source code and data: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub repository</a>. Site owners can <a href="methodology.html#opting-out">opt out</a>.</p>
+      <p>Results of an automatic check. This is not a legal audit. Source code and data: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub</a>. Website owners can <a href="methodology.html#opting-out">ask to be left out</a>.</p>
     </div>
   </footer>
 </body>

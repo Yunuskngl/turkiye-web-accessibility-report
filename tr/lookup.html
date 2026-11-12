@@ -3,52 +3,56 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Site sorgula – Türkiye Web Erişilebilirlik Raporu</title>
+  <title>Bir siteyi sorgula – Türkiye Web Erişilebilirlik Raporu</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="alternate" hreflang="en" href="../lookup.html">
 </head>
 <body>
   <a class="skip-link" href="#main">Ana içeriğe geç</a>
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap header-top">
       <p class="site-name"><a href="index.html">Türkiye Web Erişilebilirlik Raporu</a></p>
-      <nav aria-label="Ana menü">
+      <nav class="lang-switch" aria-label="Dil">
+        <ul><li><a href="../lookup.html" lang="en" hreflang="en">English</a></li><li><a href="lookup.html" lang="tr" hreflang="tr" aria-current="true">Türkçe</a></li></ul>
+      </nav>
+    </div>
+    <div class="wrap">
+      <nav class="main-nav" aria-label="Ana menü">
         <ul>
-          <li><a href="index.html">Rapor</a></li>
+          <li><a href="index.html">Sonuçlar</a></li>
           <li><a href="lookup.html" aria-current="page">Site sorgula</a></li>
-          <li><a href="methodology.html">Yöntem</a></li>
-          <li><a href="../lookup.html" lang="en" hreflang="en">English</a></li>
+          <li><a href="methodology.html">Nasıl yaptık?</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main id="main" class="wrap">
-<h1>Site sorgula</h1>
-<p class="lede">Bir ana sayfanın otomatik kontrol sonucunu görün. Bir sitenin sonucunu yalnızca biri o siteyi sorguladığında gösteriyoruz; sitelerin listesini veya sıralamasını yayımlamıyoruz.</p>
+<h1>Bir siteyi sorgula</h1>
+<p class="lede">Bir web sitesi adresi yazın; ana sayfasının otomatik kontrol sonucunu görün. Bir sitenin sonucunu yalnızca biri o siteyi aradığında gösteriyoruz; liste veya sıralama yayımlamıyoruz.</p>
 
 <form id="lookup-form" class="lookup-form" data-tr-zones="av bbs bel biz com dr edu gen gov info k12 kep mil name nc net org pol tel tsk tv web" data-root="../"
   data-lang="tr" novalidate>
   <label for="domain">Web sitesi adresi</label>
-  <p id="domain-hint" class="hint">Örneğin <code>ornek.com.tr</code> veya <code>https://www.ornek.com.tr</code></p>
+  <p id="domain-hint" class="hint">Örneğin <code>ornek.com.tr</code></p>
   <div class="lookup-row">
     <input id="domain" name="domain" type="text" inputmode="url" autocomplete="url" spellcheck="false"
       aria-describedby="domain-hint" required>
-    <button type="submit">Sorgula</button>
+    <button type="submit">Sonucu göster</button>
   </div>
 </form>
 <p id="lookup-status" class="lookup-status" role="status"></p>
 <div id="lookup-result" class="lookup-result"></div>
-<noscript><p>Bu arama için JavaScript gerekir. Yayımlanan tüm sayılar rapor sayfasında da var.</p></noscript>
+<noscript><p>Bu arama için JavaScript gerekir. Tüm sayılar sonuçlar sayfasında da var.</p></noscript>
 <section aria-labelledby="read-first">
-  <h2 id="read-first">Önce bunu okuyun</h2>
-  <ul><li>11 Kasım 2026 tarihinde axe-core 4.14.0 ile, yalnızca ana sayfa kontrol edildi.</li><li>Otomatik kontroller erişilebilirlik engellerinin yalnızca bir kısmını bulur. Hata tespit edilmemesi sayfanın erişilebilir olduğu anlamına gelmez; bu bir yasal uygunluk denetimi değildir.</li><li>Site sahipleri sitelerinin kaldırılmasını isteyebilir: <a href="methodology.html#opting-out">kapsam dışı kalma</a>.</li></ul>
+  <h2 id="read-first">Bilmeniz gerekenler</h2>
+  <ul><li>Yalnızca ana sayfa, 11 Kasım 2026 tarihinde kontrol edildi.</li><li>Otomatik kontroller sorunların yalnızca bir kısmını bulur. Sorun bulunmasa bile site bazı kişiler için zor olabilir.</li><li>Bu bir yasal denetim değildir.</li><li>Site sahipleri <a href="methodology.html#opting-out">rapordan çıkarılmayı</a> isteyebilir.</li></ul>
 </section>
-<script type="application/json" id="lookup-texts">{"enterAddress":"Lütfen bir web sitesi adresi girin, örneğin ornek.com.tr.","lookingUp":"{domain} sorgulanıyor…","noResult":"{domain} için sonuç yok. Site bu taramada yoktu veya sahibi kapsam dışı kalmayı istedi.","failed":"Sorgu tamamlanamadı. Lütfen tekrar deneyin.","resultFor":"{domain} için sonuç","sectorLine":"Sektör: {sector}. Kontrol tarihi: {date}, araç: axe-core {axe}.","notChecked":"Bu ana sayfa kontrol edilmedi: {status}. Hatasız sayfa olarak sayılmaz.","summary":"Özet","view":"Görünüm","failedRules":"Başarısız kural","detectedFailures":"Tespit edilen hata (öğe)","Desktop":"Masaüstü görünüm","Mobile":"Mobil görünüm","rulesCaption":"{view}: tespit edilen hatalar","ruleColumn":"Hata türü (axe kuralı)","criteriaColumn":"WCAG kriterleri","elementsColumn":"Öğe","noFailures":"Otomatik kurallarla hata tespit edilmedi. Bu, sayfanın erişilebilir olduğu anlamına gelmez.","factsCaption":"Sayfa dili ve yapısı","measure":"Ölçüm","value":"Değer","lang":"Sayfa dili (lang özelliği)","hasTitle":"Sayfa başlığı var","hasMain":"main yer işareti var","h1Count":"Birinci düzey başlık (h1)","headingCount":"Toplam başlık","skips":"Başlık düzeyi atlanıyor","yes":"Evet","no":"Hayır","notSet":"Belirtilmemiş","stillLoading":"Sayfa kontrol edildiğinde hâlâ ek içerik (örneğin reklam) yüklüyordu."}</script>
+<script type="application/json" id="lookup-texts">{"enterAddress":"Lütfen bir web sitesi adresi yazın, örneğin ornek.com.tr.","lookingUp":"{domain} aranıyor…","noResult":"{domain} için sonuç yok. Site listemizde değildi veya sahibi rapordan çıkarılmayı istedi.","failed":"Bir şeyler ters gitti. Lütfen tekrar deneyin.","resultFor":"{domain} için sonuç","sectorLine":"Sektör: {sector}. Kontrol tarihi: {date}, kullanılan araç: axe-core {axe}.","notChecked":"Bu ana sayfa kontrol edilemedi: {status}. Sorunsuz sayfa olarak sayılmaz.","summary":"Özet","view":"Ekran","failedRules":"Sorun türü","detectedFailures":"Bulunan sorun","Desktop":"Bilgisayar ekranında","Mobile":"Telefon ekranında","rulesCaption":"{view}: bulunan sorunlar","ruleColumn":"Sorun (teknik adı)","criteriaColumn":"WCAG kuralı","elementsColumn":"Kaç kez bulundu","noFailures":"Otomatik kontrol sorun bulmadı. Bu, sayfanın herkes için kolay olduğu anlamına gelmez.","factsCaption":"Dil ve düzen","measure":"Neye baktık","value":"Sonuç","lang":"Sayfa dili","hasTitle":"Sayfa başlığı var","hasMain":"Ana içerik alanı işaretlenmiş","h1Count":"Ana başlık (h1) sayısı","headingCount":"Toplam başlık","skips":"Başlık düzeyi atlanıyor","yes":"Evet","no":"Hayır","notSet":"Belirtilmemiş","stillLoading":"Sayfa, kontrol ettiğimizde hâlâ ek içerik (örneğin reklam) yüklüyordu."}</script>
 <script src="../lookup.js" defer></script>
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p>axe-core ile yapılmış otomatik kontrol sonuçlarıdır. Yasal uygunluk denetimi değildir. Kaynak kod ve veriler: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub deposu</a>. Site sahipleri <a href="methodology.html#opting-out">kapsam dışı kalmayı</a> isteyebilir.</p>
+      <p>Otomatik bir kontrolün sonuçlarıdır. Yasal denetim değildir. Kaynak kod ve veriler: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub</a>. Site sahipleri <a href="methodology.html#opting-out">rapordan çıkarılmayı</a> isteyebilir.</p>
     </div>
   </footer>
 </body>

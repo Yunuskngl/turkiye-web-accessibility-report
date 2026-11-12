@@ -3,52 +3,56 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Look up a site – Türkiye Web Accessibility Report</title>
+  <title>Check a website – Türkiye Web Accessibility Report</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="tr" href="tr/lookup.html">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap header-top">
       <p class="site-name"><a href="index.html">Türkiye Web Accessibility Report</a></p>
-      <nav aria-label="Main">
+      <nav class="lang-switch" aria-label="Language">
+        <ul><li><a href="lookup.html" lang="en" hreflang="en" aria-current="true">English</a></li><li><a href="tr/lookup.html" lang="tr" hreflang="tr">Türkçe</a></li></ul>
+      </nav>
+    </div>
+    <div class="wrap">
+      <nav class="main-nav" aria-label="Main">
         <ul>
-          <li><a href="index.html">Report</a></li>
-          <li><a href="lookup.html" aria-current="page">Look up a site</a></li>
-          <li><a href="methodology.html">Methodology</a></li>
-          <li><a href="tr/lookup.html" lang="tr" hreflang="tr">Türkçe</a></li>
+          <li><a href="index.html">Results</a></li>
+          <li><a href="lookup.html" aria-current="page">Check a website</a></li>
+          <li><a href="methodology.html">How we did it</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main id="main" class="wrap">
-<h1>Look up a site</h1>
-<p class="lede">See the automated check result for one home page. We show a site's result only when someone looks it up; we do not publish a list or a ranking of sites.</p>
+<h1>Check a website</h1>
+<p class="lede">Type a website address to see the result of our automatic check of its home page. We show a site's result only when someone looks for it; we do not publish a list or a ranking.</p>
 
 <form id="lookup-form" class="lookup-form" data-tr-zones="av bbs bel biz com dr edu gen gov info k12 kep mil name nc net org pol tel tsk tv web" data-root=""
   data-lang="en" novalidate>
   <label for="domain">Website address</label>
-  <p id="domain-hint" class="hint">For example <code>example.com.tr</code> or <code>https://www.example.com.tr</code></p>
+  <p id="domain-hint" class="hint">For example <code>example.com.tr</code></p>
   <div class="lookup-row">
     <input id="domain" name="domain" type="text" inputmode="url" autocomplete="url" spellcheck="false"
       aria-describedby="domain-hint" required>
-    <button type="submit">Look up</button>
+    <button type="submit">Show result</button>
   </div>
 </form>
 <p id="lookup-status" class="lookup-status" role="status"></p>
 <div id="lookup-result" class="lookup-result"></div>
-<noscript><p>This search needs JavaScript. All published numbers are also on the report page.</p></noscript>
+<noscript><p>This search needs JavaScript. All numbers are also on the results page.</p></noscript>
 <section aria-labelledby="read-first">
-  <h2 id="read-first">Read this first</h2>
-  <ul><li>Checked on 11 November 2026 with axe-core 4.14.0, home page only.</li><li>Automated checks find only part of accessibility barriers. No detected failures does not mean the page is accessible, and this is not a legal compliance audit.</li><li>Site owners can ask us to remove their site: see <a href="methodology.html#opting-out">opting out</a>.</li></ul>
+  <h2 id="read-first">Good to know</h2>
+  <ul><li>Only the home page was checked, on 11 November 2026.</li><li>Automatic checks find only some problems. If no problems are found, the site may still be hard to use for some people.</li><li>This is not a legal audit.</li><li>Website owners can <a href="methodology.html#opting-out">ask to be left out</a>.</li></ul>
 </section>
-<script type="application/json" id="lookup-texts">{"enterAddress":"Please enter a website address, for example example.com.tr.","lookingUp":"Looking up {domain}…","noResult":"No result for {domain}. The site was not in this run, or its owner asked to be left out.","failed":"The lookup could not be completed. Please try again.","resultFor":"Result for {domain}","sectorLine":"Sector: {sector}. Checked on {date} with axe-core {axe}.","notChecked":"This home page was not checked: {status}. It is not counted as a page without failures.","summary":"Summary","view":"View","failedRules":"Failed rules","detectedFailures":"Detected failures (elements)","Desktop":"Desktop view","Mobile":"Mobile view","rulesCaption":"{view}: detected failures","ruleColumn":"Failure type (axe rule)","criteriaColumn":"WCAG criteria","elementsColumn":"Elements","noFailures":"No failures detected by the automated rules. This does not mean the page is accessible.","factsCaption":"Page language and structure","measure":"Measure","value":"Value","lang":"Page language (lang attribute)","hasTitle":"Has a page title","hasMain":"Has a main landmark","h1Count":"First-level headings (h1)","headingCount":"Headings in total","skips":"Skips a heading level","yes":"Yes","no":"No","notSet":"Not set","stillLoading":"The page was still loading extra content (for example ads) when it was checked."}</script>
+<script type="application/json" id="lookup-texts">{"enterAddress":"Please type a website address, for example example.com.tr.","lookingUp":"Looking for {domain}…","noResult":"No result for {domain}. It was not in our list, or its owner asked to be left out.","failed":"Something went wrong. Please try again.","resultFor":"Result for {domain}","sectorLine":"Sector: {sector}. Checked on {date} with the axe-core {axe} tool.","notChecked":"This home page was not checked: {status}. It is not counted as a page without problems.","summary":"Summary","view":"Screen","failedRules":"Types of problems","detectedFailures":"Problems found","Desktop":"On a computer screen","Mobile":"On a phone screen","rulesCaption":"{view}: problems found","ruleColumn":"Problem (technical name)","criteriaColumn":"WCAG rule","elementsColumn":"Times found","noFailures":"No problems found by the automatic check. This does not mean the page is easy for everyone to use.","factsCaption":"Language and structure","measure":"What we looked at","value":"Result","lang":"Page language","hasTitle":"Has a page title","hasMain":"Main content area is marked","h1Count":"Main headings (h1)","headingCount":"Headings in total","skips":"Heading levels skipped","yes":"Yes","no":"No","notSet":"Not set","stillLoading":"The page was still loading extra content (for example ads) when we checked it."}</script>
 <script src="lookup.js" defer></script>
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p>Automated results from axe-core. Not a legal compliance audit. Source code and data: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub repository</a>. Site owners can <a href="methodology.html#opting-out">opt out</a>.</p>
+      <p>Results of an automatic check. This is not a legal audit. Source code and data: <a href="https://github.com/Yunuskngl/turkiye-web-accessibility-report">GitHub</a>. Website owners can <a href="methodology.html#opting-out">ask to be left out</a>.</p>
     </div>
   </footer>
 </body>
