@@ -3,6 +3,25 @@
 Bu sayfa raporun 2026 sürümünü anlatır. İngilizce metin (`docs/methodology.md`) esas alınır; bu
 sayfa onun Türkçe çevirisidir.
 
+## Kısaca
+
+- **Neyi kontrol ettik:** Gerçek Chrome ziyaret verilerine göre Türkiye'de en çok ziyaret edilen
+  1.000 web sitesinin ana sayfasını.
+- **Nasıl:** Bir bilgisayar programı her ana sayfayı normal bir ziyaretçi gibi bir kez açtı ve
+  üzerinde açık kaynaklı bir kontrol aracı (axe-core) çalıştırdı; hem bilgisayar hem telefon
+  ekranı boyutunda.
+- **Neye baktık:** Siteyi engelli kişiler için zorlaştıran sorunlara; örneğin metin açıklaması
+  olmayan görseller, okunamayacak kadar soluk yazılar veya ekran okuyucunun okuyabileceği bir adı
+  olmayan düğmeler.
+- **Ne değildir:** Yasal bir denetim değildir. Bir program sorunların yalnızca bir kısmını
+  bulabilir; "sorun bulunmadı" demek sitenin herkes için kolay olduğu anlamına gelmez.
+- **Kurallara uyduk:** Her sitenin robots.txt kurallarına uyduk, her ana sayfayı yalnızca bir kez
+  açtık ve bir site ziyaretimizi reddettiğinde durduk. Raporda siteleri sıralamıyor ve isim
+  vermiyoruz.
+- **Site sahipleri** rapordan çıkarılmayı isteyebilir (bkz. "Kapsam dışı kalma").
+
+Sayfanın geri kalanı teknik ayrıntıları anlatır.
+
 ## Bu rapor nedir, ne değildir
 
 Bu rapor, Türkiye'deki popüler web sitelerinin **ana sayfalarında**, açık kaynaklı axe-core

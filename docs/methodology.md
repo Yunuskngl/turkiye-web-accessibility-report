@@ -2,6 +2,23 @@
 
 This page describes the 2026 edition of the report.
 
+## In short
+
+- **What we checked:** the home pages of the 1,000 most visited websites in Türkiye, using real
+  Chrome visit data.
+- **How:** a computer program opened each home page once, like a normal visitor, and ran an
+  open-source checking tool (axe-core) on it, on a computer screen and on a phone screen.
+- **What we looked for:** problems that make a site hard to use for people with disabilities,
+  for example images without a text description, text that is too pale to read, or buttons
+  without a name that a screen reader can read out.
+- **What it is not:** a legal audit. A program can find only some problems, so "no problems
+  found" does not mean a site is easy for everyone to use.
+- **Fair play:** we followed each site's robots.txt rules, loaded each home page only once, and
+  stopped when a site refused our visit. We do not rank or name sites in the report.
+- **Website owners** can ask to be left out (see "Opting out").
+
+The rest of this page gives the technical details.
+
 ## What this report is — and is not
 
 This report measures **automatically detectable** accessibility failures on the

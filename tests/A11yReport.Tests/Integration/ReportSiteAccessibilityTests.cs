@@ -90,7 +90,7 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
         var page = await context.NewPageAsync();
         await page.GotoAsync(_server.UrlFor("tr/lookup.html").ToString());
         await page.GetByLabel("Web sitesi adresi").FillAsync("a.gov.tr");
-        await page.GetByRole(AriaRole.Button, new() { Name = "Sorgula" }).ClickAsync();
+        await page.GetByRole(AriaRole.Button, new() { Name = "Sonucu göster" }).ClickAsync();
 
         await Assertions.Expect(page.GetByRole(AriaRole.Heading, new() { Name = "a.gov.tr için sonuç" })).ToBeFocusedAsync();
         await Assertions.Expect(page.Locator("#lookup-result")).ToContainTextAsync("Sektör: Kamu");
@@ -144,7 +144,7 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
         var page = await context.NewPageAsync();
         await page.GotoAsync(_server.UrlFor("lookup.html").ToString());
         await page.GetByLabel("Website address").FillAsync(address);
-        await page.GetByRole(AriaRole.Button, new() { Name = "Look up" }).ClickAsync();
+        await page.GetByRole(AriaRole.Button, new() { Name = "Show result" }).ClickAsync();
         return page;
     }
 
