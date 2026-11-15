@@ -1,0 +1,165 @@
+{
+  "run": {
+    "name": "2026-full",
+    "state": "Completed",
+    "startedAt": "2026-11-11T11:59:55.066928+00:00",
+    "finishedAt": "2026-11-11T15:18:56.795233+00:00",
+    "axeVersion": "4.14.0",
+    "browserVersion": "156.0.8078.4",
+    "listSource": "Chrome UX Report (CrUX) top origins for Türkiye (country code tr), via github.com/zakird/crux-top-lists; snapshot tr-202610.csv.gz (sha256 9aecf48c805fc2daf6ef12201f08409cf0d1a522683938229e2dd3b08fc19710)"
+  },
+  "coverage": {
+    "listed": 995,
+    "scanned": 873,
+    "notScannedByStatus": {
+      "Unreachable": 60,
+      "Timeout": 33,
+      "TlsError": 11,
+      "Failed": 5,
+      "SkippedRobots": 5,
+      "NetworkError": 2,
+      "HttpError": 2,
+      "Duplicate": 2,
+      "DnsError": 2
+    }
+  },
+  "desktop": {
+    "pages": 873,
+    "percentWithFailures": 95.53264604810997,
+    "averageFailures": 59.04696449026346
+  },
+  "mobile": {
+    "pages": 873,
+    "percentWithFailures": 95.07445589919817,
+    "averageFailures": 55.422680412371136
+  },
+  "sectors": [
+    {
+      "sector": "public",
+      "listed": 111,
+      "scanned": 92,
+      "percentWithFailures": 94.56521739130434,
+      "averageFailures": 29.67391304347826
+    },
+    {
+      "sector": "finance",
+      "listed": 56,
+      "scanned": 50,
+      "percentWithFailures": 96,
+      "averageFailures": 34.44
+    },
+    {
+      "sector": "ecommerce",
+      "listed": 270,
+      "scanned": 234,
+      "percentWithFailures": 96.15384615384616,
+      "averageFailures": 67.00854700854701
+    },
+    {
+      "sector": "university",
+      "listed": 63,
+      "scanned": 51,
+      "percentWithFailures": 96.07843137254902,
+      "averageFailures": 41.64705882352941
+    },
+    {
+      "sector": "media",
+      "listed": 176,
+      "scanned": 167,
+      "percentWithFailures": 98.80239520958084,
+      "averageFailures": 61.203592814371255
+    },
+    {
+      "sector": "other",
+      "listed": 319,
+      "scanned": 279,
+      "percentWithFailures": 93.18996415770609,
+      "averageFailures": 68.35483870967742
+    }
+  ],
+  "topRules": [
+    {
+      "ruleId": "color-contrast",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "percentOfPages": 75.71592210767469,
+      "pages": 661,
+      "elements": 16272
+    },
+    {
+      "ruleId": "link-name",
+      "help": "Links must have discernible text",
+      "percentOfPages": 64.60481099656357,
+      "pages": 564,
+      "elements": 8963
+    },
+    {
+      "ruleId": "image-alt",
+      "help": "Images must have alternative text",
+      "percentOfPages": 45.47537227949599,
+      "pages": 397,
+      "elements": 5508
+    },
+    {
+      "ruleId": "target-size",
+      "help": "All touch targets must be 24px large, or leave sufficient space",
+      "percentOfPages": 45.017182130584196,
+      "pages": 393,
+      "elements": 12820
+    },
+    {
+      "ruleId": "button-name",
+      "help": "Buttons must have discernible text",
+      "percentOfPages": 28.29324169530355,
+      "pages": 247,
+      "elements": 1578
+    },
+    {
+      "ruleId": "meta-viewport",
+      "help": "Zooming and scaling must not be disabled",
+      "percentOfPages": 26.804123711340207,
+      "pages": 234,
+      "elements": 242
+    },
+    {
+      "ruleId": "label-content-name-mismatch",
+      "help": "Elements must have their visible text as part of their accessible name",
+      "percentOfPages": 21.191294387170675,
+      "pages": 185,
+      "elements": 1114
+    },
+    {
+      "ruleId": "frame-title",
+      "help": "Frames must have an accessible name",
+      "percentOfPages": 14.43298969072165,
+      "pages": 126,
+      "elements": 184
+    },
+    {
+      "ruleId": "list",
+      "help": "\u003Cul\u003E and \u003Col\u003E must only directly contain \u003Cli\u003E, \u003Cscript\u003E or \u003Ctemplate\u003E elements",
+      "percentOfPages": 12.714776632302405,
+      "pages": 111,
+      "elements": 229
+    },
+    {
+      "ruleId": "listitem",
+      "help": "\u003Cli\u003E elements must be contained in a \u003Cul\u003E or \u003Col\u003E",
+      "percentOfPages": 8.59106529209622,
+      "pages": 75,
+      "elements": 1169
+    }
+  ],
+  "structure": {
+    "pages": 873,
+    "percentLangMissing": 5.956471935853379,
+    "percentLangTurkish": 90.83619702176404,
+    "percentWithMain": 52.462772050400915,
+    "percentExactlyOneH1": 43.75715922107675,
+    "percentNoH1": 45.36082474226804,
+    "percentSkippedHeadingLevel": 35.39518900343643,
+    "averageLandmarks": 7.042382588774341,
+    "averageHeadings": 38.49828178694158,
+    "pagesWithLoadRecord": 873,
+    "percentScannedBeforeLoadEvent": 44.329896907216494
+  }
+}
