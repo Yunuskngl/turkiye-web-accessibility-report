@@ -76,6 +76,16 @@ public sealed class SitePagesTests
     }
 
     [Fact]
+    public void LookupPage_OffersSuggestionsInGivenOrderAndEncodesThem()
+    {
+        var html = LookupPage.Render(SiteLanguages.English, ReportSamples.Run, ["a.com.tr", "b.com.tr", "x\"y.com.tr"], isPilot: false, Repo);
+
+        Assert.Contains("list=\"site-suggestions\"", html, StringComparison.Ordinal);
+        Assert.True(html.IndexOf("a.com.tr", StringComparison.Ordinal) < html.IndexOf("b.com.tr", StringComparison.Ordinal));
+        Assert.Contains("x&quot;y.com.tr", html, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TurkishMethodology_KeepsTheOptOutAnchor()
     {
         var html = MethodologyPage.Render(SiteLanguages.Turkish, "## Kapsam dışı kalma {#opting-out}\n\nMetin.", Repo);

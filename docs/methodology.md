@@ -241,10 +241,13 @@ What we learned:
 
 The [site lookup page](lookup.html) shows the result of one home page when someone types its
 address: which automated rules failed, how many elements were affected, and the page's language
-and heading facts. It shows rule names and counts only, not the HTML of the page. There is no
-list or ranking of sites: each result is stored in a file named after the SHA-256 hash of the
-domain, so a result can only be found by typing that domain. The list of scanned domains is still
-public in the source repository, for reproducibility.
+and heading facts. It shows rule names and counts only, not the HTML of the page. While typing,
+the page suggests matching domains from the list of checked sites, in alphabetical order; the
+suggestions show no results, so they cannot be read as a ranking. Domains that are a person's
+own name are left out of the suggestions (`data/suggest-exclude.csv`) and are found only by
+typing the full address. Each result is stored in a file named after the SHA-256 hash of the
+domain. The list of scanned domains is also public in the source repository, for
+reproducibility.
 
 ## Turkish explanations of failure types
 

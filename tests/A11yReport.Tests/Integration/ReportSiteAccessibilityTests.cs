@@ -132,6 +132,18 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
     }
 
     [Fact]
+    public async Task Lookup_SuggestsCheckedSitesAlphabetically_ButNotExcludedOrOptedOut()
+    {
+        await using var context = await _fixture.Session.Browser.NewContextAsync();
+        var page = await context.NewPageAsync();
+        await page.GotoAsync(_server.UrlFor("lookup.html").ToString());
+
+        var options = await page.Locator("#site-suggestions option").EvaluateAllAsync<string[]>("els => els.map(e => e.value)");
+
+        Assert.Equal(["a.gov.tr", "b.com.tr", "d.com.tr"], options);
+    }
+
+    [Fact]
     public void OptedOutSite_HasNoFileAndIsNotCounted()
     {
         Assert.False(File.Exists(Path.Combine(_folder, LookupFiles.FolderName, LookupFiles.FileNameFor("c.com.tr"))));
@@ -152,6 +164,8 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
     {
         var methodologyFile = Path.Combine(_folder, "methodology.md");
         File.WriteAllText(methodologyFile, Methodology);
+        var suggestExcludeFile = Path.Combine(_folder, "suggest-exclude.csv");
+        File.WriteAllText(suggestExcludeFile, "domain,reason\nuni.edu.tr,test\n");
         var explanationsFile = Path.Combine(_folder, "rules.tr.json");
         ExplanationFile.Save(explanationsFile,
         [
@@ -166,6 +180,7 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
             OptOutFile = "unused",
             RepositoryUrl = "https://github.com/example/repo",
             ExplanationsFile = explanationsFile,
+            SuggestExcludeFile = suggestExcludeFile,
         };
         var outcomes = ReportSamples.Outcomes();
         var data = A11yReport.Core.Report.ReportBuilder.Build(ReportSamples.Run, outcomes, optOut);

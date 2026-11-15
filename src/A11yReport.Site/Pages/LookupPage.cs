@@ -16,7 +16,7 @@ public static class LookupPage
 {
     private static readonly JsonSerializerOptions ScriptJson = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
 
-    public static string Render(SiteTexts t, RunInfo run, bool isPilot, string repositoryUrl)
+    public static string Render(SiteTexts t, RunInfo run, IReadOnlyList<string> suggestions, bool isPilot, string repositoryUrl)
     {
         var zones = string.Join(' ', DomainKey.TrZoneNames.Order(StringComparer.Ordinal));
         var pilot = isPilot ? $"""<p class="notice">{t.LookupPilotNotice}</p>""" : string.Empty;
@@ -33,8 +33,9 @@ public static class LookupPage
               <label for="domain">{t.LookupLabel}</label>
               <p id="domain-hint" class="hint">{t.LookupHint}</p>
               <div class="lookup-row">
-                <input id="domain" name="domain" type="text" inputmode="url" autocomplete="url" spellcheck="false"
-                  aria-describedby="domain-hint" required>
+                <input id="domain" name="domain" type="text" inputmode="url" autocomplete="off" spellcheck="false"
+                  list="site-suggestions" aria-describedby="domain-hint" required>
+                <datalist id="site-suggestions">{Options(suggestions)}</datalist>
                 <button type="submit">{t.LookupButton}</button>
               </div>
             </form>
@@ -50,6 +51,10 @@ public static class LookupPage
             """);
         return Layout.Page(t, t.LookupTitle, SitePage.Lookup, body, repositoryUrl);
     }
+
+    // A native datalist gives keyboard and screen reader support for suggestions without custom ARIA.
+    private static string Options(IReadOnlyList<string> suggestions) =>
+        string.Concat(suggestions.Select(domain => $"<option value=\"{HtmlText.Encode(domain)}\"></option>"));
 
     // JSON inside a script element: "<" is escaped as < by the encoder, so the data cannot close the element.
     private static string ScriptTexts(SiteTexts t) => JsonSerializer.Serialize(t.Script, ScriptJson).Replace("<", "\\u003C", StringComparison.Ordinal);

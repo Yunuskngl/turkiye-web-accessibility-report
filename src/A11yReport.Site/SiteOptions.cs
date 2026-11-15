@@ -13,6 +13,9 @@ public sealed class SiteOptions
     /// <summary>The review file with Turkish rule explanations. Only "approved" entries are published.</summary>
     public string ExplanationsFile { get; set; } = string.Empty;
 
+    /// <summary>Domains never offered as lookup suggestions (for example a person's own name). Typing the full address still works.</summary>
+    public string SuggestExcludeFile { get; set; } = string.Empty;
+
     public bool IsValid() =>
-        new[] { OutputFolder, MethodologyFile, MethodologyFileTurkish, OptOutFile, RepositoryUrl, ExplanationsFile }.All(value => !string.IsNullOrWhiteSpace(value));
+        new[] { OutputFolder, MethodologyFile, MethodologyFileTurkish, OptOutFile, RepositoryUrl, ExplanationsFile, SuggestExcludeFile }.All(value => !string.IsNullOrWhiteSpace(value));
 }

@@ -251,10 +251,12 @@ sayılarımız yaklaşık bir saat önce yapılan pilot taramadan (masaüstü g�
 
 [Site sorgulama sayfası](lookup.html), biri adresini yazdığında bir ana sayfanın sonucunu
 gösterir: hangi otomatik kuralların başarısız olduğu, kaç öğenin etkilendiği ve sayfanın dil ve
-başlık bilgileri. Yalnızca kural adlarını ve sayıları gösterir, sayfanın HTML'ini göstermez. Bir
-site listesi veya sıralaması yoktur: her sonuç, alan adının SHA-256 özetiyle adlandırılmış bir
-dosyada saklanır; bu yüzden bir sonuç yalnızca o alan adı yazılarak bulunabilir. Taranan alan
-adlarının listesi, tekrarlanabilirlik için kaynak depoda yine herkese açıktır.
+başlık bilgileri. Yalnızca kural adlarını ve sayıları gösterir, sayfanın HTML'ini göstermez. Yazmaya
+başlayınca sayfa, kontrol edilen siteler listesinden eşleşen alan adlarını alfabetik sırayla önerir;
+öneriler hiçbir sonuç göstermez, bu yüzden bir sıralama gibi okunamaz. Bir kişinin kendi adı olan
+alan adları önerilere alınmaz (`data/suggest-exclude.csv`) ve yalnızca tam adres yazılarak
+bulunur. Her sonuç, alan adının SHA-256 özetiyle adlandırılmış bir dosyada saklanır. Taranan alan
+adlarının listesi, tekrarlanabilirlik için kaynak depoda da herkese açıktır.
 
 ## Hata türlerinin Türkçe açıklamaları
 

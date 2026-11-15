@@ -32,9 +32,10 @@ public sealed class SiteGenerator(IOptions<SiteOptions> options)
     {
         var folder = Path.GetFullPath(_options.OutputFolder);
         Directory.CreateDirectory(folder);
-        WritePages(folder, SiteLanguages.English, _options.MethodologyFile, data, ruleNames, isPilot);
+        var suggestions = Suggestions(lookupSites);
+        WritePages(folder, SiteLanguages.English, _options.MethodologyFile, data, ruleNames, suggestions, isPilot);
         WritePages(Path.Combine(folder, SiteLanguages.Turkish.Folder), SiteLanguages.Turkish, _options.MethodologyFileTurkish,
-            data, ruleNames, isPilot);
+            data, ruleNames, suggestions, isPilot);
         Write(folder, "report.json", JsonSerializer.Serialize(data, JsonOptions));
         LookupFiles.WriteAll(folder, lookupSites);
         Write(folder, "explanations.tr.json", JsonSerializer.Serialize(ApprovedExplanations(), JsonOptions));
@@ -42,12 +43,26 @@ public sealed class SiteGenerator(IOptions<SiteOptions> options)
         return folder;
     }
 
-    private void WritePages(string folder, SiteTexts texts, string methodologyFile, ReportData data, RuleNames ruleNames, bool isPilot)
+    private void WritePages(string folder, SiteTexts texts, string methodologyFile, ReportData data, RuleNames ruleNames,
+        IReadOnlyList<string> suggestions, bool isPilot)
     {
         Directory.CreateDirectory(folder);
         Write(folder, "index.html", new ReportPage(texts, ruleNames).Render(data, isPilot, _options.RepositoryUrl));
-        Write(folder, "lookup.html", LookupPage.Render(texts, data.Run, isPilot, _options.RepositoryUrl));
+        Write(folder, "lookup.html", LookupPage.Render(texts, data.Run, suggestions, isPilot, _options.RepositoryUrl));
         Write(folder, "methodology.html", MethodologyPage.Render(texts, File.ReadAllText(methodologyFile), _options.RepositoryUrl));
+    }
+
+    /// <summary>
+    /// Domains offered while typing on the lookup page: every site with a published result, in
+    /// alphabetical order (never by result, so the list cannot be read as a ranking).
+    /// </summary>
+    private List<string> Suggestions(IEnumerable<LookupSite> lookupSites)
+    {
+        var excluded = Core.Sites.SiteListFiles.LoadDomains(_options.SuggestExcludeFile);
+        return lookupSites.Select(site => site.Domain)
+            .Where(domain => !excluded.Contains(domain))
+            .Order(StringComparer.Ordinal)
+            .ToList();
     }
 
     /// <summary>Drafts written by the language model stay private until the owner approves them.</summary>

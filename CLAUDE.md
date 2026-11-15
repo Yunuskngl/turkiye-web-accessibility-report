@@ -202,6 +202,11 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
 - Second redesign (owner request, 2026-11-15): deep blue hero card with eyebrow line, main number and
   two buttons; sticky translucent header; shadowed cards; meters under share stats (decorative,
   `aria-hidden`); dark footer. All six pages still 0 failures in both viewports.
+- Lookup suggestions (owner request, 2026-11-15): native `<datalist>` on both lookup pages with every
+  domain that has a published result, alphabetical only (never by result). `data/suggest-exclude.csv`
+  (domain, reason) keeps domains that are a person's own name out of the suggestions (KVKK caution);
+  they are still found by typing the full address. Decided after discussing the legal side; no legal
+  conclusion was given, only KVKK Art. 3 cited.
 - **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
   (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
   site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",
