@@ -28,6 +28,9 @@ public sealed record SiteTexts
     public required string FooterOptOut { get; init; }
 
     public required string ReportTitle { get; init; }
+
+    /// <summary>Small line above the report title, for example "2026 edition · 878 home pages checked".</summary>
+    public required string ReportEyebrow { get; init; }
     public required string ReportLede { get; init; }
     public required string ReportPilotNotice { get; init; }
     public required string KeyNumbersHeading { get; init; }

@@ -133,8 +133,8 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
 6. (Optional, ask first) AI explanations per axe rule id, reviewed before publishing.
    Only rule ids and axe rule descriptions go to the model. `ILlmClient`, Ollama by default.
 7. Full run (~1,000 sites), Turkish report site, one-page press summary, LinkedIn post draft.
-8. Dockerfile (non-root), GitHub Actions (build + tests; the yearly scan is a **manual**
-   workflow), README with architecture diagram and screenshot.
+8. GitHub Actions (build + tests; the yearly scan is a **manual** workflow), README with
+   architecture diagram and screenshot. (Docker dropped by the owner, 2026-11-15.)
 
 ## Status
 
@@ -189,6 +189,17 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   (each language in its own name, current one `aria-current="true"`), plain-language page texts
   (no jargon like "landmark" or "axe rule" outside the methodology), "In short / Kısaca" summary at
   the top of both methodology pages, calm card-based CSS (white cards on light grey, one accent).
+- Stage 8 (CI, README) — built 2026-11-15. Owner decided **no Docker** (2026-11-15): Dockerfile removed.
+  `THIRD-PARTY-NOTICES.md` (axe-core MPL-2.0 etc.). Workflows: `.github/workflows/ci.yml` (push/PR:
+  Release build + tests, Chromium via `playwright.ps1` with pwsh), `.github/workflows/scan.yml`
+  (`workflow_dispatch` only, inputs via env vars, uploads DB + run record as artifact, never commits
+  or publishes). README rewritten (results, features, Mermaid architecture, CI, licenses);
+  screenshots of our own site in `docs/images/`. License: MIT (owner's choice, 2026-11-15).
+- Owner decisions 2026-11-15: sectors in `data/sectors.csv` approved as suggested; press materials
+  (`docs/press/`) stay local only (gitignored, removed from the repo; still in the history of 60d7f8b).
+- Second redesign (owner request, 2026-11-15): deep blue hero card with eyebrow line, main number and
+  two buttons; sticky translucent header; shadowed cards; meters under share stats (decorative,
+  `aria-hidden`); dark footer. All six pages still 0 failures in both viewports.
 - **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
   (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
   site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",
@@ -206,7 +217,7 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   opt-out via GitHub Issues, LLM (stage 6) only via local Ollama.
 - Repo: https://github.com/Yunuskngl/turkiye-web-accessibility-report (public, `main`).
   First commit pushed 2026-11-11 with the owner's approval. Sectors in `data/sectors.csv` and
-  `data/include-domains.csv` were suggested by Claude and still need the owner's check.
+  `data/include-domains.csv` were suggested by Claude and approved by the owner (2026-11-15).
 
 ## Commands
 

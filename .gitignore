@@ -494,3 +494,6 @@ $RECYCLE.BIN/
 # Never commit local secrets
 .env
 design-time.db
+
+# Press materials are shared by the owner directly, never published in the repository
+docs/press/

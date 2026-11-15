@@ -28,25 +28,44 @@ public sealed class ReportPage(SiteTexts t, RuleNames ruleNames)
     {
         var lede = SiteTexts.Fill(t.ReportLede, ("pages", F.Count(data.Coverage.Scanned)), ("date", F.Date(data.Run.StartedAt)),
             ("axe", Encode(data.Run.AxeVersion)));
+        var eyebrow = SiteTexts.Fill(t.ReportEyebrow, ("year", data.Run.StartedAt.Year.ToString(CultureInfo.InvariantCulture)),
+            ("pages", F.Count(data.Coverage.Scanned)));
         var pilot = isPilot ? $"""<p class="notice">{t.ReportPilotNotice}</p>""" : string.Empty;
-        return Invariant($"<h1>{t.ReportTitle}</h1><p class=\"lede\">{lede}</p>{pilot}");
+        return Invariant($"""
+            <div class="hero">
+              <p class="eyebrow">{eyebrow}</p>
+              <h1>{t.ReportTitle}</h1>
+              <p class="lede">{lede}</p>
+              <p class="hero-stat"><span class="hero-number">{F.Percent(data.Desktop.PercentWithFailures)}</span>
+                <span class="hero-label">{t.StatDesktopShare}</span></p>
+              <p class="hero-actions"><a class="button" href="lookup.html">{t.NavLookup}</a>
+                <a class="button button-ghost" href="methodology.html">{t.NavMethodology}</a></p>
+            </div>
+            {pilot}
+            """);
     }
 
     private string KeyNumbers(ReportData data) => Invariant($"""
         <section aria-labelledby="key-numbers">
           <h2 id="key-numbers">{t.KeyNumbersHeading}</h2>
           <ul class="stats">
-            {Stat(F.Percent(data.Desktop.PercentWithFailures), t.StatDesktopShare)}
+            {Stat(F.Percent(data.Desktop.PercentWithFailures), t.StatDesktopShare, data.Desktop.PercentWithFailures)}
             {Stat(F.OneDecimal(data.Desktop.AverageFailures), t.StatDesktopAverage)}
-            {Stat(F.Percent(data.Mobile.PercentWithFailures), t.StatMobileShare)}
+            {Stat(F.Percent(data.Mobile.PercentWithFailures), t.StatMobileShare, data.Mobile.PercentWithFailures)}
             {Stat(F.OneDecimal(data.Mobile.AverageFailures), t.StatMobileAverage)}
           </ul>
           <p>{t.FailureDefinition}</p>
         </section>
         """);
 
-    private static string Stat(string value, string label) =>
-        $"""<li><span class="stat-value">{value}</span> <span class="stat-label">{label}</span></li>""";
+    // A share also gets a small bar; it only repeats the number shown in text, so it is hidden from screen readers.
+    private static string Stat(string value, string label, double? percent = null)
+    {
+        var meter = percent is { } p
+            ? Invariant($"""<span class="meter" aria-hidden="true"><span style="width: {p:0.#}%"></span></span>""")
+            : string.Empty;
+        return $"""<li><span class="stat-value">{value}</span> <span class="stat-label">{label}</span>{meter}</li>""";
+    }
 
     private string SectorSection(ReportData data)
     {

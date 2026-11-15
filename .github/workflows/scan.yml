@@ -1,0 +1,62 @@
+name: Yearly scan (manual)
+
+# Never scheduled: the yearly scan is started by hand, after the site list and the
+# methodology page have been checked. Results are uploaded as an artifact; nothing is
+# committed or published by this workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      run_name:
+        description: 'Run name, lowercase letters, digits and dashes (for example 2027-full)'
+        required: true
+        type: string
+      limit:
+        description: 'Optional: scan only the first N sites of data/sites.csv'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yearly-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      RUN_NAME: ${{ inputs.run_name }}
+      LIMIT: ${{ inputs.limit }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Install Chromium
+        run: pwsh src/A11yReport.Scanner/bin/Release/net10.0/playwright.ps1 install --with-deps chromium
+
+      # Inputs are passed through environment variables, never pasted into the script,
+      # and the scanner itself rejects run names that are not lowercase letters, digits and dashes.
+      - name: Scan
+        run: |
+          args=(scan --run "$RUN_NAME")
+          if [ -n "$LIMIT" ]; then args+=(--limit "$LIMIT"); fi
+          dotnet run --project src/A11yReport.Scanner --configuration Release --no-build -- "${args[@]}"
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-${{ inputs.run_name }}
+          path: |
+            output/a11yreport.db
+            data/runs/*.json
+          if-no-files-found: warn
+          retention-days: 30

@@ -23,8 +23,10 @@ public static class LookupPage
         var readFirst = SiteTexts.Fill(t.LookupReadFirst, ("date", t.Format.Date(run.StartedAt)), ("axe", HtmlText.Encode(run.AxeVersion)));
         var root = Layout.RootPrefix(t);
         var body = string.Create(CultureInfo.InvariantCulture, $"""
-            <h1>{t.LookupTitle}</h1>
-            <p class="lede">{t.LookupLede}</p>
+            <div class="hero hero-compact">
+              <h1>{t.LookupTitle}</h1>
+              <p class="lede">{t.LookupLede}</p>
+            </div>
             {pilot}
             <form id="lookup-form" class="lookup-form" data-tr-zones="{HtmlText.Encode(zones)}" data-root="{root}"
               data-lang="{t.LangCode}" novalidate>

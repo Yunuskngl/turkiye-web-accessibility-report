@@ -21,6 +21,7 @@ public static class SiteLanguages
         FooterRepository = "GitHub",
         FooterOptOut = "Website owners can <a href=\"methodology.html#opting-out\">ask to be left out</a>.",
 
+        ReportEyebrow = "{year} edition · {pages} home pages checked",
         ReportTitle = "How easy are Türkiye's most visited websites to use for people with disabilities?",
         ReportLede = "We automatically checked the home pages of {pages} popular websites in Türkiye. We looked for problems "
             + "that make a site hard to use for people who, for example, use a screen reader, cannot use a mouse or have low vision. "
@@ -140,6 +141,7 @@ public static class SiteLanguages
         FooterRepository = "GitHub",
         FooterOptOut = "Site sahipleri <a href=\"methodology.html#opting-out\">rapordan çıkarılmayı</a> isteyebilir.",
 
+        ReportEyebrow = "{year} raporu · {pages} ana sayfa kontrol edildi",
         ReportTitle = "Türkiye'nin en çok ziyaret edilen siteleri engelli kullanıcılar için ne kadar kolay?",
         ReportLede = "Türkiye'de popüler {pages} web sitesinin ana sayfasını otomatik olarak kontrol ettik. Örneğin ekran okuyucu "
             + "kullanan, fare kullanamayan veya az gören kişiler için siteyi zorlaştıran sorunlara baktık. Kontrol tarihi: {date}.",
