@@ -1,6 +1,5 @@
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Encodings.Web;
+using A11yReport.Core.Sites;
 using System.Text.Json;
 using System.Text.Unicode;
 
@@ -20,8 +19,7 @@ public static class LookupFiles
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
     };
 
-    public static string FileNameFor(string domain) =>
-        Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(domain))) + ".json";
+    public static string FileNameFor(string domain) => DomainHash.Of(domain) + ".json";
 
     /// <summary>Replaces the whole folder, so results of sites that opted out since the last run disappear.</summary>
     public static void WriteAll(string siteFolder, IEnumerable<LookupSite> sites)

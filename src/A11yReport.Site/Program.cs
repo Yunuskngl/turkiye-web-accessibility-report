@@ -43,7 +43,8 @@ if (input is null)
 }
 
 var siteOptions = host.Services.GetRequiredService<IOptions<SiteOptions>>().Value;
-var optOut = SiteListFiles.LoadDomains(siteOptions.OptOutFile);
+var hidden = DomainHash.Hidden(input.Value.Sites.Select(site => site.Domain), SiteListFiles.LoadHashes(siteOptions.ExcludeHashedFile));
+var optOut = SiteListFiles.LoadDomains(siteOptions.OptOutFile).Union(hidden).ToHashSet(StringComparer.OrdinalIgnoreCase);
 var data = ReportBuilder.Build(input.Value.Run, input.Value.Sites, optOut);
 var ruleNames = RuleNames.From(ExplanationFile.Load(siteOptions.ExplanationsFile));
 var lookupSites = LookupBuilder.Build(input.Value.Run, input.Value.Sites, optOut, ruleNames);

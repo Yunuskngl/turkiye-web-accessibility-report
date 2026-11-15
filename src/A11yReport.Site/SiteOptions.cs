@@ -16,6 +16,9 @@ public sealed class SiteOptions
     /// <summary>Domains never offered as lookup suggestions (for example a person's own name). Typing the full address still works.</summary>
     public string SuggestExcludeFile { get; set; } = string.Empty;
 
+    /// <summary>SHA-256 hashes of domains left out of every published page and file.</summary>
+    public string ExcludeHashedFile { get; set; } = string.Empty;
+
     public bool IsValid() =>
-        new[] { OutputFolder, MethodologyFile, MethodologyFileTurkish, OptOutFile, RepositoryUrl, ExplanationsFile, SuggestExcludeFile }.All(value => !string.IsNullOrWhiteSpace(value));
+        new[] { OutputFolder, MethodologyFile, MethodologyFileTurkish, OptOutFile, RepositoryUrl, ExplanationsFile, SuggestExcludeFile, ExcludeHashedFile }.All(value => !string.IsNullOrWhiteSpace(value));
 }

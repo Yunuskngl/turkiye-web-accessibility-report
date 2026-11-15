@@ -83,13 +83,16 @@ public sealed class DataOptions
 
     /// <summary>Domains left out of the report on purpose (gambling, adult, piracy), with a reason per row.</summary>
     public string ExcludeFile { get; set; } = string.Empty;
+
+    /// <summary>SHA-256 hashes of domains that are never listed, scanned or published (for example a person's name).</summary>
+    public string ExcludeHashedFile { get; set; } = string.Empty;
     public string OptOutFile { get; set; } = string.Empty;
     public string OtherTldCandidatesFile { get; set; } = string.Empty;
     public int MaxSites { get; set; }
     public int OtherTldCandidateMaxBucket { get; set; }
 
     public bool IsValid() =>
-        new[] { SitesFile, SitesSourceFile, SectorsFile, IncludeFile, ExcludeFile, OptOutFile, OtherTldCandidatesFile }
+        new[] { SitesFile, SitesSourceFile, SectorsFile, IncludeFile, ExcludeFile, ExcludeHashedFile, OptOutFile, OtherTldCandidatesFile }
             .All(path => !string.IsNullOrWhiteSpace(path))
         && MaxSites > 0
         && OtherTldCandidateMaxBucket > 0;

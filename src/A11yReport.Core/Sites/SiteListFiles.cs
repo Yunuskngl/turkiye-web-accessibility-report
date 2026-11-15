@@ -11,6 +11,7 @@ public static class SiteListFiles
     private const string BucketColumn = "rank_bucket";
     private const string SectorColumn = "sector";
     private const string NotesColumn = "notes";
+    private const string HashColumn = "sha256";
 
     public const string NeedsReviewNote = "auto: needs review";
 
@@ -25,6 +26,20 @@ public static class SiteListFiles
             .Select(row => DomainKey.FromHost(row.GetValueOrDefault(DomainColumn, string.Empty)))
             .Where(domain => domain.Length > 0)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+    }
+
+    /// <summary>Reads data/exclude-hashed.csv: one SHA-256 domain hash per row (column "sha256").</summary>
+    public static IReadOnlySet<string> LoadHashes(string path)
+    {
+        if (!File.Exists(path))
+        {
+            return new HashSet<string>();
+        }
+
+        return CsvFile.Read(path)
+            .Select(row => row.GetValueOrDefault(HashColumn, string.Empty).Trim().ToLowerInvariant())
+            .Where(hash => hash.Length > 0)
+            .ToHashSet(StringComparer.Ordinal);
     }
 
     public static IReadOnlyList<SectorAssignment> LoadSectors(string path)

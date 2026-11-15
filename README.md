@@ -18,12 +18,13 @@ results by sector, in English and Turkish.
 
 | | Computer screen | Phone screen |
 |---|---|---|
-| Home pages with at least one problem | 95.4% | 95.1% |
-| Average problems per home page (median on a computer screen: 29) | 58.8 | 55.3 |
+| Home pages with at least one problem | 95.5% | 95.1% |
+| Average problems per home page (median on a computer screen: 29) | 59.0 | 55.4 |
 
-878 of 1,000 home pages could be checked on 11 November 2026. The most common problems were low
-contrast text (75.7% of pages), links without a text name (64.6%), images without alternative
-text (45.3%) and touch targets that are too small (44.9%).
+873 of 995 home pages could be checked on 11 November 2026 (the list had 1,000 sites; 5 whose
+domain is a person's name were removed afterwards). The most common problems were low contrast
+text (75.7% of pages), links without a text name (64.6%), images without alternative text (45.5%)
+and touch targets that are too small (45.0%).
 
 This is an automated check, **not** a legal audit: software finds only some barriers, so "no
 problems found" does not mean a site is easy for everyone to use. The report shows sectors only;

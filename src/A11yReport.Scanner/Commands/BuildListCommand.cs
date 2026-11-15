@@ -24,7 +24,12 @@ public sealed class BuildListCommand(IOptions<DataOptions> options)
 
         var origins = CruxReader.Read(snapshotPath);
         var include = SiteListFiles.LoadDomains(_data.IncludeFile);
-        var excluded = SiteListFiles.LoadDomains(_data.OptOutFile).Union(SiteListFiles.LoadDomains(_data.ExcludeFile)).ToHashSet();
+        var hidden = DomainHash.Hidden(origins.Select(origin => DomainKey.FromHost(origin.Origin.Host)).Distinct(),
+            SiteListFiles.LoadHashes(_data.ExcludeHashedFile));
+        var excluded = SiteListFiles.LoadDomains(_data.OptOutFile)
+            .Union(SiteListFiles.LoadDomains(_data.ExcludeFile))
+            .Union(hidden)
+            .ToHashSet();
         var result = SiteListBuilder.Build(origins, include, excluded, _data.MaxSites);
         var candidates = result.Sites;
 

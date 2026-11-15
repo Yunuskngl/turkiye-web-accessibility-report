@@ -145,7 +145,7 @@ the list on 11 November 2026 between 14:59 and 18:18 Türkiye time (UTC+3), with
 
 | Result | Sites |
 |---|---|
-| Checked | 878 |
+| Checked | 873 |
 | Refused the request or unreachable (57 × HTTP 403, 1 × 429, 1 × 503, 1 refused connection) | 60 |
 | Did not load in time | 33 |
 | Secure connection (TLS) failed | 11 |
@@ -165,13 +165,19 @@ Notes on this run:
   the run; the 586 finished sites were not scanned again. Both sessions and their settings are in
   the run record. The requests of the few sites that were in progress when the scanner stopped
   are not counted; those sites were scanned again on resume.
-- **44.1% of the checked pages** had not finished loading extra content (the browser's load
+- **5 sites removed after the run:** five domains in the list are a person's own name. To protect
+  personal data they were removed on 15 November 2026 from the site list, the report, the lookup
+  and the published run record. The numbers on this page and in the report exclude them (995
+  sites, 873 checked); the request totals above include them, because those requests were made.
+  Their domains are kept only as SHA-256 hashes in `data/exclude-hashed.csv`, so they are also
+  left out of future lists.
+- **44.3% of the checked pages** had not finished loading extra content (the browser's load
   event) 10 seconds after the page was ready. They were checked anyway; see "How each page is
   scanned".
 - **Averages and outliers:** the average is the arithmetic mean. The number of detected failures
   per page varies a lot: half of the checked home pages had 29 or fewer (median), 90% had 113 or
-  fewer, and one page had 5,911. 40 pages (4.6%) had none.
-- **Possible placeholder pages:** 7 checked pages loaded fewer than five resources. Some of them
+  fewer, and one page had 5,911. 39 pages (4.5%) had none.
+- **Possible placeholder pages:** 6 checked pages loaded fewer than five resources. Some of them
   may have shown a bot check or maintenance page instead of the real home page. We could not
   tell this reliably, so they are counted as checked.
 
@@ -244,8 +250,8 @@ address: which automated rules failed, how many elements were affected, and the 
 and heading facts. It shows rule names and counts only, not the HTML of the page. While typing,
 the page suggests matching domains from the list of checked sites, in alphabetical order; the
 suggestions show no results, so they cannot be read as a ranking. Domains that are a person's
-own name are left out of the suggestions (`data/suggest-exclude.csv`) and are found only by
-typing the full address. Each result is stored in a file named after the SHA-256 hash of the
+own name are not published at all (see "Full run"); `data/suggest-exclude.csv` can keep other
+domains out of the suggestions. Each result is stored in a file named after the SHA-256 hash of the
 domain. The list of scanned domains is also public in the source repository, for
 reproducibility.
 

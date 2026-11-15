@@ -170,8 +170,9 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   says what was wrong (field `Notes`, never published). Owner approved all 27 unchanged
   (asked Claude to set the status on their behalf, 2026-11-11).
 - Stage 7 (full run, Turkish site, press summary, LinkedIn draft) — built 2026-11-12, NOT published.
-  Run `2026-full` Completed 2026-11-11 18:18 (TR): 878 Done of 1,000; 139,732 requests. Desktop: 95.4%
-  of pages with a failure, mean 58.8 (median 29, one page 5,911). Methodology has a "Full run" section
+  Run `2026-full` Completed 2026-11-11 18:18 (TR): 878 Done of 1,000; 139,732 requests. After removing 5
+  personal-name domains (2026-11-15): 995 listed, 873 checked; desktop 95.5% with a failure, mean 59.0
+  (median 29, one page 5,911). Methodology has a "Full run" section
   (EN + TR). Press summaries `docs/press/press-summary.{tr,en}.md`, LinkedIn draft
   `docs/press/linkedin-post.tr.md`. Generate: `dotnet run --project src/A11yReport.Site -- --run 2026-full`.
   Details of the run:
@@ -207,6 +208,12 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   (domain, reason) keeps domains that are a person's own name out of the suggestions (KVKK caution);
   they are still found by typing the full address. Decided after discussing the legal side; no legal
   conclusion was given, only KVKK Art. 3 cited.
+- **Personal-name domains removed (owner request, 2026-11-15):** 5 domains that are a person's name are
+  out of everything: list, sectors, CrUX copy, run manifest (rows removed, `publicationNote` added,
+  totals unchanged), report, lookup, suggestions. `data/exclude-hashed.csv` holds only their SHA-256
+  hashes (`DomainHash.Of`), honored by build-list, scan and the site generator, so names never appear
+  in the repository. Main and gh-pages histories rewritten without them (force push, owner approved;
+  backups in `output/backup/`). The scrub script with the names lives outside the repo.
 - **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
   (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
   site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",

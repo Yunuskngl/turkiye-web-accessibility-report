@@ -72,7 +72,8 @@ public sealed class ScanRunCommand(
 
     private RunPlan BuildPlan(ScanArgs args)
     {
-        var sites = SiteListFiles.LoadSites(_data.SitesFile);
+        var hidden = SiteListFiles.LoadHashes(_data.ExcludeHashedFile);
+        var sites = SiteListFiles.LoadSites(_data.SitesFile).Where(site => !hidden.Contains(DomainHash.Of(site.Domain))).ToList();
         var selected = args.Limit is { } limit ? sites.Take(limit).ToList() : sites;
         var source = SiteListSource.Load(_data.SitesSourceFile);
         return new RunPlan(args.RunName, selected, SiteListFiles.LoadDomains(_data.OptOutFile),

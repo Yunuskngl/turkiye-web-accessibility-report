@@ -153,7 +153,7 @@ Tam tarama (`2026-full`, tarama kaydı `data/runs/2026-full.json`), listedeki 1.
 
 | Sonuç | Site |
 |---|---|
-| Kontrol edildi | 878 |
+| Kontrol edildi | 873 |
 | İsteği reddetti veya erişilemedi (57 × HTTP 403, 1 × 429, 1 × 503, 1 reddedilen bağlantı) | 60 |
 | Zamanında yüklenmedi | 33 |
 | Güvenli bağlantı (TLS) kurulamadı | 11 |
@@ -173,14 +173,20 @@ Bu taramayla ilgili notlar:
   ve taramaya kaldığı yerden devam ettik; bitmiş 586 site yeniden taranmadı. İki oturum ve
   ayarları tarama kaydında yer alır. Tarayıcı durduğunda işlenmekte olan birkaç sitenin istekleri
   sayılmadı; bu siteler devam ederken yeniden tarandı.
-- **Kontrol edilen sayfaların %44,1'i**, sayfa hazır olduktan 10 saniye sonra ek içerik yüklemeyi
+- **Taramadan sonra 5 site çıkarıldı:** Listedeki beş alan adı bir kişinin kendi adıdır. Kişisel
+  verileri korumak için 15 Kasım 2026'da site listesinden, rapordan, site sorgulamadan ve yayımlanan
+  tarama kaydından çıkarıldılar. Bu sayfadaki ve rapordaki sayılar onları içermez (995 site, 873
+  kontrol edilen sayfa); yukarıdaki istek toplamları ise onları içerir, çünkü bu istekler yapıldı.
+  Alan adları yalnızca SHA-256 özetleri olarak `data/exclude-hashed.csv` dosyasında tutulur; böylece
+  gelecekteki listelere de alınmazlar.
+- **Kontrol edilen sayfaların %44,3'ü**, sayfa hazır olduktan 10 saniye sonra ek içerik yüklemeyi
   (tarayıcının load olayı) bitirmemişti. Yine de kontrol edildiler; bkz. "Her sayfa nasıl
   taranır".
 - **Ortalamalar ve uç değerler:** Ortalama, aritmetik ortalamadır. Sayfa başına tespit edilen hata
   sayısı çok değişkendir: kontrol edilen ana sayfaların yarısında 29 veya daha az (ortanca),
-  %90'ında 113 veya daha az hata vardı; tek bir sayfada 5.911 hata vardı. 40 sayfada (%4,6) hiç
+  %90'ında 113 veya daha az hata vardı; tek bir sayfada 5.911 hata vardı. 39 sayfada (%4,5) hiç
   hata yoktu.
-- **Olası yer tutucu sayfalar:** Kontrol edilen 7 sayfa beşten az kaynak yükledi. Bunların bir
+- **Olası yer tutucu sayfalar:** Kontrol edilen 6 sayfa beşten az kaynak yükledi. Bunların bir
   kısmı gerçek ana sayfa yerine bir bot kontrolü veya bakım sayfası göstermiş olabilir. Bunu
   güvenilir biçimde ayırt edemediğimiz için kontrol edilmiş sayıldılar.
 
@@ -254,8 +260,8 @@ gösterir: hangi otomatik kuralların başarısız olduğu, kaç öğenin etkile
 başlık bilgileri. Yalnızca kural adlarını ve sayıları gösterir, sayfanın HTML'ini göstermez. Yazmaya
 başlayınca sayfa, kontrol edilen siteler listesinden eşleşen alan adlarını alfabetik sırayla önerir;
 öneriler hiçbir sonuç göstermez, bu yüzden bir sıralama gibi okunamaz. Bir kişinin kendi adı olan
-alan adları önerilere alınmaz (`data/suggest-exclude.csv`) ve yalnızca tam adres yazılarak
-bulunur. Her sonuç, alan adının SHA-256 özetiyle adlandırılmış bir dosyada saklanır. Taranan alan
+alan adları hiç yayımlanmaz (bkz. "Tam tarama"); `data/suggest-exclude.csv` başka alan adlarını da
+önerilerin dışında tutmak için kullanılabilir. Her sonuç, alan adının SHA-256 özetiyle adlandırılmış bir dosyada saklanır. Taranan alan
 adlarının listesi, tekrarlanabilirlik için kaynak depoda da herkese açıktır.
 
 ## Hata türlerinin Türkçe açıklamaları
