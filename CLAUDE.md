@@ -196,7 +196,9 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   or publishes). README rewritten (results, features, Mermaid architecture, CI, licenses);
   screenshots of our own site in `docs/images/`. License: MIT (owner's choice, 2026-11-15).
 - Owner decisions 2026-11-15: sectors in `data/sectors.csv` approved as suggested; press materials
-  (`docs/press/`) stay local only (gitignored, removed from the repo; still in the history of 60d7f8b).
+  (`docs/press/`) stay local only (gitignored). Main history was rewritten on 2026-11-15 with the owner's
+  explicit approval to remove them from every commit (force push; backup bundle in `output/backup/`).
+  Commit hashes before that date changed; gh-pages messages still name the old main hashes.
 - Second redesign (owner request, 2026-11-15): deep blue hero card with eyebrow line, main number and
   two buttons; sticky translucent header; shadowed cards; meters under share stats (decorative,
   `aria-hidden`); dark footer. All six pages still 0 failures in both viewports.
