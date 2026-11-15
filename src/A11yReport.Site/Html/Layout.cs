@@ -7,6 +7,7 @@ public enum SitePage
     Report,
     Lookup,
     Methodology,
+    Privacy,
 }
 
 /// <summary>
@@ -19,6 +20,7 @@ public static class Layout
     {
         SitePage.Lookup => "lookup.html",
         SitePage.Methodology => "methodology.html",
+        SitePage.Privacy => "privacy.html",
         _ => "index.html",
     };
 
@@ -62,7 +64,8 @@ public static class Layout
               </main>
               <footer class="site-footer">
                 <div class="wrap">
-                  <p>{t.FooterText} <a href="{HtmlText.Encode(repositoryUrl)}">{t.FooterRepository}</a>. {t.FooterOptOut}</p>
+                  <p>{t.FooterText} <a href="{HtmlText.Encode(repositoryUrl)}">{t.FooterRepository}</a>. {t.FooterOptOut}
+                    <a href="privacy.html">{t.NavPrivacy}</a>.</p>
                 </div>
               </footer>
             </body>

@@ -214,6 +214,11 @@ docs/methodology.md       Methodology and ethics (source for the methodology pag
   hashes (`DomainHash.Of`), honored by build-list, scan and the site generator, so names never appear
   in the repository. Main and gh-pages histories rewritten without them (force push, owner approved;
   backups in `output/backup/`). The scrub script with the names lives outside the repo.
+- Privacy and legal notice (owner request, 2026-11-16): `docs/privacy.md` + `docs/privacy.tr.md` →
+  `privacy.html` (EN + TR), linked in the footer. States facts only (no cookies, no storage, no
+  third-party resources, HTTPS enforced, GitHub Pages logs visitor IPs per GitHub's docs, contact via
+  GitHub issues); no claim of legal compliance. E-commerce items of the owner's checklist (distance
+  sales, returns, ETBİS, İYS, payments, reviews) do not apply: the site sells nothing.
 - **Publishing (owner's choice: commit generated HTML):** GitHub Pages serves the `gh-pages` branch
   (root). That branch holds only the generated files plus `.nojekyll`. To republish: generate the
   site, copy `site/*` into a clean checkout of `gh-pages`, commit ("Publish report site (run …)",

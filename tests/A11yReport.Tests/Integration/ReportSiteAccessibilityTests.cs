@@ -58,6 +58,8 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
     [InlineData("tr/index.html")]
     [InlineData("tr/lookup.html")]
     [InlineData("tr/methodology.html")]
+    [InlineData("privacy.html")]
+    [InlineData("tr/privacy.html")]
     public async Task GeneratedPage_HasNoDetectedFailures(string page)
     {
         var scanner = new PageScanner(_fixture.Session.Browser, Options.Create(TestSettings.Scan()), NullLogger<PageScanner>.Instance);
@@ -177,6 +179,8 @@ public sealed class ReportSiteAccessibilityTests : IClassFixture<ScannerFixture>
             OutputFolder = _folder,
             MethodologyFile = methodologyFile,
             MethodologyFileTurkish = methodologyFile,
+            PrivacyFile = methodologyFile,
+            PrivacyFileTurkish = methodologyFile,
             OptOutFile = "unused",
             RepositoryUrl = "https://github.com/example/repo",
             ExplanationsFile = explanationsFile,

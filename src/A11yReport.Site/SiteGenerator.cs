@@ -33,9 +33,8 @@ public sealed class SiteGenerator(IOptions<SiteOptions> options)
         var folder = Path.GetFullPath(_options.OutputFolder);
         Directory.CreateDirectory(folder);
         var suggestions = Suggestions(lookupSites);
-        WritePages(folder, SiteLanguages.English, _options.MethodologyFile, data, ruleNames, suggestions, isPilot);
-        WritePages(Path.Combine(folder, SiteLanguages.Turkish.Folder), SiteLanguages.Turkish, _options.MethodologyFileTurkish,
-            data, ruleNames, suggestions, isPilot);
+        WritePages(folder, SiteLanguages.English, data, ruleNames, suggestions, isPilot);
+        WritePages(Path.Combine(folder, SiteLanguages.Turkish.Folder), SiteLanguages.Turkish, data, ruleNames, suggestions, isPilot);
         Write(folder, "report.json", JsonSerializer.Serialize(data, JsonOptions));
         LookupFiles.WriteAll(folder, lookupSites);
         Write(folder, "explanations.tr.json", JsonSerializer.Serialize(ApprovedExplanations(), JsonOptions));
@@ -43,13 +42,18 @@ public sealed class SiteGenerator(IOptions<SiteOptions> options)
         return folder;
     }
 
-    private void WritePages(string folder, SiteTexts texts, string methodologyFile, ReportData data, RuleNames ruleNames,
+    private void WritePages(string folder, SiteTexts texts, ReportData data, RuleNames ruleNames,
         IReadOnlyList<string> suggestions, bool isPilot)
     {
+        var isTurkish = texts.LangCode == SiteLanguages.Turkish.LangCode;
+        var methodologyFile = isTurkish ? _options.MethodologyFileTurkish : _options.MethodologyFile;
+        var privacyFile = isTurkish ? _options.PrivacyFileTurkish : _options.PrivacyFile;
         Directory.CreateDirectory(folder);
         Write(folder, "index.html", new ReportPage(texts, ruleNames).Render(data, isPilot, _options.RepositoryUrl));
         Write(folder, "lookup.html", LookupPage.Render(texts, data.Run, suggestions, isPilot, _options.RepositoryUrl));
         Write(folder, "methodology.html", MethodologyPage.Render(texts, File.ReadAllText(methodologyFile), _options.RepositoryUrl));
+        Write(folder, "privacy.html", MethodologyPage.RenderMarkdown(texts, texts.NavPrivacy, SitePage.Privacy,
+            File.ReadAllText(privacyFile), _options.RepositoryUrl));
     }
 
     /// <summary>

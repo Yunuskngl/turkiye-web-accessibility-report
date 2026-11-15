@@ -16,6 +16,7 @@ public sealed record SiteTexts
     public required string NavReport { get; init; }
     public required string NavLookup { get; init; }
     public required string NavMethodology { get; init; }
+    public required string NavPrivacy { get; init; }
     public required string OtherLanguageName { get; init; }
 
     /// <summary>The language's own name, for example "Türkçe".</summary>
